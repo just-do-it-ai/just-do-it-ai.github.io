@@ -430,14 +430,15 @@
         <article class="index-post">
             <a class="abstract-title" href="/2022/09/23/secondblog/">
                 
-                <span class="abstract-title-text">secondblog</span>
+                <span class="abstract-title-text">高斯混合模型</span>
             </a>
             <div class="abstract-content">
                 高斯混合模型
-@(Sample notebook)[Marxico|Manual|Markdown]
-Marxico is a delicate Markdown editor for Evernote. With reliable storage and sync powered by Evernote, Marxico offers greate writing experience.
-
-Versatile - supporting code highlight, LaTeX &amp; flow charts, inserting images &amp; attachme...
+概述
+高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。
+基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：
+\[ Pr(x) = \sum_{k=1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \]
+其中，$ _k\(是权重因子：\)N(x;_k,_k),k=1,2,...,K\(，表示任意一个单高斯分布，叫做该模型的一个component（成分）。\)K\(需要先确定好，只要\)K\(足够大，该模型就可以用来逼近任意连续的概率密度分布，即\)...
             </div>
             <!-- read more -->
             
@@ -584,7 +585,7 @@ Versatile - supporting code highlight, LaTeX &amp; flow charts, inserting images
         
         <li class="archive-post-item">
             <span class="archive-post-date">09/23</span>
-            <a class="archive-post-title" href="/2022/09/23/secondblog/">secondblog</a>
+            <a class="archive-post-title" href="/2022/09/23/secondblog/">高斯混合模型</a>
         </li>
     
     </div>

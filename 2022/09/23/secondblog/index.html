@@ -19,22 +19,22 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="高斯混合模型 @(Sample notebook)[Marxico|Manual|Markdown] Marxico is a delicate Markdown editor for Evernote. With reliable storage and sync powered by Evernote, Marxico offers greate writing experience.">
+    <meta name="description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，$ _k\(是权重因子：\)N(x;_k,_k)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="secondblog">
+<meta property="og:title" content="高斯混合模型">
 <meta property="og:url" content="http://example.com/2022/09/23/secondblog/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="高斯混合模型 @(Sample notebook)[Marxico|Manual|Markdown] Marxico is a delicate Markdown editor for Evernote. With reliable storage and sync powered by Evernote, Marxico offers greate writing experience.">
+<meta property="og:description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，$ _k\(是权重因子：\)N(x;_k,_k)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-23T07:03:20.000Z">
-<meta property="article:modified_time" content="2022-09-23T08:27:02.421Z">
+<meta property="article:modified_time" content="2022-09-23T12:43:44.970Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/bitbug_favicon.ico">
     
-    <title>secondblog · Scofield&#39;s Studio</title>
+    <title>高斯混合模型 · Scofield&#39;s Studio</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -259,7 +259,7 @@
                 <a href="/">Scofield&#39;s Studio.</a>
             </div>
             <div class="post-title header-element">
-                <a href="#" class="post-name">secondblog</a>
+                <a href="#" class="post-name">高斯混合模型</a>
             </div>
         </div>
     
@@ -305,7 +305,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-                secondblog
+                高斯混合模型
             <!-- 404 -->
             
         </h1>
@@ -324,7 +324,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">773</span>Reading time: <span class="post-count reading-time">4 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.4k</span>Reading time: <span class="post-count reading-time">11 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -486,6 +486,37 @@
                 <main class="main post-page">
     <article class="article-entry">
         <h1 id="高斯混合模型">高斯混合模型</h1>
+<h2 id="概述">概述</h2>
+<p>高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。</p>
+<p>基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：</p>
+<p><span class="math display">\[ Pr(x) = \sum_{k=1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \]</span></p>
+<p>其中，$ _k<span class="math inline">\(是权重因子：\)</span>N(x;_k,_k),k=1,2,...,K<span class="math inline">\(，表示任意一个单高斯分布，叫做该模型的一个component（成分）。\)</span>K<span class="math inline">\(需要先确定好，只要\)</span>K<span class="math inline">\(足够大，该模型就可以用来逼近任意连续的概率密度分布，即\)</span>GMM$可以模仿出特征空间中的任意一个样本点。</p>
+<h2 id="高斯混合模型原理">高斯混合模型原理</h2>
+<h3 id="单高斯分布"><strong>单高斯分布</strong></h3>
+<p>如果随机变量<span class="math inline">\(X\)</span>服从均值为<span class="math inline">\(\mu\)</span>、方差为<span class="math inline">\(\sigma^2\)</span>的高斯分布，即<span class="math inline">\(X\sim{N(\mu,\sigma^2)}\)</span>，则<span class="math inline">\(X\)</span>的概率密度函数为： <span class="math display">\[p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma}}exp[-\frac{(x-\mu)^2}{2\sigma^2}]\]</span> 假设随机变量<span class="math inline">\(x\)</span>是一个<span class="math inline">\(M\)</span>维向量，则上式变为：</p>
+<p><span class="math display">\[p(x;\mu,\sum)=\frac{1}{\sqrt{(2\pi)^n|\sum|}}exp[-\frac{1}{2}(x-\mu)^T\sum\nolimits^{-1}(x-\mu)]\]</span></p>
+<p>其中，<span class="math inline">\(\mu\)</span>是模型的期望，为一个向量；<span class="math inline">\(\sum\)</span>是模型的协方差矩阵。</p>
+<h3 id="混合高斯分布"><strong>混合高斯分布</strong></h3>
+<p>混合高斯分布就是多个单高斯分布<span class="math inline">\((k=1,2,3,...)\)</span>按照一定比例<span class="math inline">\((比例因子\pi_k)\)</span>加权得到的分布，表达式为</p>
+<p><span class="math display">\[ Pr(x) = \sum_{k=1}^K\pi_kN(x;\mu_k,\sum\nolimits_k)\]</span></p>
+<p>这里我们以<span class="math inline">\(K=2\)</span>为例，即假设高斯混合模型由两个单高斯模型混合而成，则有：</p>
+<p><span class="math display">\[Pr(x) = \pi_1N(x;\mu_1,\sum\nolimits_1)+\pi_2N(x;\mu_2,\sum\nolimits_2)\]</span></p>
+<p>现在所有样本点均服从概率分布为<span class="math inline">\(Pr(x)\)</span>的混合分布。那么反过来，利用一批服从该分布的给定样本点，理论上我们可以估计出该混合分布中的<span class="math inline">\(\pi_1、\mu_1、\sum\nolimits_1\)</span>和<span class="math inline">\(\pi_2、\mu_2、\sum\nolimits_2\)</span>这6个未知参数。而一旦这6个未知参数被估计出来后，对于这批样本点，我们就可以很清楚地知道各个样本属于<span class="math inline">\(N(x;\mu_1,\sum\nolimits_1)\)</span>和<span class="math inline">\(N(x;\mu_2,\sum\nolimits_2)\)</span>的概率各为多少；然后将样本点划分到概率最大的那一个单高斯分布中去，最终即可实现聚类的目的。<br></p>
+<p>从给定的样本点去估计未知参数<span class="math inline">\(\pi_k、\mu_k、\sum\nolimits_k(k=1,2,...,K)\)</span>需要用到<strong>EM算法</strong>。</p>
+<h2 id="em算法">EM算法</h2>
+<h3 id="概述-1"><strong>概述</strong></h3>
+<p>EM算法是一种用来求解含有隐变量优化问题的方法。 推导过程主要用到期望的性质、Jessen不等式和似然函数。 ### <strong>期望的性质</strong> 若随机变量<span class="math inline">\(X\)</span>的概率分布为<span class="math inline">\(p_k,k=1,2,...\)</span>，则<span class="math inline">\(X\)</span>的数学期望定义为： <span class="math display">\[E(X)=\sum_{k=1}^{\infty}x_k\cdot{p_k}\]</span> 若随机变量<span class="math inline">\(Y\)</span>与随机变量<span class="math inline">\(X\)</span>之间存在映射关系<span class="math inline">\(Y=f(X)\)</span>,则随机变量<span class="math inline">\(Y\)</span>的数学期望为： <span class="math display">\[E(Y)=E[f(X)]=\sum_{k=1}^{\infty}f(x_k)\cdot{p_k}\]</span> ### <strong>Jesson不等式</strong> 如果<span class="math inline">\(f(x)\)</span>是凸函数，<span class="math inline">\(X\)</span>是随机变量，那么存在： <span class="math display">\[E[f(X)]\geq{f(E(X))}\]</span> <strong>注释:</strong> 中学的jessen不等式的表达式为： <span class="math display">\[tf(x_1)+(1-t)f(x_2)\geq{f(tx_1+(1-t)x_2)},0\leq{t}\leq1\]</span> 由于<span class="math inline">\(0\leq{t}\leq1\)</span>且<span class="math inline">\(t_1\)</span>和<span class="math inline">\(t_2\)</span>的和为1，可以把t看作概率<span class="math inline">\(p_1\)</span>，而<span class="math inline">\(f(x_1)\)</span>和<span class="math inline">\(f(x_2)\)</span>看作变量，则由期望的性质可推出上式<span class="math inline">\(E[f(X)]\geq{f(E(X))}\)</span>。 ### <strong>似然函数</strong> 不做解释</p>
+<h3 id="em算法原理"><strong>EM算法原理</strong></h3>
+<p>EM算法叫做最大期望算法，基本思想是：先随机取一个<span class="math inline">\(\theta^0\)</span>去初始化待估计的参数<span class="math inline">\(\theta\)</span>，然后不断地迭代寻找更优的<span class="math inline">\(\theta^{n+1},n=0,1,2...\)</span>，使得其对应的似然函数<span class="math inline">\(L(\theta^{n+1})\)</span>比原来的<span class="math inline">\(L(\theta^{n})\)</span>要大。其关键之处在于找到<span class="math inline">\(L(\theta)\)</span>的一个下界，然后通过不断最大化这个下界来近似得到<span class="math inline">\(L(\theta)\)</span>的最大值。<br> - (1)建立含有未知参数<span class="math inline">\(\theta\)</span>的分布<span class="math inline">\(p(x_i,\theta)\)</span>的对数似然函数</p>
+<p><span class="math display">\[ L(\theta)=\sum_{i=1}^{M}log\space{p(x_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}log\sum_{z_i}{p(x_i,z_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}\{log\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}\cdot{q(z_i)}]\}\]</span></p>
+<hr />
+<p><strong>说明：</strong> 从第一步到第二步运用了概率的性质，即将<span class="math inline">\(p(x_i,\theta)\)</span>展开成关于<span class="math inline">\(z_i\)</span>的完全分布；从第二步到第三步相当于引入一个新的随机变量<span class="math inline">\(Z\)</span>,其对应的概率分布为<span class="math inline">\(q(z_i)\)</span>,这个分布目前还是未知的，后面可以推导出其就是随机变量<span class="math inline">\(X\)</span>的后验概率<span class="math inline">\(p(z_i|x_i;\theta)\)</span> ____ - (2)"E"步和“M”步 令： <span class="math display">\[g(z)=\frac{p(x_i,z_i;\theta)}{q(z_i)}\]</span> 则<span class="math inline">\(g(z)\)</span>就是一个关于随机变量<span class="math inline">\(Z\)</span>的复合分布，而前面说过，随机变量<span class="math inline">\(Z\)</span>的概率分布为<span class="math inline">\(q(z_i)\)</span>，所以根据复合分布期望的性质，<span class="math inline">\(g(z)\)</span>的期望为：</p>
+<p><span class="math display">\[E[g(z)]=\sum_{z_i}[g(z_i)q(z_i)]\]</span> <span class="math display">\[=\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}q(z_i)]\]</span></p>
+<p>又因为<span class="math inline">\(log\)</span>函数为严格的凹函数，所以由<span class="math inline">\(Jessen\)</span>不等式有<span class="math inline">\(log\space{E[g(z)]}\geq{E[log\space{g(z)}]}\)</span>(当且仅当<span class="math inline">\(g(z)=C\)</span>时等号成立)。 再把<span class="math inline">\(log\space{g(z)}\)</span>看成是关于随机变量<span class="math inline">\(Z\)</span>的另外一个复合分布，利用复合分布期望的性质有：</p>
+<p><span class="math display">\[E[log\space{g(z)}]=\sum_{z_i}[log\space{g(z_i)}]q(z_i)=\sum_{z_i}[log\frac{p(x_i,z_i;\theta)}{q(z_i)}]q(z_i)\]</span></p>
+<p>将其代入<span class="math inline">\(logE[g(z)]\geq{E[log\space{g(z)}]}\)</span>,得：</p>
+<p><span class="math display">\[\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}q(z_i)]\geq\sum_{z_i}[q(z_i)log\frac{p(x_i,z_i;\theta)}{q(z_i)}]\]</span></p>
+<p>进一步推出： <span class="math display">\[\sum_{i=1}^{M}{\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}q(z_i)]}\geq\sum_{i=1}^{M}\sum_{z_i}[q(z_i)log\frac{p(x_i,z_i;\theta)}{q(z_i)}]\]</span> 即： <span class="math display">\[L(\theta)\geq\sum_{i=1}^{M}\sum_{z_i}[q(z_i)log\frac{p(x_i,z_i;\theta)}{q(z_i)}]\]</span> 前面说了，当且仅当<span class="math inline">\(g(z)=C\)</span>时上式中的等号成立，即： <span class="math display">\[\frac{p(x_i,z_i;\theta)}{q(z_i)}=C\]</span> 推出： <span class="math display">\[p(x_i,z_i;\theta) = C\cdot{q(z_i)}\]</span> 即： <span class="math display">\[q(z_i)\propto{p(x_i,z_i;\theta) }\]</span> 又<span class="math inline">\(q(z_i)\)</span>是随机变量<span class="math inline">\(Z\)</span>的概率分布，因此必须满足： <span class="math display">\[\sum_{z_i}q(z_i)=1\]</span> 所以综合上述两式可以推断出<span class="math inline">\(q(z_i)\)</span>的关系式为 <span class="math display">\[q(z_i)=\frac{p(x_i,z_i;\theta)}{\sum\nolimits_{z_i}p(x_i,z_i;\theta) }\]</span> 又： <span class="math display">\[q(z_i)=\frac{p(x_i,z_i;\theta)}{\sum\nolimits_{z_i}p(x_i,z_i;\theta) }\]</span> <span class="math display">\[=\frac{p(x_i,z_i;\theta)}{p(x_i;\theta)}\]</span> <span class="math display">\[=p(z_i|x_i;\theta)\]</span> 所以最终有： <span class="math display">\[q(z_i)=p(z_i|x_i;\theta)\]</span></p>
 <p>@(Sample notebook)[Marxico|Manual|Markdown]</p>
 <p><strong>Marxico</strong> is a delicate Markdown editor for Evernote. With reliable storage and sync powered by Evernote, <strong>Marxico</strong> offers greate writing experience.</p>
 <ul>
@@ -610,7 +641,7 @@ Item3</li>
             <p>Author：<a href="http://example.com">Scofield</a>
             <p>Link：<a href="http://example.com/2022/09/23/secondblog/">http://example.com/2022/09/23/secondblog/</a>
             <p>Publish date：<a href="http://example.com/2022/09/23/secondblog/">September 23rd 2022, 3:03:20 pm</a>
-            <p>Update date：<a href="http://example.com/2022/09/23/secondblog/">September 23rd 2022, 4:27:02 pm</a>
+            <p>Update date：<a href="http://example.com/2022/09/23/secondblog/">September 23rd 2022, 8:43:44 pm</a>
             <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -773,7 +804,7 @@ Item3</li>
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">高斯混合模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#introducing-markdown"><span class="toc-number">1.1.</span> <span class="toc-text">Introducing Markdown</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code-block"><span class="toc-number">1.1.1.</span> <span class="toc-text">Code block</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#latex-expression"><span class="toc-number">1.1.2.</span> <span class="toc-text">LaTeX expression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table"><span class="toc-number">1.1.3.</span> <span class="toc-text">Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#diagrams"><span class="toc-number">1.1.4.</span> <span class="toc-text">Diagrams</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#flow-charts"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">Flow charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sequence-diagrams"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">Sequence diagrams</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkbox"><span class="toc-number">1.1.5.</span> <span class="toc-text">Checkbox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dancing-with-evernote"><span class="toc-number">1.1.6.</span> <span class="toc-text">Dancing with Evernote</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#notebook-tags"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">Notebook &amp; Tags</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#title"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">Title</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#quick-editing"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">Quick Editing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#data-synchronization"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">Data Synchronization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#offline-storage"><span class="toc-number">1.1.6.5.</span> <span class="toc-text">Offline Storage</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shortcuts"><span class="toc-number">1.2.</span> <span class="toc-text">Shortcuts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#about-pro"><span class="toc-number">1.3.</span> <span class="toc-text">About Pro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#credits"><span class="toc-number">1.4.</span> <span class="toc-text">Credits</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#feedback-bug-report"><span class="toc-number">1.5.</span> <span class="toc-text">Feedback &amp; Bug Report</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">高斯混合模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">高斯混合模型原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="toc-number">1.2.1.</span> <span class="toc-text">单高斯分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="toc-number">1.2.2.</span> <span class="toc-text">混合高斯分布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#em%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">EM算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#em%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">EM算法原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#introducing-markdown"><span class="toc-number">1.4.</span> <span class="toc-text">Introducing Markdown</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code-block"><span class="toc-number">1.4.1.</span> <span class="toc-text">Code block</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#latex-expression"><span class="toc-number">1.4.2.</span> <span class="toc-text">LaTeX expression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table"><span class="toc-number">1.4.3.</span> <span class="toc-text">Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#diagrams"><span class="toc-number">1.4.4.</span> <span class="toc-text">Diagrams</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#flow-charts"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">Flow charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sequence-diagrams"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">Sequence diagrams</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkbox"><span class="toc-number">1.4.5.</span> <span class="toc-text">Checkbox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dancing-with-evernote"><span class="toc-number">1.4.6.</span> <span class="toc-text">Dancing with Evernote</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#notebook-tags"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">Notebook &amp; Tags</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#title"><span class="toc-number">1.4.6.2.</span> <span class="toc-text">Title</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#quick-editing"><span class="toc-number">1.4.6.3.</span> <span class="toc-text">Quick Editing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#data-synchronization"><span class="toc-number">1.4.6.4.</span> <span class="toc-text">Data Synchronization</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#offline-storage"><span class="toc-number">1.4.6.5.</span> <span class="toc-text">Offline Storage</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shortcuts"><span class="toc-number">1.5.</span> <span class="toc-text">Shortcuts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#about-pro"><span class="toc-number">1.6.</span> <span class="toc-text">About Pro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#credits"><span class="toc-number">1.7.</span> <span class="toc-text">Credits</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#feedback-bug-report"><span class="toc-number">1.8.</span> <span class="toc-text">Feedback &amp; Bug Report</span></a></li></ol></li></ol>
             </div>
         
         <!-- sidebar -->
@@ -816,7 +847,7 @@ Item3</li>
         
         <li class="archive-post-item">
             <span class="archive-post-date">09/23</span>
-            <a class="archive-post-title" href="/2022/09/23/secondblog/">secondblog</a>
+            <a class="archive-post-title" href="/2022/09/23/secondblog/">高斯混合模型</a>
         </li>
     
     </div>
