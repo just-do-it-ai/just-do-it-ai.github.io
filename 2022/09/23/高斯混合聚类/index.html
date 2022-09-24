@@ -19,15 +19,15 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，$ _k\(是权重因子：\)N(x;_k,_k)">
+    <meta name="description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，\(\pi_k\) 是权重因子：\(N(x;\mu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高斯混合模型">
 <meta property="og:url" content="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，$ _k\(是权重因子：\)N(x;_k,_k)">
+<meta property="og:description" content="高斯混合模型 概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下： \[ Pr(x) &#x3D; \sum_{k&#x3D;1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \] 其中，\(\pi_k\) 是权重因子：\(N(x;\mu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-23T07:03:20.000Z">
-<meta property="article:modified_time" content="2022-09-24T06:39:00.736Z">
+<meta property="article:modified_time" content="2022-09-24T06:49:32.793Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
@@ -487,10 +487,9 @@
     <article class="article-entry">
         <h1 id="高斯混合模型">高斯混合模型</h1>
 <h2 id="概述">概述</h2>
-<p>高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。</p>
-<p>基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：</p>
+<p>高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。<br> 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：</p>
 <p><span class="math display">\[ Pr(x) = \sum_{k=1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \]</span></p>
-<p>其中，$ _k<span class="math inline">\(是权重因子：\)</span>N(x;_k,_k),k=1,2,...,K<span class="math inline">\(，表示任意一个单高斯分布，叫做该模型的一个component（成分）。\)</span>K<span class="math inline">\(需要先确定好，只要\)</span>K<span class="math inline">\(足够大，该模型就可以用来逼近任意连续的概率密度分布，即\)</span>GMM$可以模仿出特征空间中的任意一个样本点。</p>
+<p>其中，<span class="math inline">\(\pi_k\)</span> 是权重因子：<span class="math inline">\(N(x;\mu_k,\sum\nolimits_k),k=1,2,...,K\)</span>，表示任意一个单高斯分布，叫做该模型的一个component（成分）。<span class="math inline">\(K\)</span>需要先确定好，只要<span class="math inline">\(K\)</span>足够大，该模型就可以用来逼近任意连续的概率密度分布，即<span class="math inline">\(GMM\)</span>可以模仿出特征空间中的任意一个样本点。</p>
 <h2 id="高斯混合模型原理">高斯混合模型原理</h2>
 <h3 id="单高斯分布"><strong>单高斯分布</strong></h3>
 <p>如果随机变量<span class="math inline">\(X\)</span>服从均值为<span class="math inline">\(\mu\)</span>、方差为<span class="math inline">\(\sigma^2\)</span>的高斯分布，即<span class="math inline">\(X\sim{N(\mu,\sigma^2)}\)</span>，则<span class="math inline">\(X\)</span>的概率密度函数为： <span class="math display">\[p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma}}exp[-\frac{(x-\mu)^2}{2\sigma^2}]\]</span> 假设随机变量<span class="math inline">\(x\)</span>是一个<span class="math inline">\(M\)</span>维向量，则上式变为：</p>
@@ -522,9 +521,9 @@
 </ul>
 <p>对数似然函数<span class="math inline">\(L(\theta)\)</span>表示的是对复合发呢不<span class="math inline">\(g(z)\)</span>求期望后取对数再求和，我们利用期望的性质和<span class="math inline">\(Jessen\)</span>不等式将其等价转换成<span class="math inline">\(\geq\)</span>先对<span class="math inline">\(g(z)\)</span>取对数再求期望再求和，所以这一步就称为“E步”。 经过“E步”后我们就可以确定出<span class="math inline">\(L(\theta)\)</span>的下界，然后，下一步只要不断最大化这个下界（可以使用任意最优化算法）就可以使<span class="math inline">\(L(\theta)\)</span>逐渐变到最优，因此下一步称为“M步”。 - (4)EM算法的整体步骤 第1步：随机选取初始化值<span class="math inline">\(\theta^0\)</span> 第2步：不断迭代以下两步。 E步：对于每一个<span class="math inline">\(i\)</span>,计算隐变量的后验概率<span class="math inline">\(q(z_i)=p(z_i|x_i;\theta)\)</span> M步：使用任意一种优化算法，（如梯度下降法）计算下式： <span class="math display">\[\theta=arg\space{max\sum_{i=1}^{M}\sum_{z_i}[q(z_i)log\frac{p(x_i,z_i;\theta)}{q(z_i)}]}\]</span></p>
 <h3 id="高斯混合聚类参数的em算法学习过程"><strong>高斯混合聚类参数的EM算法学习过程</strong></h3>
-<p>利用EM算法估计高斯混合聚类参数的步骤如下。 第1步：猜测有几个类别，既有几个高斯分布，假设为<span class="math inline">\(K\)</span>。 第2步：针对每一个高斯分布，随机给其均值和方差进行赋值。 第3步：针对每一个样本，计算其在各个高斯分布下的概率。</p>
+<p>利用EM算法估计高斯混合聚类参数的步骤如下。<br> 第1步：猜测有几个类别，既有几个高斯分布，假设为<span class="math inline">\(K\)</span>。<br> 第2步：针对每一个高斯分布，随机给其均值和方差进行赋值。<br> 第3步：针对每一个样本，计算其在各个高斯分布下的概率。</p>
 <p><span class="math display">\[p(x_i,k)=\frac{\pi_kN(x_i;\mu_k,\sum\nolimits_k)}{\sum\nolimits_{j=1}^K\pi_kN(x_i;\mu_k,\sum\nolimits_k)},\qquad k=1,2,...,K\]</span></p>
-<p>第4步：针对每一个高斯分布，每一个样本对该高斯分布的贡献可由其下的概率<span class="math inline">\(p(x_i,k)\)</span>表示，概率越大，表示贡献越大，反之亦然。以样本对该高斯分布的贡献作为权重来计算加权的均值和方差，用其替代原来的均值和方差。 第5步：重复第3步和第4步，直到每一个高斯分布的均值和方差收敛。</p>
+<p>第4步：针对每一个高斯分布，每一个样本对该高斯分布的贡献可由其下的概率<span class="math inline">\(p(x_i,k)\)</span>表示，概率越大，表示贡献越大，反之亦然。以样本对该高斯分布的贡献作为权重来计算加权的均值和方差，用其替代原来的均值和方差。<br> 第5步：重复第3步和第4步，直到每一个高斯分布的均值和方差收敛。</p>
 <h2 id="算法优缺点">算法优缺点</h2>
 <h2 id="优点"><strong>优点</strong></h2>
 <ul>
@@ -536,7 +535,7 @@
 </ul>
 <hr />
 <h2 id="参考">参考</h2>
-<p>[1]《机器学习基础》胡换武</p>
+<p>[1]《机器学习基础》胡欢武</p>
 
     </article>
     <!-- license -->
@@ -545,7 +544,7 @@
             <p>Author：<a href="http://example.com">Scofield</a>
             <p>Link：<a href="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/">http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/</a>
             <p>Publish date：<a href="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/">September 23rd 2022, 3:03:20 pm</a>
-            <p>Update date：<a href="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/">September 24th 2022, 2:39:00 pm</a>
+            <p>Update date：<a href="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/">September 24th 2022, 2:49:32 pm</a>
             <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
