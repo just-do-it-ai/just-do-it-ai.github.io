@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg">
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg">
 <meta property="article:published_time" content="2022-09-25T05:40:02.000Z">
-<meta property="article:modified_time" content="2022-09-27T10:55:23.813Z">
+<meta property="article:modified_time" content="2022-09-27T11:07:00.150Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://visualqa.org/static/img/vqa_examples.jpg">
@@ -129,7 +129,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.</span> <span class="nav-text">多模态融合的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9E%8D%E5%90%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number"></span> <span class="nav-text">融合任务的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%9E%8D%E5%90%88%E6%97%B6%E6%9C%9F%E7%9A%84%E5%88%86%E7%B1%BB1"><span class="nav-number">1.</span> <span class="nav-text">基于融合时期的分类[1]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E7%9A%84%E5%88%86%E7%B1%BB3"><span class="nav-number">2.</span> <span class="nav-text">基于模型架构的分类[3]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%872"><span class="nav-number"></span> <span class="nav-text">VLP模型的预训练目标[2]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E7%9A%84%E4%B8%8B%E6%B8%B8%E4%BB%BB%E5%8A%A1"><span class="nav-number"></span> <span class="nav-text">VLP的下游任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="nav-number"></span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%8C%AE%E5%AD%A6%E4%B9%A0"><span class="nav-number"></span> <span class="nav-text">文献学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#visualbert"><span class="nav-number">1.</span> <span class="nav-text">VisualBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clipcontrastive-languageimage-pre-training"><span class="nav-number">2.</span> <span class="nav-text">CLIP(Contrastive Language–Image Pre-training)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">2.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">架构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.</span> <span class="nav-text">多模态融合的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9E%8D%E5%90%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">融合任务的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%9E%8D%E5%90%88%E6%97%B6%E6%9C%9F%E7%9A%84%E5%88%86%E7%B1%BB1"><span class="nav-number">2.1.</span> <span class="nav-text">基于融合时期的分类[1]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E7%9A%84%E5%88%86%E7%B1%BB3"><span class="nav-number">2.2.</span> <span class="nav-text">基于模型架构的分类[3]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%872"><span class="nav-number">3.</span> <span class="nav-text">VLP模型的预训练目标[2]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E7%9A%84%E4%B8%8B%E6%B8%B8%E4%BB%BB%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">VLP的下游任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="nav-number">5.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%8C%AE%E5%AD%A6%E4%B9%A0"><span class="nav-number">6.</span> <span class="nav-text">文献学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#visualbert"><span class="nav-number">6.1.</span> <span class="nav-text">VisualBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">6.1.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clipcontrastive-languageimage-pre-training"><span class="nav-number">6.2.</span> <span class="nav-text">CLIP(Contrastive Language–Image Pre-training)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">6.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80-1"><span class="nav-number">6.2.2.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">6.2.3.</span> <span class="nav-text">架构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-27 18:55:23" itemprop="dateModified" datetime="2022-09-27T18:55:23+08:00">2022-09-27</time>
+      <time title="Modified: 2022-09-27 19:07:00" itemprop="dateModified" datetime="2022-09-27T19:07:00+08:00">2022-09-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -258,7 +258,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这篇文章主要关注图像-文本两种模态衍生出来的任务。（VLP：Vision-Language Pretrain） <span id="more"></span> # 概述 多模态可以理解为不同类型的数据，比如图像、文本、音频等。 多模态学习任务主要包括表征、翻译、对齐、融合、协同学习等。</p>
+        <p>这篇文章主要关注图像-文本两种模态衍生出来的任务。（VLP：Vision-Language Pretrain） <span id="more"></span></p>
+<h1 id="引言">引言</h1>
+<p>多模态可以理解为不同类型的数据，比如图像、文本、音频等。 多模态学习任务主要包括表征、翻译、对齐、融合、协同学习等。</p>
 <ul>
 <li>表征主要任务是学习如何更好的提取和表示多模态数据的特征信息，以利用多模态数据的互补性。</li>
 <li>翻译主要任务是如何将数据从一种模态转换（映射）到另一种模态。</li>
@@ -285,10 +287,10 @@
 <h2 id="基于模型架构的分类3">基于模型架构的分类[3]</h2>
 <ul>
 <li><strong>单流方法</strong><br> 与早期融合同。将图像和文本特征进行拼接送入模型中训练。 Visual-Bert</li>
-<li><strong>双流方法</strong><br> 双流方法指的是文本和视觉特征不连接在一起，而是分别发送到两个不同的transformer模块。<br> LXMERT：https://www.cnblogs.com/wangxiaocvpr/p/14184033.html <br><br></li>
+<li><strong>双流方法</strong><br> 双流方法指的是文本和视觉特征不连接在一起，而是分别发送到两个不同的transformer模块。<br> LXMERT：https://www.cnblogs.com/wangxiaocvpr/p/14184033.html <br></li>
 </ul>
 <h1 id="vlp模型的预训练目标2">VLP模型的预训练目标[2]</h1>
-<p>预训练目标对于学习视觉-语言的普遍表示是至关重要的。预训练的目标可以总结为四类:补全、匹配、时序和其他类型。 - <strong>补全：</strong><br> 利用unmasked的元素去重构masked的元素。(可以将文本或者图像中的token给mask) - <strong>匹配</strong><br> 匹配是将视觉和语言统一到一个共享的隐藏空间中，产生普遍的视觉语言表征。 训练数据是图像和文本对，标签是1/0代表匹配/不匹配。 - <strong>时序</strong><br> 时序是通过重新排列混乱的输入序列来学习良好的表示。(视频-文本)<br> 为了更好地模拟视频的时序，VLP模型随机打乱一些输入帧的顺序，然后预测每一帧的实际位置。帧顺序建模在实践中被建模为一个分类任务。 - <strong>其他</strong><br> 其他包括其他预训练的对象，如视觉问题回答和视觉字幕等。 <br><br></p>
+<p>预训练目标对于学习视觉-语言的普遍表示是至关重要的。预训练的目标可以总结为四类:补全、匹配、时序和其他类型。 - <strong>补全：</strong><br> 利用unmasked的元素去重构masked的元素。(可以将文本或者图像中的token给mask) - <strong>匹配</strong><br> 匹配是将视觉和语言统一到一个共享的隐藏空间中，产生普遍的视觉语言表征。 训练数据是图像和文本对，标签是1/0代表匹配/不匹配。 - <strong>时序</strong><br> 时序是通过重新排列混乱的输入序列来学习良好的表示。(视频-文本)<br> 为了更好地模拟视频的时序，VLP模型随机打乱一些输入帧的顺序，然后预测每一帧的实际位置。帧顺序建模在实践中被建模为一个分类任务。 - <strong>其他</strong><br> 其他包括其他预训练的对象，如视觉问题回答和视觉字幕等。 <br></p>
 <h1 id="vlp的下游任务">VLP的下游任务</h1>
 <ul>
 <li><p>视觉问答(VQA:Visual Question Answering)<br> 根据图像信息，回答文本的提问。 <img src="https://visualqa.org/static/img/vqa_examples.jpg"></p></li>
@@ -304,7 +306,11 @@
 <li><p>图像匹配 (VE:Visual Entailment) 在VE任务中，图像是前提，文本是假设。其目的是预测文本是否为“蕴涵图像”。有三个标签，蕴涵、中立和矛盾。 <img src="https://production-media.paperswithcode.com/tasks/15afd88a-1912-42f6-a979-b95ab7efdb3d.png"></p></li>
 </ul>
 <h1 id="特征提取">特征提取</h1>
-<p>文本的特征提取主要有2种： - Word2Vec - Transformer</p>
+<p>文本的特征提取主要有2种：</p>
+<ul>
+<li>Word2Vec</li>
+<li>Transformer</li>
+</ul>
 <p>图像的特征提取主要有3种：</p>
 <ul>
 <li>感兴趣区域 (利用faster R-CNN等)</li>
@@ -316,8 +322,10 @@
 <h3 id="概述"><strong>概述</strong></h3>
 <p><strong>tag：</strong> 第1篇VL <br> VisualBERT使用Faster R-CNN提取的视觉特征，将视觉特征和文本嵌入拼接，然后将拼接起来的特征输入到由BERT初始化的transformer中。</p>
 <h2 id="clipcontrastive-languageimage-pre-training">CLIP(Contrastive Language–Image Pre-training)</h2>
-<p><strong>tag：</strong> 简单高效<br> ### <strong>概述</strong> CLIP可以从自然语言监督中有效地学习视觉概念。CLIP使用了4亿个(图片,文本)对去训练。在不使用带有imagenet原始标签的图像参与训练的前提下(zero-shot)，CLIP直接在imagenet上zero-shot推理能达到resnet50在imagenet上一样的效果。</p>
-<h3 id="引言"><strong>引言</strong></h3>
+<p><strong>tag：</strong> 简单高效<br></p>
+<h3 id="概述-1"><strong>概述</strong></h3>
+<p>CLIP可以从自然语言监督中有效地学习视觉概念。CLIP使用了4亿个(图片,文本)对去训练。在不使用带有imagenet原始标签的图像参与训练的前提下(zero-shot)，CLIP直接在imagenet上zero-shot推理能达到resnet50在imagenet上一样的效果。</p>
+<h3 id="引言-1"><strong>引言</strong></h3>
 <p>问题[5]：<br> - 典型的视觉数据集耗费昂贵，而且视觉任务比较专一; - 标准的视觉模型擅长于一项任务，也只擅长于一项任务，模型迁移适应一项新任务很困难;在基准测试中表现良好的模型在“压力”测试中(风格相差较大的数据集)的表现很差。</p>
 <p>CLIP解决了这些问题，CLIP使用自然语言的监督信号来训练视觉模型，因此不需要手工标注(以前图像有监督数据的生成需要经过一系列步骤，比如Imagenet需要筛选1000个类然后根据这1000个类去下载照片，在去清理数据集，然后再去标注；而CLIP只需要从网上下载图像和文本的配对，而且监督信号是文本，所以不需要转换成0-1000的标签了)；<strong>并且</strong>因为和自然语言处理的结合导致其学出来的视觉特征和我们用语言描述的物体产生了强烈的联系，所以CLIP的迁移能力得到了很大的增强。 <img src="https://i.ibb.co/267YCMD/canvas-2.png"> 在原始的imagenet上，resnet101和CLIP能取得一样的推理成绩。 但随着domain的改变，在imagenet上训练得到的resnet101的表现随着domain迁移的程度而下滑；但是CLIP却依旧稳健。</p>
 <h3 id="架构"><strong>架构</strong></h3>
