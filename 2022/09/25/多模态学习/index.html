@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg">
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg">
 <meta property="article:published_time" content="2022-09-25T05:40:02.000Z">
-<meta property="article:modified_time" content="2022-09-27T11:19:27.613Z">
+<meta property="article:modified_time" content="2022-09-27T11:23:27.682Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://visualqa.org/static/img/vqa_examples.jpg">
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-27 19:19:27" itemprop="dateModified" datetime="2022-09-27T19:19:27+08:00">2022-09-27</time>
+      <time title="Modified: 2022-09-27 19:23:27" itemprop="dateModified" datetime="2022-09-27T19:23:27+08:00">2022-09-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,7 +339,7 @@
 <p>问题[5]：<br> - 典型的视觉数据集耗费昂贵，而且视觉任务比较专一; - 标准的视觉模型擅长于一项任务，也只擅长于一项任务，模型迁移适应一项新任务很困难;在基准测试中表现良好的模型在“压力”测试中(风格相差较大的数据集)的表现很差。</p>
 <p>CLIP解决了这些问题，CLIP使用自然语言的监督信号来训练视觉模型，因此不需要手工标注(以前图像有监督数据的生成需要经过一系列步骤，比如Imagenet需要筛选1000个类然后根据这1000个类去下载照片，在去清理数据集，然后再去标注；而CLIP只需要从网上下载图像和文本的配对，而且监督信号是文本，所以不需要转换成0-1000的标签了)；<strong>并且</strong>因为和自然语言处理的结合导致其学出来的视觉特征和我们用语言描述的物体产生了强烈的联系，所以CLIP的迁移能力得到了很大的增强。 <img src="https://i.ibb.co/267YCMD/canvas-2.png"> 在原始的imagenet上，resnet101和CLIP能取得一样的推理成绩。 但随着domain的改变，在imagenet上训练得到的resnet101的表现随着domain迁移的程度而下滑；但是CLIP却依旧稳健。</p>
 <h3 id="架构"><strong>架构</strong></h3>
-<p>训练阶段： 在训练阶段，模型的输入是图像和文本(一段话)的配对，图片经过图像编码器，编码器可以是resnet也可以是ViT。文本通过文本编码器。n张图片和n个句子能够组成<span class="math inline">\(n\times{n}\)</span>的图像文本对。然后通过对比学习的方式去训练(不需要手工的标注)。对角线上的是正样本，其他是负样本。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg"></p>
+<p>训练阶段： 在训练阶段，模型的输入是图像和文本(一段话)的配对，图片经过图像编码器，编码器可以是resnet也可以是ViT。文本通过文本编码器。n张图片和n个句子能够组成 <span class="math inline">\(n\times{n}\)</span> 的图像文本对。然后通过对比学习的方式去训练(不需要手工的标注)。对角线上的是正样本，其他是负样本。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg"></p>
 <p>测试阶段<br> 输入一张图片得到图片的特征，再用图像的特征去和类别信息(此处类别需要转换成一句话，因为训练的时候使用的就是一句话)计算余弦相似度，再通过softmax，最高值为图片对应的类别。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg"></p>
 <h1 id="参考">参考</h1>
 <p>[1] 面向深度学习的多模态融合技术研究综述<br> [2] VLP: A Survey on Vision-Language Pre-training<br> [3] Multimodal Pretraining Unmasked: A Meta-Analysis and a Unified Framework of Vision-and-Language BERTs <br> [4] <a target="_blank" rel="noopener" href="https://cs.stanford.edu/people/dorarad/gqa/about.html">GQA数据集</a><br> [5] <a target="_blank" rel="noopener" href="https://openai.com/blog/clip/#rf2">clip网址</a></p>
