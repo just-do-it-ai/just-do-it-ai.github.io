@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg">
 <meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg">
 <meta property="article:published_time" content="2022-09-25T05:40:02.000Z">
-<meta property="article:modified_time" content="2022-09-27T11:10:06.832Z">
+<meta property="article:modified_time" content="2022-09-27T11:19:27.613Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://visualqa.org/static/img/vqa_examples.jpg">
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-27 19:10:06" itemprop="dateModified" datetime="2022-09-27T19:10:06+08:00">2022-09-27</time>
+      <time title="Modified: 2022-09-27 19:19:27" itemprop="dateModified" datetime="2022-09-27T19:19:27+08:00">2022-09-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,8 +268,8 @@
 <li>融合主要任务是将来自两种或两种以上模态的信息结合起来进行预测。</li>
 <li>协同学习是在不同模态数据、特征和模型之间转移知识。<br></li>
 </ul>
-<p>多模态融合是将来自多种不同模态的信息进行整合，用于分类任务或回归任务。</p>
-<p><br></p>
+<p>多模态融合是将来自多种不同模态的信息进行整合，用于分类任务或回归任务。<br />
+<br></p>
 <h2 id="多模态融合的优势">多模态融合的优势</h2>
 <ul>
 <li>对于同一任务，能够应用多种模态的数据，可以做出更鲁棒的预测。</li>
@@ -330,6 +330,7 @@
 <h2 id="visualbert">VisualBERT</h2>
 <h3 id="概述"><strong>概述</strong></h3>
 <p><strong>tag：</strong> 第1篇VL <br> VisualBERT使用Faster R-CNN提取的视觉特征，将视觉特征和文本嵌入拼接，然后将拼接起来的特征输入到由BERT初始化的transformer中。</p>
+<hr />
 <h2 id="clipcontrastive-languageimage-pre-training">CLIP(Contrastive Language–Image Pre-training)</h2>
 <p><strong>tag：</strong> 简单高效<br></p>
 <h3 id="概述-1"><strong>概述</strong></h3>
@@ -341,7 +342,7 @@
 <p>训练阶段： 在训练阶段，模型的输入是图像和文本(一段话)的配对，图片经过图像编码器，编码器可以是resnet也可以是ViT。文本通过文本编码器。n张图片和n个句子能够组成<span class="math inline">\(n\times{n}\)</span>的图像文本对。然后通过对比学习的方式去训练(不需要手工的标注)。对角线上的是正样本，其他是负样本。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg"></p>
 <p>测试阶段<br> 输入一张图片得到图片的特征，再用图像的特征去和类别信息(此处类别需要转换成一句话，因为训练的时候使用的就是一句话)计算余弦相似度，再通过softmax，最高值为图片对应的类别。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg"></p>
 <h1 id="参考">参考</h1>
-<p>[1] 面向深度学习的多模态融合技术研究综述<br> [2] VLP: A Survey on Vision-Language Pre-training<br> [3] Multimodal Pretraining Unmasked: A Meta-Analysis and a Unified Framework of Vision-and-Language BERTs <br> [4] <a target="_blank" rel="noopener" href="https://cs.stanford.edu/people/dorarad/gqa/about.html">GQA数据集</a> [5] <a target="_blank" rel="noopener" href="https://openai.com/blog/clip/#rf2">clip网址</a></p>
+<p>[1] 面向深度学习的多模态融合技术研究综述<br> [2] VLP: A Survey on Vision-Language Pre-training<br> [3] Multimodal Pretraining Unmasked: A Meta-Analysis and a Unified Framework of Vision-and-Language BERTs <br> [4] <a target="_blank" rel="noopener" href="https://cs.stanford.edu/people/dorarad/gqa/about.html">GQA数据集</a><br> [5] <a target="_blank" rel="noopener" href="https://openai.com/blog/clip/#rf2">clip网址</a></p>
 
     </div>
 
