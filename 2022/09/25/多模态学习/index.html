@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 多模态可以理解为不同类型的数据，比如图像、文本、音频等。 多模态学习任务主要包括表征、翻译、对齐、融合、协同学习等。  表征主要任务是学习如何更好的提取和表示多模态数据的特征信息，以利用多模态数据的互补性。 翻译主要任务是如何将数据从一种模态转换（映射）到另一种模态。 对齐主要任务是识别在两种或更多不同模态的(子)元素之间的直接关系。 融合主要任务是将来自两种或两种以上模态的信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多模态学习">
+<meta property="og:url" content="http://example.com/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 多模态可以理解为不同类型的数据，比如图像、文本、音频等。 多模态学习任务主要包括表征、翻译、对齐、融合、协同学习等。  表征主要任务是学习如何更好的提取和表示多模态数据的特征信息，以利用多模态数据的互补性。 翻译主要任务是如何将数据从一种模态转换（映射）到另一种模态。 对齐主要任务是识别在两种或更多不同模态的(子)元素之间的直接关系。 融合主要任务是将来自两种或两种以上模态的信息">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://visualqa.org/static/img/vqa_examples.jpg">
+<meta property="og:image" content="https://vitalab.github.io/article/images/VCR/example.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lil-lab/nlvr/master/nlvr2/ipynb_data/pairex1.png">
+<meta property="og:image" content="https://www.researchgate.net/profile/Mohit-Shridhar/publication/338349223/figure/fig1/AS:843070555828224@1578015092550/Interactive-visual-grounding-of-referring-expressions-a-Ground-self-referential.ppm">
+<meta property="og:image" content="https://1.bp.blogspot.com/-ArwTM2jx8fI/YJqT5199WsI/AAAAAAAAHls/etcO2dIOeiQCtcqsJnc3t69lYpAr4sGOQCLcBGAsYHQ/s1523/image7.png">
+<meta property="og:image" content="https://visualdialog.org/static/img/visdial/visdial_task.jpg">
+<meta property="og:image" content="https://www.statmt.org/wmt18/overview.png">
+<meta property="og:image" content="https://production-media.paperswithcode.com/tasks/Screenshot_2019-11-28_at_19.13.12_doqUQZb.png">
+<meta property="og:image" content="https://production-media.paperswithcode.com/tasks/15afd88a-1912-42f6-a979-b95ab7efdb3d.png">
+<meta property="og:image" content="https://i.ibb.co/267YCMD/canvas-2.png">
+<meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg">
+<meta property="og:image" content="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg">
+<meta property="article:published_time" content="2022-09-25T05:40:02.000Z">
+<meta property="article:modified_time" content="2022-09-27T10:44:50.687Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://visualqa.org/static/img/vqa_examples.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/","path":"2022/09/25/多模态学习/","title":"多模态学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>多模态学习 | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.</span> <span class="nav-text">多模态融合的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9E%8D%E5%90%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">融合任务的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%9E%8D%E5%90%88%E6%97%B6%E6%9C%9F%E7%9A%84%E5%88%86%E7%B1%BB1"><span class="nav-number">2.1.</span> <span class="nav-text">基于融合时期的分类[1]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E7%9A%84%E5%88%86%E7%B1%BB3"><span class="nav-number">2.2.</span> <span class="nav-text">基于模型架构的分类[3]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%872"><span class="nav-number">3.</span> <span class="nav-text">VLP模型的预训练目标[2]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vlp%E7%9A%84%E4%B8%8B%E6%B8%B8%E4%BB%BB%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">VLP的下游任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="nav-number">5.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%8C%AE%E5%AD%A6%E4%B9%A0"><span class="nav-number">6.</span> <span class="nav-text">文献学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#visualbert"><span class="nav-number">6.1.</span> <span class="nav-text">VisualBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">6.1.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clipcontrastive-languageimage-pre-training"><span class="nav-number">6.2.</span> <span class="nav-text">CLIP(Contrastive Language–Image Pre-training)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">6.2.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">6.2.2.</span> <span class="nav-text">架构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="多模态学习 | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          多模态学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-25 13:40:02" itemprop="dateCreated datePublished" datetime="2022-09-25T13:40:02+08:00">2022-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-27 18:44:50" itemprop="dateModified" datetime="2022-09-27T18:44:50+08:00">2022-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<p>多模态可以理解为不同类型的数据，比如图像、文本、音频等。 多模态学习任务主要包括表征、翻译、对齐、融合、协同学习等。</p>
+<ul>
+<li>表征主要任务是学习如何更好的提取和表示多模态数据的特征信息，以利用多模态数据的互补性。</li>
+<li>翻译主要任务是如何将数据从一种模态转换（映射）到另一种模态。</li>
+<li>对齐主要任务是识别在两种或更多不同模态的(子)元素之间的直接关系。</li>
+<li>融合主要任务是将来自两种或两种以上模态的信息结合起来进行预测。</li>
+<li>协同学习是在不同模态数据、特征和模型之间转移知识。<br></li>
+</ul>
+<p>多模态融合是将来自多种不同模态的信息进行整合，用于分类任务或回归任务。<br />
+这篇文章主要关注图像-文本两种模态衍生出来的任务。（VLP：Vision-Language Pretrain） <span id="more"></span> <br></p>
+<h2 id="多模态融合的优势">多模态融合的优势</h2>
+<ul>
+<li>对于同一任务，能够应用多种模态的数据，可以做出更鲁棒的预测。</li>
+<li>模态之间可能会存在互补的信息。</li>
+<li>当其中一种模态数据缺失时，多模态系统仍然可以运行。</li>
+</ul>
+<p><br></p>
+<h1 id="融合任务的分类">融合任务的分类</h1>
+<h2 id="基于融合时期的分类1">基于融合时期的分类[1]</h2>
+<ul>
+<li><strong>早期融合</strong>(特征阶段)<br> 早期融合方法是在提取了各模态的特征后，立即进行融合，例如最常见的方法是对特征进行简单的连接操作。早期融合方法学习利用了每个模态低水平特征之间的相关性和相互作用，由于只需要单一模型的训练，使得早期融合方法的训练相对更容易些。</li>
+<li><strong>晚期融合</strong>(决策阶段)<br> 晚期融合方法是对每种模态单独训练一个模型，而后采用某种融合机制对所有单独模态模型的结果进行集成。常用的融合机制有平均方法，投票方法，基于信道噪声和信号方差的加权方法，训练融合模型等。由于晚期融合方法是针对不同的模态训练不同的模型，因而可以更好地对每种模态数据进行建模，从而实现更大的灵活性。此外，当存在某个模态数据缺失时，一般不会导致模型难以训练。不过值得注意的是，后期融合方法本质上忽略了模态之间的低水平交互作用。</li>
+<li><strong>混合</strong><br> 混合融合是对以上两种方法的结合</li>
+</ul>
+<h2 id="基于模型架构的分类3">基于模型架构的分类[3]</h2>
+<ul>
+<li><strong>单流方法</strong><br> 与早期融合同。将图像和文本特征进行拼接送入模型中训练。 Visual-Bert</li>
+<li><strong>双流方法</strong><br> 双流方法指的是文本和视觉特征不连接在一起，而是分别发送到两个不同的transformer模块。<br> LXMERT：https://www.cnblogs.com/wangxiaocvpr/p/14184033.html <br><br></li>
+</ul>
+<h1 id="vlp模型的预训练目标2">VLP模型的预训练目标[2]</h1>
+<p>预训练目标对于学习视觉-语言的普遍表示是至关重要的。预训练的目标可以总结为四类:补全、匹配、时序和其他类型。 - <strong>补全：</strong><br> 利用unmasked的元素去重构masked的元素。(可以将文本或者图像中的token给mask) - <strong>匹配</strong><br> 匹配是将视觉和语言统一到一个共享的隐藏空间中，产生普遍的视觉语言表征。 训练数据是图像和文本对，标签是1/0代表匹配/不匹配。 - <strong>时序</strong><br> 时序是通过重新排列混乱的输入序列来学习良好的表示。(视频-文本)<br> 为了更好地模拟视频的时序，VLP模型随机打乱一些输入帧的顺序，然后预测每一帧的实际位置。帧顺序建模在实践中被建模为一个分类任务。 - <strong>其他</strong><br> 其他包括其他预训练的对象，如视觉问题回答和视觉字幕等。 <br><br></p>
+<h1 id="vlp的下游任务">VLP的下游任务</h1>
+<ul>
+<li><p>视觉问答(VQA:Visual Question Answering)<br> 根据图像信息，回答文本的提问。 <img src="https://visualqa.org/static/img/vqa_examples.jpg"></p></li>
+<li><p>视觉推理与作文答题(GQA:Visual Reasoning and Compositional Question Answering)<br> GQA是VQA的升级版，旨在推进自然场景的视觉推理研究。许多GQA的问题涉及多种推理技巧和空间理解，比VQA更具挑战性。GQA数据集确保了数据集的平衡，严格控制不同问题组的答案分布。与传统VQA的单一评价指标(如准确性)相比，GQA包括多维度评价指标:一致性、有效性、可信性。[4]</p></li>
+<li><p>视觉常识推理(VCR:Visual Commonsense Reasoning)<br> 视觉常识推理以多项选择题的形式出现。模型需要根据图像信息选择出最可能符合问题的答案选项。 <img src="https://vitalab.github.io/article/images/VCR/example.png"></p></li>
+<li><p>视觉推理的自然语言(NLVR:Natural Language for Visual Reasoning)<br> NLVR是更广泛的VCR类别的一个子任务，仅限于分类范式。NLVR任务的输入是两张图片和一个文本描述，输出是图片和文本描述的对应关系是否一致(两个标签：true或者false)。<br> <img src="https://raw.githubusercontent.com/lil-lab/nlvr/master/nlvr2/ipynb_data/pairex1.png"></p></li>
+<li><p>根据表达定位图像位置(GRE:Grounding Referring Expressions) 可以应用于机器人根据人的指令精确的执行任务。 <img src="https://www.researchgate.net/profile/Mohit-Shridhar/publication/338349223/figure/fig1/AS:843070555828224@1578015092550/Interactive-visual-grounding-of-referring-expressions-a-Ground-self-referential.ppm"></p></li>
+<li><p>视觉-语言检索(VLR:Vision-Language Retrieval)<br> 视觉-语言检索有以下3种形式： <img src="https://1.bp.blogspot.com/-ArwTM2jx8fI/YJqT5199WsI/AAAAAAAAHls/etcO2dIOeiQCtcqsJnc3t69lYpAr4sGOQCLcBGAsYHQ/s1523/image7.png"></p></li>
+<li><p>视觉字幕(VC:Visual Captioning)<br> VC旨在为给定的视觉(图像或视频)输入生成语义和语法上适当的文本描述。</p></li>
+<li><p>视觉对话(VD:Visual Dialog)<br> 视觉对话要求人工智能代理与人类以自然的对话语言就视觉内容进行有意义的对话。具体地说，给定一个图像、一个对话历史记录和一个关于该图像的后续问题，任务就是回答该问题。 <img src="https://visualdialog.org/static/img/visdial/visdial_task.jpg"></p></li>
+<li><p>多模态机器翻译(MMT:Multi-modal Machine Translation)<br> 直接的文本机器翻译可能存在歧义。为语言匹配上附加的图像信息有助于改善这种情况。 <img src="https://www.statmt.org/wmt18/overview.png"></p></li>
+<li><p>视觉语言导航(VLN:Vision-Language Navigation) VLN多用于机器人导航，旨在让代理通过观测现实世界的场景按照语言指令进行导航。 <img src="https://production-media.paperswithcode.com/tasks/Screenshot_2019-11-28_at_19.13.12_doqUQZb.png"></p></li>
+<li><p>图像匹配 (VE:Visual Entailment) 在VE任务中，图像是前提，文本是假设。其目的是预测文本是否为“蕴涵图像”。有三个标签，蕴涵、中立和矛盾。 <img src="https://production-media.paperswithcode.com/tasks/15afd88a-1912-42f6-a979-b95ab7efdb3d.png"></p></li>
+</ul>
+<h1 id="特征提取">特征提取</h1>
+<p>文本的特征提取主要有2种： - Word2Vec - Transformer</p>
+<p>图像的特征提取主要有3种：</p>
+<ul>
+<li>感兴趣区域 (利用faster R-CNN等)</li>
+<li>特征图 (图像输入CNN网络中得到的特征图)</li>
+<li>patch编码 (Vit文章中的方式)</li>
+</ul>
+<h1 id="文献学习">文献学习</h1>
+<h2 id="visualbert">VisualBERT</h2>
+<h3 id="概述-1"><strong>概述</strong></h3>
+<p><strong>tag：</strong> 第1篇VL <br> VisualBERT使用Faster R-CNN提取的视觉特征，将视觉特征和文本嵌入拼接，然后将拼接起来的特征输入到由BERT初始化的transformer中。</p>
+<h2 id="clipcontrastive-languageimage-pre-training">CLIP(Contrastive Language–Image Pre-training)</h2>
+<p><strong>tag：</strong> 简单高效<br> ### <strong>概述</strong> CLIP可以从自然语言监督中有效地学习视觉概念。CLIP使用了4亿个(图片,文本)对去训练。在不使用带有imagenet原始标签的图像参与训练的前提下(zero-shot)，CLIP直接在imagenet上zero-shot推理能达到resnet50在imagenet上一样的效果。</p>
+<h3 id="引言"><strong>引言</strong></h3>
+<p>问题[5]：<br> - 典型的视觉数据集耗费昂贵，而且视觉任务比较专一; - 标准的视觉模型擅长于一项任务，也只擅长于一项任务，模型迁移适应一项新任务很困难;在基准测试中表现良好的模型在“压力”测试中(风格相差较大的数据集)的表现很差。</p>
+<p>CLIP解决了这些问题，CLIP使用自然语言的监督信号来训练视觉模型，因此不需要手工标注(以前图像有监督数据的生成需要经过一系列步骤，比如Imagenet需要筛选1000个类然后根据这1000个类去下载照片，在去清理数据集，然后再去标注；而CLIP只需要从网上下载图像和文本的配对，而且监督信号是文本，所以不需要转换成0-1000的标签了)；<strong>并且</strong>因为和自然语言处理的结合导致其学出来的视觉特征和我们用语言描述的物体产生了强烈的联系，所以CLIP的迁移能力得到了很大的增强。 <img src="https://i.ibb.co/267YCMD/canvas-2.png"> 在原始的imagenet上，resnet101和CLIP能取得一样的推理成绩。 但随着domain的改变，在imagenet上训练得到的resnet101的表现随着domain迁移的程度而下滑；但是CLIP却依旧稳健。</p>
+<h3 id="架构"><strong>架构</strong></h3>
+<p>训练阶段： 在训练阶段，模型的输入是图像和文本(一段话)的配对，图片经过图像编码器，编码器可以是resnet也可以是ViT。文本通过文本编码器。n张图片和n个句子能够组成<span class="math inline">\(n\times{n}\)</span>的图像文本对。然后通过对比学习的方式去训练(不需要手工的标注)。对角线上的是正样本，其他是负样本。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-a.svg"></p>
+<p>测试阶段<br> 输入一张图片得到图片的特征，再用图像的特征去和类别信息(此处类别需要转换成一句话，因为训练的时候使用的就是一句话)计算余弦相似度，再通过softmax，最高值为图片对应的类别。 <img src="https://openaiassets.blob.core.windows.net/$web/clip/draft/20210104b/overview-b.svg"></p>
+<h1 id="参考">参考</h1>
+<p>[1] 面向深度学习的多模态融合技术研究综述<br> [2] VLP: A Survey on Vision-Language Pre-training<br> [3] Multimodal Pretraining Unmasked: A Meta-Analysis and a Unified Framework of Vision-and-Language BERTs <br> [4] <a target="_blank" rel="noopener" href="https://cs.stanford.edu/people/dorarad/gqa/about.html">GQA数据集</a> [5] <a target="_blank" rel="noopener" href="https://openai.com/blog/clip/#rf2">clip网址</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/" rel="prev" title="高斯混合聚类">
+                  <i class="fa fa-chevron-left"></i> 高斯混合聚类
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。">
+    <meta name="description" content="概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。属于生成模型。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高斯混合聚类">
 <meta property="og:url" content="http://example.com/2022/09/23/%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E8%81%9A%E7%B1%BB/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。">
+<meta property="og:description" content="概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。属于生成模型。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-23T07:03:20.000Z">
-<meta property="article:modified_time" content="2022-09-24T08:40:03.712Z">
+<meta property="article:modified_time" content="2022-09-25T04:29:42.225Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 
@@ -131,13 +131,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -223,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-24 16:40:03" itemprop="dateModified" datetime="2022-09-24T16:40:03+08:00">2022-09-24</time>
+      <time title="Modified: 2022-09-25 12:29:42" itemprop="dateModified" datetime="2022-09-25T12:29:42+08:00">2022-09-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,7 +250,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="概述">概述</h2>
-<p>高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。<br><span id="more"></span> 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：</p>
+<p>高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。属于生成模型。<br><span id="more"></span> 基本思想是：任意形态都可以用多个高斯函数来加权求和得到，只不过这些高斯函数有不同的维度和不同的中心，用数学公式表达如下：</p>
 <p><span class="math display">\[ Pr(x) = \sum_{k=1}^{K}\pi_{k}N(x;\mu_{k},\sum\nolimits_{k}) \]</span></p>
 <p>其中，<span class="math inline">\(\pi_k\)</span> 是权重因子：<span class="math inline">\(N(x;\mu_k,\sum\nolimits_k),k=1,2,...,K\)</span>，表示任意一个单高斯分布，叫做该模型的一个component（成分）。<span class="math inline">\(K\)</span>需要先确定好，只要<span class="math inline">\(K\)</span>足够大，该模型就可以用来逼近任意连续的概率密度分布，即<span class="math inline">\(GMM\)</span>可以模仿出特征空间中的任意一个样本点。</p>
 <h2 id="高斯混合模型原理">高斯混合模型原理</h2>
@@ -280,16 +280,9 @@
 <li>(1)建立含有未知参数<span class="math inline">\(\theta\)</span>的分布<span class="math inline">\(p(x_i,\theta)\)</span>的对数似然函数</li>
 </ul>
 <p><span class="math display">\[ L(\theta)=\sum_{i=1}^{M}log\space{p(x_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}log\sum_{z_i}{p(x_i,z_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}\{log\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}\cdot{q(z_i)}]\}\]</span></p>
-<table style="width:10%;">
-<colgroup>
-<col style="width: 9%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><strong>说明：</strong> 从第一步到第二步运用了概率的性质，即将<span class="math inline">\(p(x_i,\theta)\)</span>展开成关于<span class="math inline">\(z_i\)</span>的完全分布；从第二步到第三步相当于引入一个新的随机变量<span class="math inline">\(Z\)</span>,其对应的概率分布为<span class="math inline">\(q(z_i)\)</span>,这个分布目前还是未知的，后面可以推导出其就是随机变量<span class="math inline">\(X\)</span>的后验概率<span class="math inline">\(p(z_i|x_i;\theta)\)</span></td>
-</tr>
-</tbody>
-</table>
+<hr />
+<p><strong>说明：</strong> 从第一步到第二步运用了概率的性质，即将<span class="math inline">\(p(x_i,\theta)\)</span>展开成关于<span class="math inline">\(z_i\)</span>的完全分布；从第二步到第三步相当于引入一个新的随机变量<span class="math inline">\(Z\)</span>,其对应的概率分布为<span class="math inline">\(q(z_i)\)</span>,这个分布目前还是未知的，后面可以推导出其就是随机变量<span class="math inline">\(X\)</span>的后验概率<span class="math inline">\(p(z_i|x_i;\theta)\)</span></p>
+<hr />
 <ul>
 <li>(2)"E"步和“M”步</li>
 </ul>
@@ -305,9 +298,20 @@
 </ul>
 <p>第1步：随机选取初始化值<span class="math inline">\(\theta^0\)</span> 第2步：不断迭代以下两步。 E步：对于每一个<span class="math inline">\(i\)</span>,计算隐变量的后验概率<span class="math inline">\(q(z_i)=p(z_i|x_i;\theta)\)</span> M步：使用任意一种优化算法，（如梯度下降法）计算下式： <span class="math display">\[\theta=arg\space{max\sum_{i=1}^{M}\sum_{z_i}[q(z_i)log\frac{p(x_i,z_i;\theta)}{q(z_i)}]}\]</span></p>
 <h3 id="高斯混合聚类参数的em算法学习过程"><strong>高斯混合聚类参数的EM算法学习过程</strong></h3>
-<p>利用EM算法估计高斯混合聚类参数的步骤如下。<br> 第1步：猜测有几个类别，既有几个高斯分布，假设为<span class="math inline">\(K\)</span>。<br> 第2步：针对每一个高斯分布，随机给其均值和方差进行赋值。<br> 第3步：针对每一个样本，计算其在各个高斯分布下的概率。</p>
+<p>利用EM算法估计高斯混合聚类参数的步骤如下。<br> 第1步：猜测有几个类别，既有几个高斯分布，假设为<span class="math inline">\(K\)</span>。<br> 第2步：针对每一个高斯分布，随机给其均值和方差进行赋值。<br> 第3步(E步)：针对每一个样本，计算其在各个高斯分布下的概率。</p>
 <p><span class="math display">\[p(x_i,k)=\frac{\pi_kN(x_i;\mu_k,\sum\nolimits_k)}{\sum\nolimits_{j=1}^K\pi_kN(x_i;\mu_k,\sum\nolimits_k)},\qquad k=1,2,...,K\]</span></p>
-<p>第4步：针对每一个高斯分布，每一个样本对该高斯分布的贡献可由其下的概率<span class="math inline">\(p(x_i,k)\)</span>表示，概率越大，表示贡献越大，反之亦然。以样本对该高斯分布的贡献作为权重来计算加权的均值和方差，用其替代原来的均值和方差。<br> 第5步：重复第3步和第4步，直到每一个高斯分布的均值和方差收敛。</p>
+<table style="width:10%;">
+<colgroup>
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>说明:</strong> <span class="math inline">\(p(x_i,k)\)</span>就是<span class="math inline">\(p(z_i|x_i;\theta)\)</span>,也就是后验概率(样本已知，求所属类别概率)；<span class="math inline">\(N(x_i;\mu_k,\sum\nolimits_k)\)</span>是<span class="math inline">\(p(x_i|z_i)\)</span>,也就是条件概率(已知类别，求样本的概率)，<span class="math inline">\(\pi_k\)</span>就是先验概率。(这其实就是高斯型贝叶斯定理)</td>
+</tr>
+</tbody>
+</table>
+<p>第4步(M步)：针对每一个高斯分布，每一个样本对该高斯分布的贡献可由其下的概率<span class="math inline">\(p(x_i,k)\)</span>表示，概率越大，表示贡献越大，反之亦然。以样本对该高斯分布的贡献作为权重来计算加权的均值和方差，用其替代原来的均值和方差。<br></p>
+<p><span class="math display">\[\mu_k=\frac{\sum\nolimits_i^Mp(x_i,k)x_i}{\sum\nolimits_i^Mp(x_i,k)}\]</span> <span class="math display">\[\sum\nolimits_k=\frac{\sum\nolimits_i^Mp(x_i,k)(x_i-\mu_k)(x_i-\mu_k)^T}{\sum\nolimits_i^Mp(x_i,k)}\]</span> <span class="math display">\[\pi_k=\frac{\sum\nolimits_{i=1}^Mp(x_i,k)}{M}\]</span> <span class="math display">\[k=1,2,..,K\]</span> 第5步：重复第3步和第4步，直到每一个高斯分布的均值和方差收敛。</p>
 <h2 id="算法优缺点">算法优缺点</h2>
 <h3 id="优点"><strong>优点</strong></h3>
 <ul>
@@ -322,7 +326,7 @@
 </ul>
 <hr />
 <h2 id="参考">参考</h2>
-<p>[1]《机器学习基础》胡欢武</p>
+<p>[1]《机器学习基础》胡欢武 [2] https://blog.csdn.net/jojozhangju/article/details/19182013</p>
 
     </div>
 
@@ -334,6 +338,15 @@
 
         
 
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/" rel="next" title="多模态学习">
+                  多模态学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
