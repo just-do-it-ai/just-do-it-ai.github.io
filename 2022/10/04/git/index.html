@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://www.runoob.com/manual/git-guide/img/trees.png">
 <meta property="og:image" content="https://git-scm.com/book/en/v2/images/lifecycle.png">
 <meta property="article:published_time" content="2022-10-04T05:46:38.000Z">
-<meta property="article:modified_time" content="2022-10-04T12:38:27.603Z">
+<meta property="article:modified_time" content="2022-10-04T12:43:23.719Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg">
@@ -221,7 +221,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-04 13:46:38 / Modified: 20:38:27" itemprop="dateCreated datePublished" datetime="2022-10-04T13:46:38+08:00">2022-10-04</time>
+      <time title="Created: 2022-10-04 13:46:38 / Modified: 20:43:23" itemprop="dateCreated datePublished" datetime="2022-10-04T13:46:38+08:00">2022-10-04</time>
     </span>
 
   
@@ -241,11 +241,26 @@
 <h1 id="git工作流程">git工作流程</h1>
 <p>git常用的6个指令实现工作区、暂存区、本地仓库、远程仓库之间的交互。 <img src="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg"></p>
 <ul>
-<li>工作区(workspace) &gt; 本地工作目录</li>
-<li><a target="_blank" rel="noopener" href="https://taoshu.in/git/git-internal.html">暂存区</a>(staging area) &gt; 暂存区类似于缓存，保存临时的改动。暂存区能提高文件查找速度。一般存放在 .git 目录下的 index 文件（.git/index）中</li>
-<li>本地仓库(local repository) &gt; 存储最新版本。<br> <a target="_blank" rel="noopener" href="https://www.runoob.com/manual/git-guide/">广义上的仓库</a>由git维护的三棵“树”组成，包括工作区，暂存区和head： <img src="https://www.runoob.com/manual/git-guide/img/trees.png" alt="仓库组成" /></li>
-<li>远程仓库(remote repository) &gt; 远端服务器上的仓库，如github，gitee。</li>
+<li>工作区(workspace)</li>
 </ul>
+<blockquote>
+<p>本地工作目录</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://taoshu.in/git/git-internal.html">暂存区</a>(staging area)</li>
+</ul>
+<blockquote>
+<p>暂存区类似于缓存，保存临时的改动。暂存区能提高文件查找速度。一般存放在 .git 目录下的 index 文件（.git/index）中</p>
+</blockquote>
+<ul>
+<li>本地仓库(local repository)</li>
+</ul>
+<blockquote>
+<p>存储最新版本。<br> <a target="_blank" rel="noopener" href="https://www.runoob.com/manual/git-guide/">广义上的仓库</a>由git维护的三棵“树”组成，包括工作区，暂存区和head： <img src="https://www.runoob.com/manual/git-guide/img/trees.png" alt="仓库组成" /> - 远程仓库(remote repository)</p>
+</blockquote>
+<blockquote>
+<p>远端服务器上的仓库，如github，gitee。</p>
+</blockquote>
 <h2 id="文件的状态">文件的状态</h2>
 <p>工作目录下的每一个文件都不外乎这两种状态：<strong>已跟踪</strong>或<strong>未跟踪</strong>。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后， 它们的状态可能是<strong>未修改</strong>，<strong>已修改</strong>或<strong>已放入暂存区</strong>。(已跟踪又可以分为上述3种状态) <img src="https://git-scm.com/book/en/v2/images/lifecycle.png" alt="文件状态示意图" /></p>
 <h1 id="分支">分支</h1>
