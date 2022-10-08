@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言[1] Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
+    <meta name="description" content="前言 Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CBOW">
 <meta property="og:url" content="http://example.com/2022/10/06/word2vec/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="前言[1] Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
+<meta property="og:description" content="前言 Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png">
 <meta property="og:image" content="https://images2017.cnblogs.com/blog/1042406/201707/1042406-20170727105326843-18935623.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430173826772.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430180824018.png">
 <meta property="article:published_time" content="2022-10-06T03:50:59.000Z">
-<meta property="article:modified_time" content="2022-10-06T12:48:16.676Z">
+<meta property="article:modified_time" content="2022-10-08T11:16:06.258Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png">
@@ -124,7 +124,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%801"><span class="nav-number">1.</span> <span class="nav-text">前言[1]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E6%96%B9%E6%B3%95%E7%9A%84cbow%E6%A8%A1%E5%9E%8Be"><span class="nav-number">2.</span> <span class="nav-text">基于Hierarchical Softmax方法的CBOW模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%9E%84%E5%BB%BAcbow%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">使用传统神经网络构建CBOW模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8A%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">在传统神经网络模型上的优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B4%9F%E9%87%87%E6%A0%B7%E7%9A%84skip-gram%E6%A8%A1%E5%9E%8Ba"><span class="nav-number">3.</span> <span class="nav-text">基于负采样的Skip-gram模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#skip-gram%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">Skip-gram网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E9%87%87%E6%A0%B7%E8%A7%A3%E5%86%B3%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">负采样解决大规模分类问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E6%96%B9%E6%B3%95%E7%9A%84cbow%E6%A8%A1%E5%9E%8Be"><span class="nav-number">2.</span> <span class="nav-text">基于Hierarchical Softmax方法的CBOW模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%9E%84%E5%BB%BAcbow%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">使用传统神经网络构建CBOW模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8A%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">在传统神经网络模型上的优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B4%9F%E9%87%87%E6%A0%B7%E7%9A%84skip-gram%E6%A8%A1%E5%9E%8Ba"><span class="nav-number">3.</span> <span class="nav-text">基于负采样的Skip-gram模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#skip-gram%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">Skip-gram网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E9%87%87%E6%A0%B7%E8%A7%A3%E5%86%B3%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">负采样解决大规模分类问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -223,9 +223,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-06 11:50:59 / Modified: 20:48:16" itemprop="dateCreated datePublished" datetime="2022-10-06T11:50:59+08:00">2022-10-06</time>
+      <time title="Created: 2022-10-06 11:50:59" itemprop="dateCreated datePublished" datetime="2022-10-06T11:50:59+08:00">2022-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-08 19:16:06" itemprop="dateModified" datetime="2022-10-08T19:16:06+08:00">2022-10-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,9 +253,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="前言1">前言[1]</h1>
+        <h1 id="前言">前言</h1>
 <p>Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。<span id="more"></span></p>
-<p>Word2Vec模型包括2种：CBOW(Continuous Bag-of-Word Model)模型和Skip-Gram(Continuous Skip-Gram Model)模型。<br></p>
+<p>Word2Vec模型包括2种：CBOW(Continuous Bag-of-Word Model)模型和Skip-Gram(Continuous Skip-Gram Model)模型[1]。<br></p>
 <pre><code>两种模型都是浅层的神经网络。CBOW和Skip-Gram在原论文中只有输入层，1层隐藏层和输出层，据说是由于当时硬件不行需要训练时间长选择了浅层，发现效果还不错，但是现在硬件条件不是问题，可以使用更深的网络去训练。输入层和隐藏层之间的权重矩阵是训练得到的词向量，也有将隐藏层和输出层之间的权重作为学习到的词向量。</code></pre>
 <p>CBOW模型的目标是在给定某个词<span class="math inline">\(W_t\)</span>的上下文的情况下，需要预测词<span class="math inline">\(W_t\)</span>自身；<br> Skip-Gram模型正好相反，它是给定某个词<span class="math inline">\(W_t\)</span>的情况下，需要预测该词的上下文。 <img src="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png" /></p>
 <p>CBOW和Skip-Gram有2种训练方法，一是层序softmax(Hierarchical softmax)；二是负采样(Negative Sampling)。</p>
