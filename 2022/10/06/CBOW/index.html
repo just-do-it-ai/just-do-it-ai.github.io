@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言[1] Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CBOW">
+<meta property="og:url" content="http://example.com/2022/10/06/CBOW/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="前言[1] Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png">
+<meta property="og:image" content="https://images2017.cnblogs.com/blog/1042406/201707/1042406-20170727105326843-18935623.png">
+<meta property="og:image" content="https://i.imgur.com/WukfJ8F.png">
+<meta property="og:image" content="https://images2017.cnblogs.com/blog/1042406/201707/1042406-20170727105752968-819608237.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430172831782.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430173826772.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430180824018.png">
+<meta property="article:published_time" content="2022-10-06T03:50:59.000Z">
+<meta property="article:modified_time" content="2022-10-06T12:48:16.676Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png">
+
+
+<link rel="canonical" href="http://example.com/2022/10/06/CBOW/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/06/CBOW/","path":"2022/10/06/CBOW/","title":"CBOW"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CBOW | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%801"><span class="nav-number">1.</span> <span class="nav-text">前言[1]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E6%96%B9%E6%B3%95%E7%9A%84cbow%E6%A8%A1%E5%9E%8Be"><span class="nav-number">2.</span> <span class="nav-text">基于Hierarchical Softmax方法的CBOW模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%9E%84%E5%BB%BAcbow%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">使用传统神经网络构建CBOW模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%BC%A0%E7%BB%9F%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8A%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">在传统神经网络模型上的优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B4%9F%E9%87%87%E6%A0%B7%E7%9A%84skip-gram%E6%A8%A1%E5%9E%8Ba"><span class="nav-number">3.</span> <span class="nav-text">基于负采样的Skip-gram模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#skip-gram%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">Skip-gram网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E9%87%87%E6%A0%B7%E8%A7%A3%E5%86%B3%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">负采样解决大规模分类问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/06/CBOW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CBOW | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CBOW
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-06 11:50:59 / Modified: 20:48:16" itemprop="dateCreated datePublished" datetime="2022-10-06T11:50:59+08:00">2022-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Word2Vec%E8%AF%8D%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">Word2Vec词向量模型</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言1">前言[1]</h1>
+<p>Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。<span id="more"></span></p>
+<p>Word2Vec模型包括2种：CBOW(Continuous Bag-of-Word Model)模型和Skip-Gram(Continuous Skip-Gram Model)模型。<br></p>
+<pre><code>两种模型都是浅层的神经网络。CBOW和Skip-Gram在原论文中只有输入层，1层隐藏层和输出层，据说是由于当时硬件不行需要训练时间长选择了浅层，发现效果还不错，但是现在硬件条件不是问题，可以使用更深的网络去训练。输入层和隐藏层之间的权重矩阵是训练得到的词向量，也有将隐藏层和输出层之间的权重作为学习到的词向量。</code></pre>
+<p>CBOW模型的目标是在给定某个词<span class="math inline">\(W_t\)</span>的上下文的情况下，需要预测词<span class="math inline">\(W_t\)</span>自身；<br> Skip-Gram模型正好相反，它是给定某个词<span class="math inline">\(W_t\)</span>的情况下，需要预测该词的上下文。 <img src="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png" /></p>
+<p>CBOW和Skip-Gram有2种训练方法，一是层序softmax(Hierarchical softmax)；二是负采样(Negative Sampling)。</p>
+<p>一般来说，CBOW比Skip-garm训练快且更加稳定一些。然而，Skip-garm不会刻意地回避生僻词（即出现频率比较低的词），比CBOW能够更好地处理生僻词。</p>
+<p>CBOW和Skip-Gram用于快速训练单词嵌入，将训练好的词向量作为更复杂模型的输入能够帮助提升几个百分点的性能。</p>
+<h1 id="基于hierarchical-softmax方法的cbow模型e"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/7243513.html">基于Hierarchical Softmax方法的CBOW模型</a></h1>
+<h2 id="使用传统神经网络构建cbow模型">使用传统神经网络构建CBOW模型</h2>
+<p>CBOW可以直接使用神经网络构造，构造图如下： <img src="https://images2017.cnblogs.com/blog/1042406/201707/1042406-20170727105326843-18935623.png" /></p>
+<p>V是词汇表的大小,N是隐藏层神经元个数。<br> 最大的问题在于从隐藏层到输出的softmax层的计算量很大，因为要计算所有词的softmax概率，再去找概率最大的值。<br> 因为目前硬件的支持，许多工程人员为方便起见，直接使用传统神经网络去实现CBOW模型。<br></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/FraLotito/pytorch-continuous-bag-of-words/blob/99068bcbf36a37e6d2b8ecdcd0a5d69aea601ef0/cbow.py">使用传统神经网络实现CBOW模型</a><br> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_22210253/article/details/85229988">NLLLoss的解释</a></p>
+<h2 id="在传统神经网络模型上的优化">在传统神经网络模型上的优化</h2>
+<p><strong>模型计算量从<span class="math inline">\(V\)</span>变成了<span class="math inline">\(log_{2}V\)</span></strong></p>
+<p><img src="https://i.imgur.com/WukfJ8F.png" /></p>
+<p>word2vec对传统神经网络构建的模型做了以下改进：</p>
+<ol type="1">
+<li><p>对于从输入层到隐藏层的映射，没有采取神经网络的线性变换加激活函数的方法，而是采用简单的对所有输入词向量求和并取平均的方法。比如输入的是三个4维词向量：(1,2,3,4),(9,6,11,8),(5,10,7,12),那么我们word2vec映射后的词向量就是(5,6,7,8)。从多个词向量变成了一个词向量。</p></li>
+<li><p>隐藏层到输出层之间，为了避免要计算所有词的softmax概率，word2vec采取了霍夫曼树来代替从隐藏层到输出softmax层的映射。softmax概率计算只需要沿着树形结构进行就可以了。<br></p></li>
+</ol>
+<p><img src="https://images2017.cnblogs.com/blog/1042406/201707/1042406-20170727105752968-819608237.png" /></p>
+<p>根节点的词向量对应输入层到隐藏层映射后的词向量；根节点与叶子节点之间的节点就是隐藏层的神经元；叶子节点则对应着softmax输出层的神经元。叶子节点的个数就是词汇表的大小。在霍夫曼树中，隐藏层到输出层的softmax映射不是一下子完成的，而是沿着霍夫曼树一步步完成的，因此这种softmax取名为"Hierarchical Softmax"。</p>
+<p>如何“沿着霍夫曼树一步步完成”呢？在word2vec中，我们采用了二元逻辑回归的方法，即规定沿着左子树走，那么就是负类(霍夫曼树编码1)，沿着右子树走，那么就是正类(霍夫曼树编码0)。判别正类和负类的方法是使用sigmoid函数<span class="math inline">\(\sigma\)</span>。</p>
+<blockquote>
+<p>假设有一批文本语料，我们首先可以对其进行分词，分词后统计语料中各个词出现次数，然后根据各个词在整个语料中的频次生成一棵哈夫曼树并对词进行哈夫曼编码。准备好后就可以构造CBOW模型了。因为根据频率进行编码，高频词编码会靠近树根，这样高频词只需更少的时间会被找到，使得梯度回传得到优化。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://seed9d.github.io/Pytorch-Implement-CBOW-with-Hierarchical-Softmax/">使用Hierarchical Softmax实现CBOW模型</a><br></p>
+<blockquote>
+<p>注意：还可以通过负采样的方式对CBOW进行优化，本文不进行展开，而是在“基于负采样的Skip-gram模型”章节叙述了采用负采样方法的Skip-gram的优化。</p>
+</blockquote>
+<h1 id="基于负采样的skip-gram模型a"><a target="_blank" rel="noopener" href="https://paddlepedia.readthedocs.io/en/latest/tutorials/sequence_model/word_representation/word2vec.html">基于负采样的Skip-gram模型</a></h1>
+<p>Skip-gram是通过<strong>中心词来预测上下文</strong>。我们以Pineapples are spiked and yellow为例进行讲解。如图，中心词是spiked，上下文是Pineapples are and yellow，在Skip-gram中，上下文是我们要预测的词，因此这些词也叫<strong>目标词</strong>。 <img src="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430172831782.png" /></p>
+<h2 id="skip-gram网络结构">Skip-gram网络结构</h2>
+<p>Word2Vec是建模了一个单词预测的任务，通过这个任务来学习词向量。Skip-gram是一种以中心词预测上下文的方式进行的，其结构如下：</p>
+<p><img src="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430173826772.png" /></p>
+<p>Skip-gram的网络结构共包含三层：输入层，隐藏层和输出层。它的处理步骤是这样的：</p>
+<ol type="1">
+<li><p>输入层接收shape为[1,V]的one-hot向量x，其中V代表词表中单词的数量，这个one-hot向量就是上边提到的中心词。</p></li>
+<li><p>隐藏层包含一个shape为[V,N]的参数矩阵W1，其中这个N代表词向量的维度，<strong>W1就是word embedding矩阵，即我们要学习的词向量</strong>。将输入的one-hot向量x与W1相乘，便可得到一个shape为[1,N]的向量，即该输入单词对应的词向量e。</p></li>
+<li><p>输出层包含一个shape为[N,V]的参数矩阵W2，将隐藏层输出的e与W2相乘，便可以得到shape为[1,V]的向量r，内部的数值分别代表每个候选词的打分，使用softmax函数，对这些打分进行归一化，即得到中心词的预测各个单词的概率。</p></li>
+</ol>
+<p>这是一种比较理想的实现方式，但是这里有<strong>两个问题</strong>：</p>
+<ol type="1">
+<li><p>这个输入向量是个one-hot编码的方式，只有一个元素为1，其他全是0，是个极其稀疏的向量，假设它第2个位置为1，它和word embedding相乘，便可获得word embedding矩阵的第二行的数据。那么我们知道这个规律，直接通过访存的方式直接获取就可以了，不需要进行矩阵相乘。</p></li>
+<li><p>在获取了输入单词对应的词向量e后，它是一个[1,N]向量。接下来，会使用这个向量和另外一个大的矩阵W2进行相乘，最终会获得一个1*V的向量，然后对这个向量进行softmax，可以看到这个向量具有词表的长度，对这么长的向量进行softmax本身也是一个极其消耗资源的事情。</p></li>
+</ol>
+<p>第1个问题解决起来比较简单，我们主要来看第2个问题，那怎么解决呢？直观的想法是我们不要去生成这么多的类别，所以采用了一个负采样的策略，将海量分类转化成了二分类，来缓解这个问题，下面我们来看看它具体是怎么做的。</p>
+<h2 id="负采样解决大规模分类问题">负采样解决大规模分类问题</h2>
+<p><img src="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430180824018.png" /></p>
+<p>还是以Pineapples are spiked and yellow为例进行讲解，如上图所示，其中中心词是spiked和上下文词是正样本Pineapples are and yellow，这里这个正样本代表该词是中心词的上下文。</p>
+<p>以正样本单词Pineapples为例，之前的做法是在使用softmax学习时，需要最大化Pineapples的推理概率，同时最小化其他词表中词的推理概率。之所以计算缓慢，是因为需要对词表中的所有词都计算一遍。然而我们还可以使用另一种方法，就是随机从词表中选择几个代表词，通过最小化这几个代表词的概率，去近似最小化整体的预测概率。</p>
+<p>例如，先指定一个中心词（spiked）和一个目标词正样本（Pineapples），再随机在词表中采样几个目标词负样本（如”dog，house”等）。</p>
+<p>有了这些正负样本，我们的skip-gram模型就变成了一个二分类任务。对于目标词正样本，我们需要最大化它的预测概率；对于目标词负样本，我们需要最小化它的预测概率。通过这种方式，我们就可以完成计算加速。这个做法就是负采样。</p>
+<p>我们再回到上图，看一看整体的训练流程是怎么样的。上图中相当于有两个词向量矩阵：黄色的和灰色的，他们的shape都是一样的。整体的流程大概是这样的。</p>
+<ol type="1">
+<li><p>获取中心词spiked的正负样本（正负样本是目标词），这里一般会设定个固定的窗口，比如中心词前后3个词算是中心词的上下文(即正样本)；</p></li>
+<li><p>获取对应词的词向量，其中中心词从黄色的向量矩阵中获取词向量，目标词从灰色的向量矩阵中获取词向量。</p></li>
+<li><p>将中心词和目标词的词向量进行点积并经过sigmoid函数，我们知道sigmoid是可以用于2分类的函数，通过这种方式来预测中心词和目标词是否具有上下文关系。</p></li>
+<li><p>将预测的结果和标签使用交叉熵计算损失值，并计算梯度进行反向迭代，优化参数。</p></li>
+</ol>
+<p>经过这个训练的方式，我们就可以训练出我们想要的词向量，但上图中包含两个词向量矩阵（黄色的和灰色的），一般是将中心词对应的词向量矩阵(黄色的)作为正式训练出的词向量。</p>
+<h1 id="参考">参考</h1>
+<p>[1] 机器学习基础 胡欢武</p>
+<p>[2] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=C4X0Cb5_FSo">word2vec视频</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/05/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="prev" title="进程管理">
+                  <i class="fa fa-chevron-left"></i> 进程管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/06/Skip-Gram/" rel="next" title="Skip-Gram">
+                  Skip-Gram <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
