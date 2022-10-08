@@ -20,17 +20,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。 原理推导 假设有\(M\)个样本\(x_1,x_2,...x_M\)，每个样本\(x_i\)含有\(N\)个特征，即\(x_i&#x3D;(x_i^{(1)},x_i^{(2)},...,x_i^{(N)})\)。">
+    <meta name="description" content="概述 主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="主成分分析">
 <meta property="og:url" content="http://example.com/2022/10/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="概述 主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。 原理推导 假设有\(M\)个样本\(x_1,x_2,...x_M\)，每个样本\(x_i\)含有\(N\)个特征，即\(x_i&#x3D;(x_i^{(1)},x_i^{(2)},...,x_i^{(N)})\)。">
+<meta property="og:description" content="概述 主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://iq.opengenus.org/content/images/2020/03/opengenus_logo.png">
 <meta property="og:image" content="https://iq.opengenus.org/content/images/2020/03/opengenus_logo_pca32.png">
 <meta property="article:published_time" content="2022-10-08T01:13:25.000Z">
-<meta property="article:modified_time" content="2022-10-08T11:05:54.627Z">
+<meta property="article:modified_time" content="2022-10-08T11:09:48.405Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://iq.opengenus.org/content/images/2020/03/opengenus_logo.png">
@@ -220,7 +220,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-08 09:13:25 / Modified: 19:05:54" itemprop="dateCreated datePublished" datetime="2022-10-08T09:13:25+08:00">2022-10-08</time>
+      <time title="Created: 2022-10-08 09:13:25 / Modified: 19:09:48" itemprop="dateCreated datePublished" datetime="2022-10-08T09:13:25+08:00">2022-10-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,7 +243,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="概述">概述</h1>
-<p>主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。</p>
+<p>主成分分析是一种无监督降维的方式，其基本思想是：找出原始数据里最主要的方面来代替原始数据，使得在缺少部分原始信息的基础上极大地降低原始数据的维度。具体就是将方差最大方向作为其主成分。<span id="more"></span></p>
 <h1 id="原理推导">原理推导</h1>
 <p>假设有<span class="math inline">\(M\)</span>个样本<span class="math inline">\(x_1,x_2,...x_M\)</span>，每个样本<span class="math inline">\(x_i\)</span>含有<span class="math inline">\(N\)</span>个特征，即<span class="math inline">\(x_i=(x_i^{(1)},x_i^{(2)},...,x_i^{(N)})\)</span>。经过降维后特征变为<span class="math inline">\(N^{&#39;}\)</span>，记降维后的样本为<span class="math inline">\(z_i\)</span>。也就是通过坐标转换矩阵将原始样本数据<span class="math inline">\(x_i\)</span>变成<span class="math inline">\(z_i\)</span>，用数学表示如下： <span class="math display">\[x_i=Wz_i\]</span> &gt; 坐标变换矩阵<span class="math inline">\(W={w_1,w_2,...,w_{N^{&#39;}}}\)</span>中要满足正交性质，<span class="math inline">\(||w_s||=1,w^T_s\dot{w_t}=0,s\neq{t}\)</span>，则矩阵<span class="math inline">\(WW^T=I\)</span>。因为<span class="math inline">\(WW^T=I\)</span>，所以<span class="math inline">\(z_i = W^Tx_i\)</span>成立。</p>
 <p>我们的目标是使<span class="math inline">\(Wz_i\)</span>和<span class="math inline">\(x_i\)</span>的距离最小化，也就是： <span class="math display">\[min \sum^M_{i=1}||Wz_i-x_i||^2_2\]</span> 先计算<span class="math inline">\(min \sum^M_{i=1}||Wz_i-x_i||^2_2\)</span>，将平方展开并化简得： <span class="math display">\[\sum^M_{i=1}[x_i^Tx_i-z_i^Tz_i]\]</span> 将<span class="math inline">\(z_i = W^Tx_i\)</span>代入消去未知的<span class="math inline">\(z_i\)</span>： <span class="math display">\[\sum^M_{i=1}[x_i^Tx_i-(W^Tx_i)^T(W^Tx_i)]\]</span></p>
