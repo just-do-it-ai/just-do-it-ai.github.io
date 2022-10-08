@@ -28,7 +28,7 @@
 <meta property="og:description" content="概述 高斯混合模型是k个服从高斯分布的成分混合而成的一种概率模型。属于生成模型。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-23T07:03:20.000Z">
-<meta property="article:modified_time" content="2022-09-25T04:29:42.225Z">
+<meta property="article:modified_time" content="2022-10-08T11:21:01.376Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 
@@ -223,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-25 12:29:42" itemprop="dateModified" datetime="2022-09-25T12:29:42+08:00">2022-09-25</time>
+      <time title="Modified: 2022-10-08 19:21:01" itemprop="dateModified" datetime="2022-10-08T19:21:01+08:00">2022-10-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -280,9 +280,16 @@
 <li>(1)建立含有未知参数<span class="math inline">\(\theta\)</span>的分布<span class="math inline">\(p(x_i,\theta)\)</span>的对数似然函数</li>
 </ul>
 <p><span class="math display">\[ L(\theta)=\sum_{i=1}^{M}log\space{p(x_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}log\sum_{z_i}{p(x_i,z_i;\theta)}\]</span> <span class="math display">\[=\sum_{i=1}^{M}\{log\sum_{z_i}[\frac{p(x_i,z_i;\theta)}{q(z_i)}\cdot{q(z_i)}]\}\]</span></p>
-<hr />
-<p><strong>说明：</strong> 从第一步到第二步运用了概率的性质，即将<span class="math inline">\(p(x_i,\theta)\)</span>展开成关于<span class="math inline">\(z_i\)</span>的完全分布；从第二步到第三步相当于引入一个新的随机变量<span class="math inline">\(Z\)</span>,其对应的概率分布为<span class="math inline">\(q(z_i)\)</span>,这个分布目前还是未知的，后面可以推导出其就是随机变量<span class="math inline">\(X\)</span>的后验概率<span class="math inline">\(p(z_i|x_i;\theta)\)</span></p>
-<hr />
+<table style="width:10%;">
+<colgroup>
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>说明：</strong> 从第一步到第二步运用了概率的性质，即将<span class="math inline">\(p(x_i,\theta)\)</span>展开成关于<span class="math inline">\(z_i\)</span>的完全分布；从第二步到第三步相当于引入一个新的随机变量<span class="math inline">\(Z\)</span>,其对应的概率分布为<span class="math inline">\(q(z_i)\)</span>,这个分布目前还是未知的，后面可以推导出其就是随机变量<span class="math inline">\(X\)</span>的后验概率<span class="math inline">\(p(z_i|x_i;\theta)\)</span></td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>(2)"E"步和“M”步</li>
 </ul>
