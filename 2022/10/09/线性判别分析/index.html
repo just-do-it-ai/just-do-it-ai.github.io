@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 LDA是一种有监督的降维方法，其核心思想是：投影后类内方差最小，类间方差最大。 对于二分类问题 假设我们的数据集\(D&#x3D;\{(x_1,y_1), (x_2,y_2), ...,((x_m,y_m))\}\),其中任意样本\(x_i\)为n维列向量。\(y_i \in \{0,1,..,k\}\)，我们定义\(N_j\)为第\(j\)类样本的个数，\(X_j\)为第\(j\)类样本的集合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性判别分析">
+<meta property="og:url" content="http://example.com/2022/10/09/%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 LDA是一种有监督的降维方法，其核心思想是：投影后类内方差最小，类间方差最大。 对于二分类问题 假设我们的数据集\(D&#x3D;\{(x_1,y_1), (x_2,y_2), ...,((x_m,y_m))\}\),其中任意样本\(x_i\)为n维列向量。\(y_i \in \{0,1,..,k\}\)，我们定义\(N_j\)为第\(j\)类样本的个数，\(X_j\)为第\(j\)类样本的集合">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-09T05:05:48.000Z">
+<meta property="article:modified_time" content="2022-10-09T07:39:02.609Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/10/09/%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/09/%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/","path":"2022/10/09/线性判别分析/","title":"线性判别分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>线性判别分析 | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">对于二分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">对于多分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">LDA过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.</span> <span class="nav-text">LDA的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/09/%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="线性判别分析 | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线性判别分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-10-09 13:05:48 / Modified: 15:39:02" itemprop="dateCreated datePublished" datetime="2022-10-09T13:05:48+08:00">2022-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%99%8D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">降维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<p>LDA是一种有监督的降维方法，其核心思想是：投影后类内方差最小，类间方差最大。</p>
+<h1 id="对于二分类问题">对于二分类问题</h1>
+<p>假设我们的数据集<span class="math inline">\(D=\{(x_1,y_1), (x_2,y_2), ...,((x_m,y_m))\}\)</span>,其中任意样本<span class="math inline">\(x_i\)</span>为n维列向量。<span class="math inline">\(y_i \in \{0,1,..,k\}\)</span>，我们定义<span class="math inline">\(N_j\)</span>为第<span class="math inline">\(j\)</span>类样本的个数，<span class="math inline">\(X_j\)</span>为第<span class="math inline">\(j\)</span>类样本的集合，<span class="math inline">\(\mu_j\)</span>为第<span class="math inline">\(j\)</span>类样本的均值向量，<span class="math inline">\(\Sigma_j\)</span>是协方差矩阵(严格来讲是<span class="math inline">\(N\)</span>倍的协方差矩阵，<span class="math inline">\(N\)</span>为特征维数)。 <span class="math display">\[\mu_j = \frac{1}{N_j}\sum\limits_{x \in X_j}x, \;\;\;\;\;  j=0,1\]</span> <span class="math display">\[\Sigma_j = \sum\limits_{x \in X_j}(x-\mu_j)(x-\mu_j)^T, \;\;\;\; j=0,1\]</span> 由于是两类数据，因此我们只需要将数据投影到一条直线上即可。假设我们的投影直线是向量<span class="math inline">\(w\)</span>,则对任意一个样本<span class="math inline">\(x_i\)</span>,它在直线<span class="math inline">\(w\)</span>的投影为<span class="math inline">\(w^Tx\)</span>。<br> 两类样本的类间方差是： <span class="math display">\[S_{01}=||w^T\mu_0-w^T\mu_1||_2^2\]</span> 我们希望类间方差尽可能大，类内方差尽可能小。于是构造的损失函数如下： <span class="math display">\[\underbrace{arg\;max}_w\;\;J(w) = \frac{||w^T\mu_0-w^T\mu_1||_2^2}{w^T\Sigma_0w+w^T\Sigma_1w} = \frac{w^T(\mu_0-\mu_1)(\mu_0-\mu_1)^Tw}{w^T(\Sigma_0+\Sigma_1)w}\]</span> 记类内散度矩阵<span class="math inline">\(S_w\)</span>和类间散度矩阵<span class="math inline">\(S_b\)</span>如下： <span class="math display">\[S_w = \Sigma_0 + \Sigma_1 = \sum\limits_{x \in X_0}(x-\mu_0)(x-\mu_0)^T + \sum\limits_{x \in X_1}(x-\mu_1)(x-\mu_1)^T\]</span> <span class="math display">\[S_b = (\mu_0-\mu_1)(\mu_0-\mu_1)^T\]</span> 则有： <span class="math display">\[\underbrace{arg\;max}_w\;\;J(w) = \frac{w^TS_bw}{w^TS_ww}\]</span></p>
+<blockquote>
+<p>注意：对于二分类，<span class="math inline">\(w^TS_bw\)</span>和<span class="math inline">\(w^TS_ww\)</span>都是常数。</p>
+</blockquote>
+<p>对<span class="math inline">\(J(w)\)</span>求导(涉及矩阵求导，具体求导过程可以移步<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV123411s7eZ/?spm_id_from=333.337.search-card.all.click&amp;vd_source=38f9efdf62f80ba9e21301d7798a488b">b站视频16:29</a>)： <span class="math display">\[(S_w^{-1}S_b)w=\lambda w\]</span></p>
+<blockquote>
+<p>其中<span class="math inline">\(\lambda=\frac{w^TS_bw}{w^TS_ww}\)</span>，也就是说要想最大化<span class="math inline">\(\frac{w^TS_bw}{w^TS_ww}\)</span>，就要求<span class="math inline">\((S_w^{-1}S_b)\)</span>矩阵的最大特征值。<span class="math inline">\(w\)</span>就是对应的特征向量。但是<span class="math inline">\((S_w^{-1}S_b)\)</span>仍可进一步化简。</p>
+</blockquote>
+<p><span class="math inline">\(S_bw\)</span>的方向总是与<span class="math inline">\(\mu_0-\mu_1\)</span>一致,不妨令<span class="math inline">\(S_bw=\lambda(\mu_0-\mu_1)\)</span>，将其代入上式，则有： <span class="math display">\[w=S_w^{-1}(\mu_0-\mu_1)\]</span></p>
+<blockquote>
+<p>注释：<br> <span class="math inline">\(S_bw\)</span>，也就是<span class="math inline">\((\mu_0-\mu_1)(\mu_0-\mu_1)^Tw\)</span>的方向总是与<span class="math inline">\(\mu_0-\mu_1\)</span>一致原因是<span class="math inline">\((\mu_0-\mu_1)^Tw\)</span>是一个常数；<br> 因为我们要寻找的只是一个投影方向，所以可以令<span class="math inline">\(S_bw=\lambda(\mu_0-\mu_1)\)</span>，消去常数项<span class="math inline">\(\lambda\)</span>。</p>
+</blockquote>
+<p>从上式可以知道，求出二分类的均值和方差就可以确定最佳投影方向<span class="math inline">\(w\)</span>。</p>
+<h1 id="对于多分类问题">对于多分类问题</h1>
+<p>我们沿用章节“对于二分类问题”中数据集的假设条件。 类内散度矩阵： <span class="math display">\[S_w =  \sum\limits_{j=1}^{k}S_{wj} = \sum\limits_{j=1}^{k}\sum\limits_{x \in X_j}(x-\mu_j)(x-\mu_j)^T\]</span></p>
+<p>类间散度矩阵： <span class="math display">\[S_b = \sum\limits_{j=1}^{k}N_j(\mu_j-\mu)(\mu_j-\mu)^T\]</span> 优化目标是： <span class="math display">\[\max_W\frac{W^TS_bW}{W^TS_wW}\]</span> &gt; 注意：<span class="math inline">\(W^TS_bW\)</span>和<span class="math inline">\(W^TS_wW\)</span>都是矩阵，而不是标量。需要构造一个标量，有多种构造方式，一般选择： <span class="math display">\[\underbrace{arg\;max}_W\;\;J(W) = \frac{\prod\limits_{diag}W^TS_bW}{\prod\limits_{diag}W^TS_wW}\]</span> 其中，<span class="math inline">\(\prod\limits_{diag}A\)</span>表示取矩阵<span class="math inline">\(A\)</span>的对角线元素的乘积；<span class="math inline">\(W\)</span>为<span class="math inline">\(N\times{d}\)</span>的矩阵，<span class="math inline">\(d\)</span>是降维后的维度： <span class="math display">\[J(W) = \frac{\prod\limits_{i=1}^dw_i^TS_bw_i}{\prod\limits_{i=1}^dw_i^TS_ww_i} = \prod\limits_{i=1}^d\frac{w_i^TS_bw_i}{w_i^TS_ww_i}\]</span> 其中<span class="math inline">\(w_i\)</span>为投影矩阵<span class="math inline">\(W\)</span>的列向量。因此多分类问题转化成了二分类问题。最大值为矩阵<span class="math inline">\(S_w^{-1}S_b\)</span>的最大特征值，最大的<span class="math inline">\(d\)</span>个值的乘积就是<span class="math inline">\(S_w^{-1}S_b\)</span>的最大<span class="math inline">\(d\)</span>个特征值的乘积，此时对应的投影矩阵<span class="math inline">\(W\)</span>为该最大<span class="math inline">\(d\)</span>个特征值对应的特征向量组成的矩阵。</p>
+<h1 id="lda过程">LDA过程</h1>
+<p>第1步：计算类内散度矩阵和类间散度矩阵，即： <span class="math display">\[S_w =  \sum\limits_{j=1}^{k}S_{wj} = \sum\limits_{j=1}^{k}\sum\limits_{x \in X_j}(x-\mu_j)(x-\mu_j)^T\]</span> <span class="math display">\[S_b = \sum\limits_{j=1}^{k}N_j(\mu_j-\mu)(\mu_j-\mu)^T\]</span> 第2步：计算矩阵<span class="math inline">\(S_w^{-1}S_b\)</span> 第3步：对矩阵<span class="math inline">\(S_w^{-1}S_b\)</span>进行特征分解，设特征值为<span class="math inline">\(\lambda_k\)</span>，对应特征向量为<span class="math inline">\(v_k\)</span>，即： <span class="math display">\[Sv_k=\lambda_kv_k\]</span> 第4步：取出最大的<span class="math inline">\(d\)</span>个特征值对应的特征向量<span class="math inline">\(w_1,w_2,...,w_d\)</span>，将其标准化后组成投影矩阵<span class="math inline">\(W=(w_1,w_2,...,w_d)\)</span>。 第5步：利用投影矩阵对各个样本向量进行转化，即 <span class="math display">\[z_i=W^Tx_i, \;\;\;\;\; i=1,2,..,M\]</span> 得到新的降维后的样本集<span class="math inline">\(D&#39;={(z_1,y_1),(z_2,y_2),...,(z_M,y_M)}\)</span>。</p>
+<h1 id="注意">注意：</h1>
+<ol type="1">
+<li>LDA降维后的维度有限制，必然小于类别总数，即<span class="math inline">\(d\leq{k-1}\)</span>，<span class="math inline">\(d\)</span>为降维后的维度大小，<span class="math inline">\(k\)</span>是数据类别个数。</li>
+</ol>
+<blockquote>
+<p>为什么LDA降维后的维度最多为k-1？ 因为<span class="math inline">\(S_w^{-1}S_b\)</span>进行特征分解时最多有<span class="math inline">\(k-1\)</span>个特征值，也就对应着最多有<span class="math inline">\(k-1\)</span>个特征向量，样本<span class="math inline">\(x_i\)</span>经过<span class="math inline">\(W\)</span>(维度为<span class="math inline">\(N\times{d},d\leq{k-1}\)</span>)转换后得到的<span class="math inline">\(z_i\)</span>特征维度最多为<span class="math inline">\(d,d\leq{k-1}\)</span>。</p>
+</blockquote>
+<ol start="2" type="1">
+<li>LDA不适合对非高斯分布样本进行降维，PCA也有这个问题。</li>
+<li>LDA在样本分类信息依赖方差而不是均值的时候，降维效果不好。</li>
+</ol>
+<h1 id="lda的实现">LDA的实现</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">class</span> LDA:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_components):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="va">self</span>.n_components <span class="op">=</span> n_components</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>        <span class="va">self</span>.linear_discriminants <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, X, y):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>        n_features <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>        class_labels <span class="op">=</span> np.unique(y)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="co"># Within class scatter matrix:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>        <span class="co"># SW = sum((X_c - mean_X_c)^2 )</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>        <span class="co"># Between class scatter:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>        <span class="co"># SB = sum( n_c * (mean_X_c - mean_overall)^2 )</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        mean_overall <span class="op">=</span> np.mean(X, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        SW <span class="op">=</span> np.zeros((n_features, n_features))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        SB <span class="op">=</span> np.zeros((n_features, n_features))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>        <span class="cf">for</span> c <span class="kw">in</span> class_labels:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>            X_c <span class="op">=</span> X[y <span class="op">==</span> c]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>            mean_c <span class="op">=</span> np.mean(X_c, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>            <span class="co"># (4, n_c) * (n_c, 4) = (4,4) -&gt; transpose</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>            SW <span class="op">+=</span> (X_c <span class="op">-</span> mean_c).T.dot((X_c <span class="op">-</span> mean_c))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>            <span class="co"># (4, 1) * (1, 4) = (4,4) -&gt; reshape</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a>            n_c <span class="op">=</span> X_c.shape[<span class="dv">0</span>]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a>            mean_diff <span class="op">=</span> (mean_c <span class="op">-</span> mean_overall).reshape(n_features, <span class="dv">1</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>            SB <span class="op">+=</span> n_c <span class="op">*</span> (mean_diff).dot(mean_diff.T)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a>        <span class="co"># Determine SW^-1 * SB</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>        A <span class="op">=</span> np.linalg.inv(SW).dot(SB)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>        <span class="co"># Get eigenvalues and eigenvectors of SW^-1 * SB</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>        eigenvalues, eigenvectors <span class="op">=</span> np.linalg.eig(A)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>        <span class="co"># -&gt; eigenvector v = [:,i] column vector, transpose for easier calculations</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>        <span class="co"># sort eigenvalues high to low</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>        eigenvectors <span class="op">=</span> eigenvectors.T</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>        idxs <span class="op">=</span> np.argsort(<span class="bu">abs</span>(eigenvalues))[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>        eigenvalues <span class="op">=</span> eigenvalues[idxs]</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>        eigenvectors <span class="op">=</span> eigenvectors[idxs]</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>        <span class="co"># store first n eigenvectors</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a>        <span class="va">self</span>.linear_discriminants <span class="op">=</span> eigenvectors[<span class="dv">0</span>:<span class="va">self</span>.n_components]</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a>    <span class="kw">def</span> transform(<span class="va">self</span>, X):</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a>        <span class="co"># project data</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a>        <span class="cf">return</span> np.dot(X, <span class="va">self</span>.linear_discriminants.T)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a>lda <span class="op">=</span> LDA(<span class="dv">2</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a>z <span class="op">=</span> lda.fit(X,y).transform(X)</span></code></pre></div>
+<h1 id="应用">应用</h1>
+<p>搭配分类器实现识别 脸部识别 顾客分类</p>
+<h1 id="参考">参考</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" rel="prev" title="主成分分析">
+                  <i class="fa fa-chevron-left"></i> 主成分分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
