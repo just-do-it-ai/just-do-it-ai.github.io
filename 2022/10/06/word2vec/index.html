@@ -22,7 +22,7 @@
 
     <meta name="description" content="前言 Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CBOW">
+<meta property="og:title" content="word2vec">
 <meta property="og:url" content="http://example.com/2022/10/06/word2vec/index.html">
 <meta property="og:site_name" content="Scofield">
 <meta property="og:description" content="前言 Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430173826772.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/1649759610/images_for_blog/master/image-20210430180824018.png">
 <meta property="article:published_time" content="2022-10-06T03:50:59.000Z">
-<meta property="article:modified_time" content="2022-10-08T12:41:55.144Z">
+<meta property="article:modified_time" content="2022-10-09T12:09:18.268Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*cuOmGT7NevP9oJFJfVpRKA.png">
@@ -45,10 +45,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/06/word2vec/","path":"2022/10/06/word2vec/","title":"CBOW"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/06/word2vec/","path":"2022/10/06/word2vec/","title":"word2vec"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>CBOW | Scofield</title>
+<title>word2vec | Scofield</title>
   
 
 
@@ -208,12 +208,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="CBOW | Scofield">
+      <meta itemprop="name" content="word2vec | Scofield">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CBOW
+          word2vec
         </h1>
 
         <div class="post-meta-container">
@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-08 20:41:55" itemprop="dateModified" datetime="2022-10-08T20:41:55+08:00">2022-10-08</time>
+      <time title="Modified: 2022-10-09 20:09:18" itemprop="dateModified" datetime="2022-10-09T20:09:18+08:00">2022-10-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
