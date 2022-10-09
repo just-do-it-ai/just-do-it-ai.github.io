@@ -20,27 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 问题 数据标注耗时费力。无监督学习才是AI的未来。 方法 对比学习是一种自监督的学习方法。指导原则是：通过自动构造相似实例和不相似实例，要求习得一个表示学习模型，通过这个模型，使得相似的实例在投影空间中比较接近，而不相似的实例在投影空间中距离比较远。">
+    <meta name="description" content="概述 奇异值分解(SVD)是用来解决非方阵型矩阵的特征分解的。&lt;!--more&gt; 其将矩阵分解为奇异向量和奇异值。 矩阵的特征分解 如果一个方阵A相似于对角矩阵，或者说，如果存在一个可逆矩阵P使得\(P^{-1}AP\)是对角矩阵，则矩阵\(A\)被称为可对角化的。可对角化的矩阵可以做特征分解，即可以将可对角化的矩阵分解为由其特征值和特征向量表示的矩阵之积： \[A&#x3D;Q\Sigm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对比学习">
-<meta property="og:url" content="http://example.com/2022/09/27/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="奇异值分解">
+<meta property="og:url" content="http://example.com/2022/10/09/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="概述 问题 数据标注耗时费力。无监督学习才是AI的未来。 方法 对比学习是一种自监督的学习方法。指导原则是：通过自动构造相似实例和不相似实例，要求习得一个表示学习模型，通过这个模型，使得相似的实例在投影空间中比较接近，而不相似的实例在投影空间中距离比较远。">
+<meta property="og:description" content="概述 奇异值分解(SVD)是用来解决非方阵型矩阵的特征分解的。&lt;!--more&gt; 其将矩阵分解为奇异向量和奇异值。 矩阵的特征分解 如果一个方阵A相似于对角矩阵，或者说，如果存在一个可逆矩阵P使得\(P^{-1}AP\)是对角矩阵，则矩阵\(A\)被称为可对角化的。可对角化的矩阵可以做特征分解，即可以将可对角化的矩阵分解为由其特征值和特征向量表示的矩阵之积： \[A&#x3D;Q\Sigm">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-27T13:19:36.000Z">
-<meta property="article:modified_time" content="2022-09-28T04:43:28.184Z">
+<meta property="article:published_time" content="2022-10-09T07:48:33.000Z">
+<meta property="article:modified_time" content="2022-10-09T12:07:10.150Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/09/27/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">
+<link rel="canonical" href="http://example.com/2022/10/09/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/09/27/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/","path":"2022/09/27/对比学习/","title":"对比学习"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/09/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/","path":"2022/10/09/奇异值分解/","title":"奇异值分解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>对比学习 | Scofield</title>
+<title>奇异值分解 | Scofield</title>
   
 
 
@@ -116,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">代理任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nce"><span class="nav-number">3.1.</span> <span class="nav-text">NCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#infonce"><span class="nav-number">3.2.</span> <span class="nav-text">infoNCE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%9D%8D%E5%A1%8C"><span class="nav-number">5.</span> <span class="nav-text">模型坍塌</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">矩阵的特征分解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">奇异值分解</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -187,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/27/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/09/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -200,12 +200,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="对比学习 | Scofield">
+      <meta itemprop="name" content="奇异值分解 | Scofield">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          对比学习
+          奇异值分解
         </h1>
 
         <div class="post-meta-container">
@@ -215,15 +215,22 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2022-09-27 21:19:36" itemprop="dateCreated datePublished" datetime="2022-09-27T21:19:36+08:00">2022-09-27</time>
+      <time title="Created: 2022-10-09 15:48:33 / Modified: 20:07:10" itemprop="dateCreated datePublished" datetime="2022-10-09T15:48:33+08:00">2022-10-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
+        <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-28 12:43:28" itemprop="dateModified" datetime="2022-09-28T12:43:28+08:00">2022-09-28</time>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%99%8D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">降维</span></a>
+        </span>
     </span>
 
   
@@ -237,18 +244,17 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="概述">概述</h1>
-<h2 id="问题">问题</h2>
-<p>数据标注耗时费力。无监督学习才是AI的未来。</p>
-<h2 id="方法">方法</h2>
-<p>对比学习是一种自监督的学习方法。指导原则是：通过自动构造相似实例和不相似实例，要求习得一个表示学习模型，通过这个模型，使得相似的实例在投影空间中比较接近，而不相似的实例在投影空间中距离比较远。<span id="more"></span></p>
-<h1 id="代理任务">代理任务</h1>
-<p>代理任务用来定义对比学习的正负样本。正负样本就相当于有监督学习中的标签，只是对比学习不需要知道标签类别。</p>
-<h1 id="损失函数">损失函数</h1>
-<h2 id="nce">NCE</h2>
-<h2 id="infonce">infoNCE</h2>
-<h1 id="模型选择">模型选择</h1>
-<p>早期使用CNN，在ViT出来之后模型使用的编码器大都转向了transformer</p>
-<h1 id="模型坍塌">模型坍塌</h1>
+<p>奇异值分解(SVD)是用来解决非方阵型矩阵的特征分解的。&lt;!--more&gt; 其将矩阵分解为奇异向量和奇异值。</p>
+<h1 id="矩阵的特征分解">矩阵的特征分解</h1>
+<p>如果一个方阵A相似于对角矩阵，或者说，如果存在一个可逆矩阵P使得<span class="math inline">\(P^{-1}AP\)</span>是对角矩阵，则矩阵<span class="math inline">\(A\)</span>被称为可对角化的。可对角化的矩阵可以做特征分解，即可以将可对角化的矩阵分解为由其特征值和特征向量表示的矩阵之积： <span class="math display">\[A=Q\Sigma{Q^{-1}}\]</span> 其中<span class="math inline">\(\Sigma\)</span>是由方阵<span class="math inline">\(A\)</span>的各个特征值组成的对角矩阵，<span class="math inline">\(Q\)</span>是由方阵<span class="math inline">\(A\)</span>的各特征值对应的特征向量标准化后组成的矩阵。<br> 实际情况中，大部分矩阵并不是可对角化的，比如训练集样本数据<span class="math inline">\(T={(x_1,y_1),(x_2,y_2),..,(x_M,y_M)}\)</span>，由<span class="math inline">\(M\)</span>个样本组成，每个样本<span class="math inline">\(x_i\)</span>含有<span class="math inline">\(N\)</span>个特征，则样本和样本特征组成一个<span class="math inline">\(M\)</span>行<span class="math inline">\(N\)</span>列的矩阵A，这时候不能直接利用上面的分解方法，而需要引入一种奇异值分解的方法。</p>
+<h1 id="奇异值分解">奇异值分解</h1>
+<p><strong>下文不是证明，只是帮助记忆奇异值分解的3个矩阵是怎么计算得到的</strong><br> 设<span class="math inline">\(A\)</span>是一个<span class="math inline">\(M\times{N}\)</span>矩阵，且其秩为<span class="math inline">\(R(A)=K\)</span>，则可将<span class="math inline">\(A\)</span>分解为如下形式： <span class="math display">\[A_{M\times{N}}=U_{M\times{M}}\Sigma_{M\times{N}}V^T_{N\times{N}}\]</span> 其中，<span class="math inline">\(U\)</span>是<span class="math inline">\(M\times{M}\)</span>方阵，里面的向量是正交的，称为左奇异向量；<span class="math inline">\(V\)</span>是<span class="math inline">\(N\times{N}\)</span>方阵，里面的向量是正交的，称为右奇异矩阵；<span class="math inline">\(\Sigma\)</span>是<span class="math inline">\(M\times{N}\)</span>矩阵，除对角线外其他元素全部为0。<br> 根据正交矩阵的性质有： <span class="math display">\[UU^T=I\]</span> <span class="math display">\[VV^T=I\]</span> <span class="math inline">\(A\)</span>是<span class="math inline">\(M\times{N}\)</span>矩阵，则<span class="math inline">\(AA^T\)</span>是<span class="math inline">\(M\times{M}\)</span>方阵，<span class="math inline">\(A^TA\)</span>是<span class="math inline">\(N\times{N}\)</span>方阵。 利用下面的式子可以求出两方阵各自的特征值和特征向量，即 <span class="math display">\[(AA^T)\mu=\lambda\mu\]</span> <span class="math display">\[(A^TA)v=\lambda{v}\]</span> <span class="math display">\[AA^T = U\Sigma{V^T}(U\Sigma{V^T})^T=U\Sigma{\Sigma^T}U^T\]</span> <span class="math display">\[A^TA =(U\Sigma{V^T})^T U\Sigma{V^T}=V\Sigma^T\Sigma{V^T}\]</span> <span class="math inline">\(AA^T\)</span>和<span class="math inline">\(A^TA\)</span>可以认为是实对称矩阵，实对称矩阵一定可以相似对角化，则<span class="math inline">\(\Sigma{\Sigma^T}\)</span>和<span class="math inline">\(\Sigma^T\Sigma\)</span>是其特征值组成的对角矩阵。</p>
+<ul>
+<li>左奇异矩阵<span class="math inline">\(U\)</span>对应的是矩阵<span class="math inline">\(AA^T\)</span>的特征向量组成的矩阵，为<span class="math inline">\(M\times{M}\)</span>方阵。</li>
+<li>右奇异矩阵<span class="math inline">\(V\)</span>对应的是矩阵<span class="math inline">\(A^TA\)</span>的特征向量组成的矩阵，为<span class="math inline">\(N\times{N}\)</span>方阵。</li>
+<li><span class="math inline">\(\Sigma\)</span>中的奇异值是矩阵<span class="math inline">\(AA^T\)</span>的特征值<span class="math inline">\(\lambda\)</span>开平方。</li>
+</ul>
+<p>将奇异值在矩阵按从大到小的顺序排列，然后截取其中的前百分之多少作为整体的一个近似。实际上，在很多情况下，前<span class="math inline">\(10%\)</span>的奇异值就占了所有奇异值之和的<span class="math inline">\(90%\)</span>以上，所以一般可以用<span class="math inline">\(K\)</span>个奇异值和对应的奇异向量来近似描述矩阵，即 <span class="math display">\[A_{M\times{N}}=U_{M\times{M}}\Sigma_{M\times{N}}V^T_{N\times{N}}\approx{U_{M\times{K}}\Sigma_{K\times{K}}V^T_{K\times{N}}}\]</span> 其中，<span class="math inline">\(K\)</span>要比<span class="math inline">\(M\)</span>和<span class="math inline">\(N\)</span>小得多。正是由于这个性质，所以<span class="math inline">\(SVD\)</span>可以被降维，应用在图像压缩、降噪等业务中。</p>
 
     </div>
 
@@ -262,14 +268,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/09/25/%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0/" rel="prev" title="多模态学习">
-                  <i class="fa fa-chevron-left"></i> 多模态学习
+                <a href="/2022/10/09/%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/" rel="prev" title="线性判别分析">
+                  <i class="fa fa-chevron-left"></i> 线性判别分析
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/10/04/git/" rel="next" title="git">
-                  git <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
