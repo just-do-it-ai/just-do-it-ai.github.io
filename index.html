@@ -211,7 +211,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-09 15:48:33 / Modified: 20:07:10" itemprop="dateCreated datePublished" datetime="2022-10-09T15:48:33+08:00">2022-10-09</time>
+      <time title="Created: 2022-10-09 15:48:33 / Modified: 20:10:44" itemprop="dateCreated datePublished" datetime="2022-10-09T15:48:33+08:00">2022-10-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -238,18 +238,15 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="概述">概述</h1>
-<p>奇异值分解(SVD)是用来解决非方阵型矩阵的特征分解的。&lt;!--more&gt; 其将矩阵分解为奇异向量和奇异值。</p>
-<h1 id="矩阵的特征分解">矩阵的特征分解</h1>
-<p>如果一个方阵A相似于对角矩阵，或者说，如果存在一个可逆矩阵P使得<span class="math inline">\(P^{-1}AP\)</span>是对角矩阵，则矩阵<span class="math inline">\(A\)</span>被称为可对角化的。可对角化的矩阵可以做特征分解，即可以将可对角化的矩阵分解为由其特征值和特征向量表示的矩阵之积： <span class="math display">\[A=Q\Sigma{Q^{-1}}\]</span> 其中<span class="math inline">\(\Sigma\)</span>是由方阵<span class="math inline">\(A\)</span>的各个特征值组成的对角矩阵，<span class="math inline">\(Q\)</span>是由方阵<span class="math inline">\(A\)</span>的各特征值对应的特征向量标准化后组成的矩阵。<br> 实际情况中，大部分矩阵并不是可对角化的，比如训练集样本数据<span class="math inline">\(T={(x_1,y_1),(x_2,y_2),..,(x_M,y_M)}\)</span>，由<span class="math inline">\(M\)</span>个样本组成，每个样本<span class="math inline">\(x_i\)</span>含有<span class="math inline">\(N\)</span>个特征，则样本和样本特征组成一个<span class="math inline">\(M\)</span>行<span class="math inline">\(N\)</span>列的矩阵A，这时候不能直接利用上面的分解方法，而需要引入一种奇异值分解的方法。</p>
-<h1 id="奇异值分解">奇异值分解</h1>
-<p><strong>下文不是证明，只是帮助记忆奇异值分解的3个矩阵是怎么计算得到的</strong><br> 设<span class="math inline">\(A\)</span>是一个<span class="math inline">\(M\times{N}\)</span>矩阵，且其秩为<span class="math inline">\(R(A)=K\)</span>，则可将<span class="math inline">\(A\)</span>分解为如下形式： <span class="math display">\[A_{M\times{N}}=U_{M\times{M}}\Sigma_{M\times{N}}V^T_{N\times{N}}\]</span> 其中，<span class="math inline">\(U\)</span>是<span class="math inline">\(M\times{M}\)</span>方阵，里面的向量是正交的，称为左奇异向量；<span class="math inline">\(V\)</span>是<span class="math inline">\(N\times{N}\)</span>方阵，里面的向量是正交的，称为右奇异矩阵；<span class="math inline">\(\Sigma\)</span>是<span class="math inline">\(M\times{N}\)</span>矩阵，除对角线外其他元素全部为0。<br> 根据正交矩阵的性质有： <span class="math display">\[UU^T=I\]</span> <span class="math display">\[VV^T=I\]</span> <span class="math inline">\(A\)</span>是<span class="math inline">\(M\times{N}\)</span>矩阵，则<span class="math inline">\(AA^T\)</span>是<span class="math inline">\(M\times{M}\)</span>方阵，<span class="math inline">\(A^TA\)</span>是<span class="math inline">\(N\times{N}\)</span>方阵。 利用下面的式子可以求出两方阵各自的特征值和特征向量，即 <span class="math display">\[(AA^T)\mu=\lambda\mu\]</span> <span class="math display">\[(A^TA)v=\lambda{v}\]</span> <span class="math display">\[AA^T = U\Sigma{V^T}(U\Sigma{V^T})^T=U\Sigma{\Sigma^T}U^T\]</span> <span class="math display">\[A^TA =(U\Sigma{V^T})^T U\Sigma{V^T}=V\Sigma^T\Sigma{V^T}\]</span> <span class="math inline">\(AA^T\)</span>和<span class="math inline">\(A^TA\)</span>可以认为是实对称矩阵，实对称矩阵一定可以相似对角化，则<span class="math inline">\(\Sigma{\Sigma^T}\)</span>和<span class="math inline">\(\Sigma^T\Sigma\)</span>是其特征值组成的对角矩阵。</p>
-<ul>
-<li>左奇异矩阵<span class="math inline">\(U\)</span>对应的是矩阵<span class="math inline">\(AA^T\)</span>的特征向量组成的矩阵，为<span class="math inline">\(M\times{M}\)</span>方阵。</li>
-<li>右奇异矩阵<span class="math inline">\(V\)</span>对应的是矩阵<span class="math inline">\(A^TA\)</span>的特征向量组成的矩阵，为<span class="math inline">\(N\times{N}\)</span>方阵。</li>
-<li><span class="math inline">\(\Sigma\)</span>中的奇异值是矩阵<span class="math inline">\(AA^T\)</span>的特征值<span class="math inline">\(\lambda\)</span>开平方。</li>
-</ul>
-<p>将奇异值在矩阵按从大到小的顺序排列，然后截取其中的前百分之多少作为整体的一个近似。实际上，在很多情况下，前<span class="math inline">\(10%\)</span>的奇异值就占了所有奇异值之和的<span class="math inline">\(90%\)</span>以上，所以一般可以用<span class="math inline">\(K\)</span>个奇异值和对应的奇异向量来近似描述矩阵，即 <span class="math display">\[A_{M\times{N}}=U_{M\times{M}}\Sigma_{M\times{N}}V^T_{N\times{N}}\approx{U_{M\times{K}}\Sigma_{K\times{K}}V^T_{K\times{N}}}\]</span> 其中，<span class="math inline">\(K\)</span>要比<span class="math inline">\(M\)</span>和<span class="math inline">\(N\)</span>小得多。正是由于这个性质，所以<span class="math inline">\(SVD\)</span>可以被降维，应用在图像压缩、降噪等业务中。</p>
-
+<p>奇异值分解(SVD)是用来解决非方阵型矩阵的特征分解的。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/09/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
