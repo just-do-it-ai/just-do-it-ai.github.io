@@ -33,8 +33,15 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/GY23333/imgs/master/Guass_Filter.jpg">
 <meta property="og:image" content="https://img2020.cnblogs.com/blog/743748/202003/743748-20200321155037063-1916127890.png">
 <meta property="og:image" content="https://cs.brown.edu/courses/csci1290/labs/lab_bilateral/img/bilateral_filtering.png">
+<meta property="og:image" content="https://ataspinar.com/wp-content/uploads/2018/08/fft_spectra-1.png">
+<meta property="og:image" content="https://docs.opencv.org/3.4/fft1.jpg">
+<meta property="og:image" content="https://docs.opencv.org/3.4/fft4.jpg">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGKAmrkPFPi7VIBpnCdEl_yLVw5HcNlfUn5w&amp;usqp=CAU">
+<meta property="og:image" content="https://ataspinar.com/wp-content/uploads/2018/08/wavelet_families.png">
+<meta property="og:image" content="https://pywavelets.readthedocs.io/en/latest/_images/camera_approx_detail.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/0*mb9PgergH2AV20AQ.png">
 <meta property="article:published_time" content="2022-10-14T08:44:57.000Z">
-<meta property="article:modified_time" content="2022-10-14T12:50:45.239Z">
+<meta property="article:modified_time" content="2022-10-15T12:47:11.138Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/14/%E5%9B%BE%E5%83%8F%E5%B9%B3%E6%BB%91/median_filter.png">
@@ -123,7 +130,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%99%AA%E5%A3%B0"><span class="nav-number">1.0.1.</span> <span class="nav-text">高斯噪声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.0.2.</span> <span class="nav-text">线性滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.0.3.</span> <span class="nav-text">非线性滤波</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%9F%9F%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">空间域方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">2.1.</span> <span class="nav-text">中值滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2"><span class="nav-number">2.2.</span> <span class="nav-text">高斯滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2bilateral-filter"><span class="nav-number">2.3.</span> <span class="nav-text">双边滤波(bilateral filter)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E5%9F%9F%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">频率域方法</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%99%AA%E5%A3%B0"><span class="nav-number">1.0.1.</span> <span class="nav-text">高斯噪声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.0.2.</span> <span class="nav-text">线性滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.0.3.</span> <span class="nav-text">非线性滤波</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%9F%9F%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">空间域方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">2.1.</span> <span class="nav-text">中值滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2"><span class="nav-number">2.2.</span> <span class="nav-text">高斯滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2bilateral-filter"><span class="nav-number">2.3.</span> <span class="nav-text">双边滤波(bilateral filter)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E5%9F%9F%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">频率域方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2a"><span class="nav-number">3.1.</span> <span class="nav-text">傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E5%8F%98%E6%8D%A2"><span class="nav-number">3.2.</span> <span class="nav-text">小波变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E9%98%88%E5%80%BC%E5%92%8C%E8%BD%AF%E9%98%88%E5%80%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">3.2.1.</span> <span class="nav-text">硬阈值和软阈值滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E5%9F%BA%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">3.2.2.</span> <span class="nav-text">小波基的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E5%8F%98%E6%8D%A2python%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.3.</span> <span class="nav-text">小波变换python实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">其他方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -138,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -222,9 +229,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-14 16:44:57 / Modified: 20:50:45" itemprop="dateCreated datePublished" datetime="2022-10-14T16:44:57+08:00">2022-10-14</time>
+      <time title="Created: 2022-10-14 16:44:57" itemprop="dateCreated datePublished" datetime="2022-10-14T16:44:57+08:00">2022-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-15 20:47:11" itemprop="dateModified" datetime="2022-10-15T20:47:11+08:00">2022-10-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -286,6 +299,57 @@
 <p>如果像素中心点在边缘附近，则该中心点必会有一侧的像素点像素值与该中心点像素值相差较小，另一侧像素点像素值相差较大，这会导致中心点一侧的权重普遍大于另一侧的权重，因此能够保留边界。 <img src="https://cs.brown.edu/courses/csci1290/labs/lab_bilateral/img/bilateral_filtering.png" /></p>
 </blockquote>
 <h1 id="频率域方法">频率域方法</h1>
+<h2 id="傅里叶变换a"><a target="_blank" rel="noopener" href="https://docs.opencv.org/3.4/de/dbc/tutorial_py_fourier_transform.html#:~:text=Fourier%20Transform%20is%20used%20to,used%20for%20calculation%20of%20DFT.">傅里叶变换</a></h2>
+<p>对于非周期函数<span class="math inline">\(f(t)\in{L^1(R)}\)</span>，其傅里叶变换定义如下： <span class="math display">\[F(w) = \int_Rf(t)e^{-jwt}dt\]</span> 逆变换定义如下： <span class="math display">\[f(t)=\frac{1}{2\pi}\int_RF(w)e^{jwt}dw\]</span> 傅里叶变换的实质是将时域的信号分解成许多不同频率的正弦波或余弦波的叠加和，这样就可以把对原函数<span class="math inline">\(f(t)\)</span>的研究转化为对其权系数的研究，即傅里叶变化<span class="math inline">\(F(w)\)</span>的研究。</p>
+<blockquote>
+<p>傅里叶变换的局限性：虽然傅里叶变换能够将信号的时域特征和频域特征联系起来，能够分别从信号的时域和频域观察，但却不能把二者有机地结合起来。这是因为任何时刻的信号的时域波形中包含了信号全部频域的信息。而傅里叶谱是信号的统计特征，它是整个时间域的积分，没有局部化分析信号的功能，完全不具备时域信息。 <img src="https://ataspinar.com/wp-content/uploads/2018/08/fft_spectra-1.png" /> 在左上方的图中，可以看到一个包含四个不同频率(4,30,60,90hz)的信号，在任何时候都存在。<br> 在左下角的图中，可以看到同样的四个频率，只有第一个频率出现在信号的第一个四分之一，第二个频率出现在第二个四分之一等等。<br> 两个频谱包含完全相同的四个峰值，傅里叶变换不能告诉我们这些频率在信号中的什么位置。<br></p>
+</blockquote>
+<p>具体到图像，图像的边缘、突出部分以及颗粒噪声代表高频分量，图像背景区则代表图像信号的低频分量。<br> 因此，<strong>去除高频部分可以实现去噪，去除低频部分可以检测边缘</strong>。<br></p>
+<p>经过傅里叶变换后，低频部分(DC component)会出现在图像的左上角，为了便于观察，将其移至图像中心(沿着<span class="math inline">\(x,y\)</span>两个方向平移<span class="math inline">\(N/2\)</span>)。 <img src="https://docs.opencv.org/3.4/fft1.jpg" /></p>
+<p>中间白色部分代表低频区域。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">img = cv.imread(<span class="string">&#x27;messi5.jpg&#x27;</span>,<span class="number">0</span>)</span><br><span class="line"><span class="comment"># DFT(Discrete Fourier Transform)代表离散傅里叶变换</span></span><br><span class="line">dft = cv.dft(np.float32(img),flags = cv.DFT_COMPLEX_OUTPUT)</span><br><span class="line"><span class="comment"># np.fft.fftshift将低频信号从图像左上角移到图像中心</span></span><br><span class="line">dft_shift = np.fft.fftshift(dft)</span><br><span class="line"><span class="comment">#一旦你找到了频率变换，你就能找到幅度谱。</span></span><br><span class="line">magnitude_spectrum = <span class="number">20</span>*np.log(cv.magnitude(dft_shift[:,:,<span class="number">0</span>],dft_shift[:,:,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img, cmap = <span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Input Image&#x27;</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(magnitude_spectrum, cmap = <span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Magnitude Spectrum&#x27;</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">rows, cols = img.shape</span><br><span class="line">crow,ccol = rows/<span class="number">2</span> , cols/<span class="number">2</span></span><br><span class="line"><span class="comment"># create a mask first, center square is 1, remaining all zeros</span></span><br><span class="line">mask = np.zeros((rows,cols,<span class="number">2</span>),np.uint8)</span><br><span class="line">mask[crow-<span class="number">30</span>:crow+<span class="number">30</span>, ccol-<span class="number">30</span>:ccol+<span class="number">30</span>] = <span class="number">1</span></span><br><span class="line"><span class="comment"># apply mask and inverse DFT</span></span><br><span class="line"><span class="comment">#保留低频部分</span></span><br><span class="line">fshift = dft_shift*mask</span><br><span class="line"><span class="comment"># ifftshift(inverse fftshift)就是fftshift的逆操作。</span></span><br><span class="line">f_ishift = np.fft.ifftshift(fshift)</span><br><span class="line"><span class="comment"># idft(inverse dft)就是dft的逆操作。</span></span><br><span class="line">img_back = cv.idft(f_ishift)</span><br><span class="line">img_back = cv.magnitude(img_back[:,:,<span class="number">0</span>],img_back[:,:,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img, cmap = <span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Input Image&#x27;</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(img_back, cmap = <span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Magnitude Spectrum&#x27;</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://docs.opencv.org/3.4/fft4.jpg" /></p>
+<h2 id="小波变换">小波变换</h2>
+<blockquote>
+<p><strong>短时傅里叶变换：</strong><br>[2] <strong>为了解决傅里叶变换在时域的局部化分析能力</strong>，引入了短时傅里叶变换。短时傅里叶变换是傅里叶变换的自然推广，它是通过窗函数来实现信号的时频分析的。窗函数不是唯一的，包括高斯函数等。<br> 短时傅里叶变换的<strong>基本思想</strong>是把信号分成许多小的时间间隔，用傅里叶变换分析每一个时间间隔，以便确定该时间间隔存在的频率。<br> 短时傅里叶变换不能解决低频信号要求高的频率分辨率，而高频信号要求高的时间分辨率的多分辨率<strong>问题</strong>。正是由于上述需求，小波分析被提出。</p>
+</blockquote>
+<p>小波变换把傅里叶变换的基换了，将无限长的三角函数基换成了有限长的会衰减的小波基。这样不仅能够获取频率，还可以定位到时间。<br> 小波分析用于非平稳信号(图像也是一种非平稳信号)的处理，优于传统的傅里叶变换。<br> 用小波进行信号消噪可以保存有用信号中的尖峰和突变部分。而用傅里叶分析进行滤波时，由于信号集中在高频部分，所以可用低通滤波器进行滤波，但是它不能对有用信号的高频部分和由噪声引起的高频干扰进行有效的区分。若低通滤波器太宽，则在滤波后，信号中仍存在大量的噪声；若低通滤波器太窄，则将一部分有用信号当成噪声滤掉了。因此小波分析对非平稳信号消噪有着傅里叶分析不可比拟的优点。 &gt; 小波分析理论十分复杂、小波种类较多，应用范围很广，以下只能涉及到很小的一部分理解和他人结论的引用。 小波分析的降噪方法有很多种，最简单的是阈值降噪法。除了阈值降噪法之外，研究比较多的是基于贝叶斯估计理论的降噪算法，该类算法通过最小化贝叶斯估计风险来获得小波系数最优估计。以下内容主要针对阈值降噪进行阐述。</p>
+<p>阈值滤波是一种最简单的小波域滤波方法。所谓阈值滤波就是把小波系数的赋值同一个阈值进行比较，若小波系数的幅值比这个阈值小，则把小波系数置为0；若小波系数的幅值比这个阈值大，则把小波系数保留下来或进行修改后保留下来。</p>
+<h3 id="硬阈值和软阈值滤波">硬阈值和软阈值滤波</h3>
+<p>硬阈值的数学表达式： <span class="math display">\[T_{hard}(y)= \left\{
+    \begin{aligned}
+    0,\;\;\;\; |y|&gt;T \\
+    y,\;\;\;\; |y|\geq{T}
+    \end{aligned}
+    \right.
+\]</span></p>
+<p>式中：<span class="math inline">\(y\)</span>是含噪信号的小波变换系数；<span class="math inline">\(T\)</span>为阈值；<span class="math inline">\(T_{hard}\)</span>为硬阈值滤波的收缩函数。 硬阈值将幅值小于阈值的小波系数去除，而将幅值大于阈值的系数原封不动地保留下来。<br> 软阈值滤波的数学表达式: <span class="math display">\[T_{soft}(y)= \left\{
+    \begin{aligned}
+    0,\;\;\;\; |y|&gt;T \\
+    sgn(y)(|y|-T),\;\;\;\; |y|\geq{T}
+    \end{aligned}
+    \right.
+\]</span> 式中：<span class="math inline">\(sgn(y)\)</span>表示<span class="math inline">\(y\)</span>的符号；<span class="math inline">\(T_{soft}\)</span>为软阈值滤波的收缩函数。<br> 软阈值和硬阈值的函数图像如下：<br></p>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGKAmrkPFPi7VIBpnCdEl_yLVw5HcNlfUn5w&amp;usqp=CAU" /></p>
+<p>在软阈值滤波中，小波系数的估计是有偏的(幅值大于阈值的小波系数的幅值被减去了一部分，因此估计的数学期望不等于观测值的数学期望)，滤波后的信号过于平滑。硬阈值滤波中，小波系数的估计是无偏的，但滤波后容易在信号的突变处产生较大的振荡。</p>
+<p><strong>使用小波变换进行图像降噪能否取得好的效果的关键在于阈值的设置和小波基的选择</strong>。 ### 阈值的选择 阈值选择有许多方法，其中最著名的是统一阈值(universal threshold)。 统一阈值的动机是要去除所有幅值可能大于噪声小波系数最大幅值的小波系数。<br> 统一阈值的表达式如下： <span class="math display">\[T_{univ}=\sigma_n\sqrt{2lg_2(N)}\]</span> 式中：<span class="math inline">\(\sigma_n\)</span>为0均值高斯白噪声的标准偏差；<span class="math inline">\(N\)</span>为小波系数的总个数。</p>
+<h3 id="小波基的选择">小波基的选择</h3>
+<p>不存在一种小波基能够适应所有的情况，针对不同的问题应最优地选择不同的小波基以实现最好的效果。在图像降噪领域，很少有文献对此做系统研究。目前唯一的办法可能是看实验效果找小波基。 &gt; 小波源程序具有较高的商业价值，因此很少能够找到小波源程序代码。opencv没有官方实现。</p>
+<p><img src="https://ataspinar.com/wp-content/uploads/2018/08/wavelet_families.png" /></p>
+<h3 id="小波变换python实现">小波变换python实现</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pywt</span><br><span class="line"><span class="keyword">import</span> pywt.data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load image</span></span><br><span class="line">original = pywt.data.camera()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Wavelet transform of image, and plot approximation and details</span></span><br><span class="line">titles = [<span class="string">&#x27;Approximation&#x27;</span>, <span class="string">&#x27; Horizontal detail&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;Vertical detail&#x27;</span>, <span class="string">&#x27;Diagonal detail&#x27;</span>]</span><br><span class="line">coeffs2 = pywt.dwt2(original, <span class="string">&#x27;bior1.3&#x27;</span>)</span><br><span class="line">LL, (LH, HL, HH) = coeffs2</span><br><span class="line">fig = plt.figure(figsize=(<span class="number">12</span>, <span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> i, a <span class="keyword">in</span> <span class="built_in">enumerate</span>([LL, LH, HL, HH]):</span><br><span class="line">    ax = fig.add_subplot(<span class="number">1</span>, <span class="number">4</span>, i + <span class="number">1</span>)</span><br><span class="line">    ax.imshow(a, interpolation=<span class="string">&quot;nearest&quot;</span>, cmap=plt.cm.gray)</span><br><span class="line">    ax.set_title(titles[i], fontsize=<span class="number">10</span>)</span><br><span class="line">    ax.set_xticks([])</span><br><span class="line">    ax.set_yticks([])</span><br><span class="line"></span><br><span class="line">fig.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://pywavelets.readthedocs.io/en/latest/_images/camera_approx_detail.png" /></p>
+<p>从上图可以看见，经过一级分解后会得到一个低频分量(approximation)和三个方向的高频分量，分别为水平方向、垂直方向、对角线方向。黑、灰和白色像素分别对应着正、零和负的小波系数。<br></p>
+<p>下图是3个级别分解后对应的效果图象。 <img src="https://miro.medium.com/max/1400/0*mb9PgergH2AV20AQ.png" /> <a target="_blank" rel="noopener" href="https://pywavelets.readthedocs.io/en/latest/ref/2d-dwt-and-idwt.html">小波变换使用的函数pywt.dwt2、pywt.idwt2、pywt.wavedec2、pywt.waverec2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=uZd78U6igOo">使用python包对图像进行小波变换的视频介绍</a><br> <a target="_blank" rel="noopener" href="https://youtu.be/BaIjK7-KlrM">使用python包对图像进行基于小波变换的降噪处理视频介绍</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/numaanqayoom/image-classification-using-wavelet-transformation">小波变换应用于图像分类</a></p>
+</blockquote>
+<h1 id="其他方法">其他方法</h1>
+<p>独立成分分析等</p>
+<h1 id="参考">参考</h1>
+<p>[1] https://blog.csdn.net/qq_39594939/article/details/100097241<br> [2] 小波分析及其在数字图像处理中的应用 朱希安 [3] 基于小波变换的图像降噪 姜三平</p>
 
     </div>
 
@@ -304,6 +368,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/10/16/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" rel="next" title="边缘检测">
+                  边缘检测 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
