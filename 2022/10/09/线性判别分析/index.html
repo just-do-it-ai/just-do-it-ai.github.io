@@ -28,7 +28,7 @@
 <meta property="og:description" content="概述 LDA是一种有监督的降维方法，其核心思想是：投影后类内方差最小，类间方差最大。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-09T05:05:48.000Z">
-<meta property="article:modified_time" content="2022-10-14T03:19:05.849Z">
+<meta property="article:modified_time" content="2022-10-16T08:50:51.709Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 
@@ -116,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">对于二分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">对于多分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">LDA过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.</span> <span class="nav-text">LDA的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">对于二分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">对于多分类问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">LDA过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">LDA的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -223,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-14 11:19:05" itemprop="dateModified" datetime="2022-10-14T11:19:05+08:00">2022-10-14</time>
+      <time title="Modified: 2022-10-16 16:50:51" itemprop="dateModified" datetime="2022-10-16T16:50:51+08:00">2022-10-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -270,10 +270,9 @@
 <p>类间散度矩阵： <span class="math display">\[S_b = \sum\limits_{j=1}^{k}N_j(\mu_j-\mu)(\mu_j-\mu)^T\]</span> 优化目标是： <span class="math display">\[\max_W\frac{W^TS_bW}{W^TS_wW}\]</span> &gt; 注意：<span class="math inline">\(W^TS_bW\)</span>和<span class="math inline">\(W^TS_wW\)</span>都是矩阵，而不是标量。需要构造一个标量，有多种构造方式，一般选择： <span class="math display">\[\underbrace{arg\;max}_W\;\;J(W) = \frac{\prod\limits_{diag}W^TS_bW}{\prod\limits_{diag}W^TS_wW}\]</span> 其中，<span class="math inline">\(\prod\limits_{diag}A\)</span>表示取矩阵<span class="math inline">\(A\)</span>的对角线元素的乘积；<span class="math inline">\(W\)</span>为<span class="math inline">\(N\times{d}\)</span>的矩阵，<span class="math inline">\(d\)</span>是降维后的维度： <span class="math display">\[J(W) = \frac{\prod\limits_{i=1}^dw_i^TS_bw_i}{\prod\limits_{i=1}^dw_i^TS_ww_i} = \prod\limits_{i=1}^d\frac{w_i^TS_bw_i}{w_i^TS_ww_i}\]</span> 其中<span class="math inline">\(w_i\)</span>为投影矩阵<span class="math inline">\(W\)</span>的列向量。因此多分类问题转化成了二分类问题。最大值为矩阵<span class="math inline">\(S_w^{-1}S_b\)</span>的最大特征值，最大的<span class="math inline">\(d\)</span>个值的乘积就是<span class="math inline">\(S_w^{-1}S_b\)</span>的最大<span class="math inline">\(d\)</span>个特征值的乘积，此时对应的投影矩阵<span class="math inline">\(W\)</span>为该最大<span class="math inline">\(d\)</span>个特征值对应的特征向量组成的矩阵。</p>
 <h1 id="lda过程">LDA过程</h1>
 <p>第1步：计算类内散度矩阵和类间散度矩阵，即： <span class="math display">\[S_w =  \sum\limits_{j=1}^{k}S_{wj} = \sum\limits_{j=1}^{k}\sum\limits_{x \in X_j}(x-\mu_j)(x-\mu_j)^T\]</span> <span class="math display">\[S_b = \sum\limits_{j=1}^{k}N_j(\mu_j-\mu)(\mu_j-\mu)^T\]</span> 第2步：计算矩阵<span class="math inline">\(S_w^{-1}S_b\)</span> 第3步：对矩阵<span class="math inline">\(S_w^{-1}S_b\)</span>进行特征分解，设特征值为<span class="math inline">\(\lambda_k\)</span>，对应特征向量为<span class="math inline">\(v_k\)</span>，即： <span class="math display">\[Sv_k=\lambda_kv_k\]</span> 第4步：取出最大的<span class="math inline">\(d\)</span>个特征值对应的特征向量<span class="math inline">\(w_1,w_2,...,w_d\)</span>，将其标准化后组成投影矩阵<span class="math inline">\(W=(w_1,w_2,...,w_d)\)</span>。 第5步：利用投影矩阵对各个样本向量进行转化，即 <span class="math display">\[z_i=W^Tx_i, \;\;\;\;\; i=1,2,..,M\]</span> 得到新的降维后的样本集<span class="math inline">\(D&#39;={(z_1,y_1),(z_2,y_2),...,(z_M,y_M)}\)</span>。</p>
-<h1 id="注意">注意：</h1>
-<ol type="1">
-<li>LDA降维后的维度有限制，必然小于类别总数，即<span class="math inline">\(d\leq{k-1}\)</span>，<span class="math inline">\(d\)</span>为降维后的维度大小，<span class="math inline">\(k\)</span>是数据类别个数。</li>
-</ol>
+<blockquote>
+<p>注意： 1. LDA降维后的维度有限制，必然小于类别总数，即<span class="math inline">\(d\leq{k-1}\)</span>，<span class="math inline">\(d\)</span>为降维后的维度大小，<span class="math inline">\(k\)</span>是数据类别个数。</p>
+</blockquote>
 <blockquote>
 <p>为什么LDA降维后的维度最多为k-1？ 因为<span class="math inline">\(S_w^{-1}S_b\)</span>进行特征分解时最多有<span class="math inline">\(k-1\)</span>个特征值，也就对应着最多有<span class="math inline">\(k-1\)</span>个特征向量，样本<span class="math inline">\(x_i\)</span>经过<span class="math inline">\(W\)</span>(维度为<span class="math inline">\(N\times{d},d\leq{k-1}\)</span>)转换后得到的<span class="math inline">\(z_i\)</span>特征维度最多为<span class="math inline">\(d,d\leq{k-1}\)</span>。</p>
 </blockquote>
