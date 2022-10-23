@@ -29,12 +29,12 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
 <meta property="og:image" content="https://www.mihaileric.com/static/vector_through_svm_classifiers-cc139d6728db3205c0297a8f04c010ee-6fd10.png">
+<meta property="og:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/SPP.png">
 <meta property="og:image" content="https://miro.medium.com/max/1374/1*EMhHR_g4UWEYpxsVWdpKdA.png">
 <meta property="og:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Fast_RCNN.png">
 <meta property="og:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Faster_RCNN.png">
-<meta property="og:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Faster_RCNN.png">
 <meta property="article:published_time" content="2022-10-14T02:14:22.000Z">
-<meta property="article:modified_time" content="2022-10-22T09:53:30.101Z">
+<meta property="article:modified_time" content="2022-10-23T12:30:24.949Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -123,7 +123,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#r-cnna"><span class="nav-number">2.</span> <span class="nav-text">R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">测试过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">训练过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">RCNN缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spp-net"><span class="nav-number">3.</span> <span class="nav-text">SPP-net</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">3.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fast-r-cnn"><span class="nav-number">4.</span> <span class="nav-text">Fast R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">4.1.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%93%E8%AE%BA"><span class="nav-number">4.2.</span> <span class="nav-text">其他结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#faster-r-cnn"><span class="nav-number">5.</span> <span class="nav-text">Faster R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rpn"><span class="nav-number">5.1.</span> <span class="nav-text">RPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E8%B4%9F%E6%A0%B7%E6%9C%AC"><span class="nav-number">5.1.1.</span> <span class="nav-text">正负样本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.2.</span> <span class="nav-text">损失函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B-1"><span class="nav-number">5.2.</span> <span class="nav-text">训练过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B-1"><span class="nav-number">5.3.</span> <span class="nav-text">测试过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#r-cnna"><span class="nav-number">2.</span> <span class="nav-text">R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">测试过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">训练过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">RCNN缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spp-net"><span class="nav-number">3.</span> <span class="nav-text">SPP-net</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fast-r-cnn"><span class="nav-number">4.</span> <span class="nav-text">Fast R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">4.1.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%93%E8%AE%BA"><span class="nav-number">4.2.</span> <span class="nav-text">其他结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#faster-r-cnn"><span class="nav-number">5.</span> <span class="nav-text">Faster R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B-1"><span class="nav-number">5.1.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpn"><span class="nav-number">5.2.</span> <span class="nav-text">RPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpn%E4%B8%AD%E6%AD%A3%E8%B4%9F%E6%A0%B7%E6%9C%AC%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">5.2.1.</span> <span class="nav-text">RPN中正负样本的设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.2.</span> <span class="nav-text">损失函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B-1"><span class="nav-number">5.3.</span> <span class="nav-text">训练过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -138,7 +138,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 17:53:30" itemprop="dateModified" datetime="2022-10-22T17:53:30+08:00">2022-10-22</time>
+      <time title="Modified: 2022-10-23 20:30:24" itemprop="dateModified" datetime="2022-10-23T20:30:24+08:00">2022-10-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
 <p>有一个独立模块来生成区域建议的网络被称为两阶段检测器。<span id="more"></span> 由于这些网络有两个单独的步骤，它们通常需要更长的时间来生成建议框，具有复杂的架构，缺乏全局上下文信息。 单级检测器使用密集采样在单个镜头中( in a single shot)对语义对象进行分类和定位。具有更简单的结构和实时检测能力。</p>
 <h1 id="r-cnna"><a target="_blank" rel="noopener" href="https://www.mihaileric.com/posts/object-detection-with-rcnn/">R-CNN</a></h1>
 <img src="/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png" class="" title="This is an example image">
-<h2 id="测试过程">测试过程</h2>
+<h2 id="测试过程">测试过程<br></h2>
 <ul>
 <li>R-CNN使用选择性搜素方法选出2000个候选框。</li>
 <li>每个候选框通过训练好的CNN特征提取网络生成4096维的特征向量</li>
@@ -268,37 +268,36 @@
 <li>在R-CNN使用类特定的支持向量机对每个区域候选框进行评分后，使用类特定的边界框回归器(岭回归)对建议候选框进行细化产生新的预测框。</li>
 </ul>
 <h2 id="训练过程">训练过程</h2>
-<p>训练包含3个独立的模块：一是CNN(AlexNet)的微调；二是SVM的分类器训练；三是检测器回归框的训练。</p>
+<p>训练包含3个独立的模块：一是CNN(AlexNet)的微调；二是SVM的分类器训练；三是检测器回归框的训练。<br></p>
 <ul>
 <li>CNN先在大型通用数据集上进行训练，此时训练的标签是图像级的(也就是一张图片对应一个类别标签)，类别是1000类；再在特定领域的数据集上进行微调，此时的分类变成N+1类，对于PASCAL VOC数据集N为20。每个minibatch使用32个正样本(over all classes)，96个负样本。IoU大于0.5时为正样本，否则为负样本。</li>
 <li>继续使用特定领域的数据集训练SVM分类器，此时正负样本的定义略有不同。将真值框作为正样本，将IoU小于0.3的检测框作为负样本。这个值是经验值，设置的不同模型的表现也会跟着变化。</li>
 <li>回归器的训练使用的数据集是<span class="math inline">\((P, G)\)</span>对，<span class="math inline">\(G\)</span>是真值框，<span class="math inline">\(P\)</span>是于真值框IoU大于0.6的检测框。</li>
 </ul>
 <blockquote>
-<p>CNN一开始使用的正负样本定义和SVM相同(即只将真值框作为正样本)，但实验结果不如上面的差异化的正负样本定义。之所以设置0.5作为CNN网络的正负样本阈值，是因为阈值条件宽松可以扩充正样本数据量，不容易过拟合。具体见原论文7.2章第2段。<br></p>
+<p>作者说CNN一开始使用的正负样本定义和SVM相同(即只将真值框作为正样本)，但实验结果不如上面的差异化的正负样本定义。之所以设置0.5作为CNN网络的正负样本阈值，是因为阈值条件宽松可以扩充正样本数据量，不容易过拟合。具体见原论文7.2章第2段。<br></p>
 </blockquote>
 <blockquote>
 <p>使用SVM进行分类训练而不直接使用softmax层也是因为性能下降。其原因可能是： 一是CNN特征提取使用0.5作为阈值区分正负样本，这个条件比较宽松，如果直接接softmax分类效果不好；二是CNN负样本是随机选择，而非"hard negtive"。在fast rcnn中，使用softmax的结果又比SVM好，原因作者没有分析，但可能和文章使用的minibatch sampling方法不同有关，具体见fast rcnn原论文5.4。 具体见原论文3.3.3第2段，7.2章第3段。<br></p>
 </blockquote>
-<h2 id="rcnn缺点">RCNN缺点</h2>
+<h2 id="rcnn缺点">RCNN缺点<br></h2>
 <ul>
 <li>时间复杂度高，因为每张图像需要对2000个区域提议进行分类。</li>
 <li>采用了选择性搜索算法。选择性搜索时间长，并且由于是一种固定算法，不能学习，导致可能产生坏的候选框。</li>
 <li>特征提取和分类检测分开，不是端到端训练。</li>
 </ul>
 <h1 id="spp-net">SPP-net</h1>
-<p>(Spatial Pyramid Pooling, SPP) <br></p>
-<h2 id="概述-1">概述</h2>
+<p>(Spatial Pyramid Pooling, SPP) <img src="/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/SPP.png" class="" title="This is an example image"><br></p>
 <p><strong>问题</strong>：<br> CNN的图像输入需要通过裁剪(crop)或者扭曲(warp)的方式得到固定尺寸的输入。<br> <strong>发现</strong>：<br> CNN网络中只有全连接层要求固定尺寸的输入。<br> <strong>解决方法</strong>：<br> 设计了SPP层，SPP就是对特征图或者感兴趣区域进行不同层级的池化，然后将池化结果拼接得到固定尺寸的特征向量。<br> <img src="https://miro.medium.com/max/1374/1*EMhHR_g4UWEYpxsVWdpKdA.png" /> 无论特征图或者感兴趣区域的尺寸大小如何都可以通过SPP层得到固定尺寸的特征向量。<br> <strong>作用</strong>：<br> 空间金字塔池化层可用来处理任意大小或纵横比的图像。<br> <strong>物体检测领域的贡献</strong>：<br> SPP在物体检测中的主要贡献是在于通过共享卷积计算提升了RCNN模型速度。<br> <strong>弊端</strong>:<br> 为简单起见，其微调固定了卷积层，只训练了分类头，这会导致准确度下降。fast rcnn中认为之所以SPP不微调所有层是因为SPP层反向传播效率太低，效率太低是因为每个batch训练样本(roi)来自不同的图像，每个batch采样128个正负样本，这128个样本来自不同的图像。具体见fat rcnn2.3<br></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/yifanjiang97/sppnet-pytorch">代码网址</a> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spp层的实现</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spatial_pyramid_pool</span>(<span class="params">self,previous_conv, num_sample, previous_conv_size, out_pool_size</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    returns: a tensor vector with shape [1 x n] is the concentration of multi-level pooling</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span>    </span><br><span class="line">    <span class="comment"># print(previous_conv.size())</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(out_pool_size)):</span><br><span class="line">        <span class="comment"># print(previous_conv_size)</span></span><br><span class="line">        h_wid = <span class="built_in">int</span>(math.ceil(previous_conv_size[<span class="number">0</span>] / out_pool_size[i]))</span><br><span class="line">        w_wid = <span class="built_in">int</span>(math.ceil(previous_conv_size[<span class="number">1</span>] / out_pool_size[i]))</span><br><span class="line">        h_pad = (h_wid*out_pool_size[i] - previous_conv_size[<span class="number">0</span>] + <span class="number">1</span>)/<span class="number">2</span></span><br><span class="line">        w_pad = (w_wid*out_pool_size[i] - previous_conv_size[<span class="number">1</span>] + <span class="number">1</span>)/<span class="number">2</span></span><br><span class="line">        maxpool = nn.MaxPool2d((h_wid, w_wid), stride=(h_wid, w_wid), padding=(h_pad, w_pad))</span><br><span class="line">        x = maxpool(previous_conv)</span><br><span class="line">        <span class="keyword">if</span>(i == <span class="number">0</span>):</span><br><span class="line">            spp = x.view(num_sample,-<span class="number">1</span>)</span><br><span class="line">            <span class="comment"># print(&quot;spp size:&quot;,spp.size())</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># print(&quot;size:&quot;,spp.size())</span></span><br><span class="line">            spp = torch.cat((spp,x.view(num_sample,-<span class="number">1</span>)), <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> spp</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> init</span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> spp_layer <span class="keyword">import</span> spatial_pyramid_pool</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SPP_NET</span>(nn.Module):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    A CNN model which adds spp layer so that we can input multi-size tensor</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, opt, input_nc, ndf=<span class="number">64</span>,  gpu_ids=[]</span>):</span><br><span class="line">        <span class="built_in">super</span>(SPP_NET, self).__init__()</span><br><span class="line">        self.gpu_ids = gpu_ids</span><br><span class="line">        self.output_num = [<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">        self.conv1 = nn.Conv2d(input_nc, ndf, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        </span><br><span class="line">        self.conv2 = nn.Conv2d(ndf, ndf * <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        self.BN1 = nn.BatchNorm2d(ndf * <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        self.conv3 = nn.Conv2d(ndf * <span class="number">2</span>, ndf * <span class="number">4</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        self.BN2 = nn.BatchNorm2d(ndf * <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">        self.conv4 = nn.Conv2d(ndf * <span class="number">4</span>, ndf * <span class="number">8</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        self.BN3 = nn.BatchNorm2d(ndf * <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">        self.conv5 = nn.Conv2d(ndf * <span class="number">8</span>, <span class="number">64</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">10752</span>,<span class="number">4096</span>)</span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">4096</span>,<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = self.LReLU1(x)</span><br><span class="line"></span><br><span class="line">        x = self.conv2(x)</span><br><span class="line">        x = F.leaky_relu(self.BN1(x))</span><br><span class="line"></span><br><span class="line">        x = self.conv3(x)</span><br><span class="line">        x = F.leaky_relu(self.BN2(x))</span><br><span class="line">        </span><br><span class="line">        x = self.conv4(x)</span><br><span class="line">        <span class="comment"># x = F.leaky_relu(self.BN3(x))</span></span><br><span class="line">        <span class="comment"># x = self.conv5(x)</span></span><br><span class="line">        spp = spatial_pyramid_pool(x,<span class="number">1</span>,[<span class="built_in">int</span>(x.size(<span class="number">2</span>)),<span class="built_in">int</span>(x.size(<span class="number">3</span>))],self.output_num)</span><br><span class="line">        <span class="comment"># print(spp.size())</span></span><br><span class="line">        fc1 = self.fc1(spp)</span><br><span class="line">        fc2 = self.fc2(fc1)</span><br><span class="line">        s = nn.Sigmoid()</span><br><span class="line">        output = s(fc2)</span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
 <h1 id="fast-r-cnn">Fast R-CNN</h1>
 <img src="/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Fast_RCNN.png" class="" title="This is an example image">
 <p><br></p>
-<h2 id="改进">改进</h2>
+<h2 id="改进">改进<br></h2>
 <ul>
 <li>使用RoI Pooling层替换了SPP层。RoI Pooling层就是single-level SPP层</li>
-<li>采用多任务学习方法，而不是RCNN中的分阶段训练(softmax分类阶段，SVMs分类阶段，检测框回归阶段)，实现了端到端的训练；同时改变了检测框回归的损失函数，该损失函数相对RCNN中的L2损失函数具有更强的鲁棒性。</li>
+<li>采用多任务学习方法，而不是RCNN中的分阶段训练(softmax分类阶段，SVMs分类阶段，检测框回归阶段)，实现了端到端的训练；同时改变了检测框回归的损失函数，该损失函数相对RCNN中的L2损失函数具有更强的鲁棒性。<br></li>
 </ul>
 <blockquote>
 <p>fast rcnn中的检测框回归损失函数： <span class="math display">\[l=\sum_{i\in\{x,y,w,h\}}smooth_{L_1}(t_i-v_i)\]</span> <span class="math display">\[
@@ -308,8 +307,11 @@ smooth_{L_1}(x)= \begin{cases}
 |x|-0.5, &amp; otherwise\\
 \end{cases}
 \end{equation}
-\]</span> - mini-batch sampling方法优化，像RCNN一样仍采样128个样本数据(RoI)，但不同的是这128个样本数据仅来自于2张图片，也就是每张图片有64个样本数据。25%为正样本，检测框与真值框的IoU大于0.5为正样本，大于0.1小于0.5为负样本，低阈值0.1此处起到类似难例挖掘的作用。 SPPnet和RCNN的128个样本来自128张图片。而fast rcnn的128个数据样本来自2张图片，这样的好处在于，网络在前向过程和反向传播时可以共享计算。速度提升64倍。</p>
+\]</span> 选择L2损失对于比较大的误差的惩罚很高。 采用稍微缓和一点绝对损失函数（L1损失）f(x)=|x|，它是随着误差线性增长，而不是平方增长。但这个函数在0点处导数不存在，因此可能会影响收敛。解决办法是分段函数，在0点附近使用平方函数使得它更加平滑。因此被称为平滑L1损失函数<br></p>
 </blockquote>
+<ul>
+<li>mini-batch sampling方法优化，像RCNN一样仍采样128个样本数据(RoI)，但不同的是这128个样本数据仅来自于2张图片，也就是每张图片有64个样本数据。25%为正样本，检测框与真值框的IoU大于0.5为正样本，大于0.1小于0.5为负样本，低阈值0.1此处起到类似难例挖掘的作用。 &gt; SPPnet和RCNN的128个样本来自128张图片。而fast rcnn的128个数据样本来自2张图片，这样的好处在于，网络在前向过程和反向传播时可以共享计算。速度提升64倍。</li>
+</ul>
 <h2 id="其他结论">其他结论</h2>
 <ul>
 <li>微调卷积层能带来mAP的提升，但是从conv2 1往上微调带来的mAP提升比从conv3 1往上微调带来的mAP提升只高0.3个points，时间却是conv3 1的1.3倍。</li>
@@ -319,16 +321,23 @@ smooth_{L_1}(x)= \begin{cases}
 </ul>
 <h1 id="faster-r-cnn">Faster R-CNN</h1>
 <img src="/2022/10/14/2%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Faster_RCNN.png" class="" title="This is an example image">
-<p><br> <img src="2阶段物体检测/Faster_RCNN.png" /> ## 改进 - 设计了一个非常小的卷积网络RPN来替代选择性搜索算法生成候选框，加快了网络速度。 - 针对候选框尺度和横纵比，提出了anchor box的概念。在最后一层特征图的每个像素位置，设置3种尺度(128<em>128，256</em>256，512*512)和3种比例(1:1,1:2,2:1)共9种组合的anchor box。 &gt; 为了网络习得尺度不变性，之前的网络做法有两种，一是缩放图像和特征图，fast rcnn中图像金字塔有5种尺度{480, 576, 688, 864, 1200}；二是使用多种不同大小的卷积核。具体参见原论文3.1.1</p>
+<p><br></p>
+<h2 id="改进-1">改进</h2>
+<ul>
+<li>设计了一个非常小的卷积网络RPN来替代选择性搜索算法生成候选框，加快了网络速度。</li>
+<li>针对候选框尺度和横纵比，提出了anchor box的概念。在最后一层特征图的每个像素位置，设置3种尺度(128<em>128，256</em>256，512*512)和3种比例(1:1,1:2,2:1)共9种组合的anchor box。 &gt; 为了网络习得尺度不变性，之前的网络做法有两种，一是缩放图像和特征图，fast rcnn中图像金字塔有5种尺度{480, 576, 688, 864, 1200}；二是使用多种不同大小的卷积核。具体参见原论文3.1.1</li>
+</ul>
 <h2 id="rpn">RPN</h2>
-<p>区域提议网络(RPN)将图像(任何大小)作为输入，输出一组带有对象评分(objectness score)的候选框，对象评分的意思是该候选框中包含物体的概率。</p>
-<h3 id="正负样本">正负样本</h3>
+<h3 id="rpn中正负样本的设置">RPN中正负样本的设置</h3>
 <p>正样本有2种情况： - 和ground truth具有最高交并比的anchor - 和ground truth交并比超过0.7的anchor</p>
-<p>负样本是和ground truth交并比小于0.3的anchor。 每个mini batch采样256个样本，不同于fast rcnn，这256个样本全部来自同一张图片，正负样本的比例设置成1：1，如果正样本的数量不够128，则使用负样本补齐。</p>
+<p>负样本是和ground truth交并比小于0.3的anchor。 每个mini batch采样256个样本，不同于论文fast rcnn，这256个样本全部来自同一张图片，正负样本的比例设置成1：1，如果正样本的数量不够128，则使用负样本补齐。</p>
 <h3 id="损失函数">损失函数</h3>
 <p>损失函数和fast rcnn类似。 分类只有正负2个类别，所以分类是一个二值交叉熵损失。 回归使用的是smooth L1损失。</p>
 <h2 id="训练过程-1">训练过程</h2>
-<h2 id="测试过程-1">测试过程</h2>
+<p>可以把faster rcnn看作两个独立的网络rpn和fast rcnn的组合，两个网络都有相同的backbone(vgg)。rpn和fast rcnn如果独立训练会以不同的方式改变backbone(vgg)，为了能够共享backbone，需要一种策略去训练网络。作者提供了3种方法，而faster rcnn使用的是以下这种方法更新网络参数,训练过程有4步：<br> <strong>四步交替迭代训练</strong> 1. 使用imagenet预训练模型初始化rpn的backbone(vgg)，微调backbone和rpn网络。 2. 使用第一步提供的proposal，相当于用proposal替代了选择性搜素算法提供的检测框，然后按照原fast rcnn的方法去训练。 &gt; 目前两个网络还没有共享backbone(vgg)，是两个独立的网络。 3. 固定第二步训练得到backbone参数，训练rpn，此时两个网络共享了backbone。 4. 继续固定backbone的参数，训练fast rcnn。</p>
+<blockquote>
+<p>虽然原始论文中用四步交替迭代训练。然而现在github上开源的实现大多是采用近似联合训练(Approximate joint training)，完成端到端训练。</p>
+</blockquote>
 <h1 id="参考">参考</h1>
 
     </div>
