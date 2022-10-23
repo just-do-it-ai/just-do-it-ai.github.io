@@ -28,7 +28,7 @@
 <meta property="og:description" content="概述 朴素贝叶斯是一个基于贝叶斯定理和特征条件独立假设的分类方法，属于生成模型。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-10-23T12:29:11.000Z">
-<meta property="article:modified_time" content="2022-10-23T14:07:55.904Z">
+<meta property="article:modified_time" content="2022-10-23T14:14:04.638Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 
@@ -217,7 +217,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-23 20:29:11 / Modified: 22:07:55" itemprop="dateCreated datePublished" datetime="2022-10-23T20:29:11+08:00">2022-10-23</time>
+      <time title="Created: 2022-10-23 20:29:11 / Modified: 22:14:04" itemprop="dateCreated datePublished" datetime="2022-10-23T20:29:11+08:00">2022-10-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -253,10 +253,11 @@
 <p>以垃圾邮件识别为例。假设现在有10000封电子邮件，其中垃圾邮件有3000封，非垃圾邮件有7000封。对应的概率分别是：<br> <span class="math display">\[𝑃(&quot;垃圾邮件&quot; )=0.3\]</span> <span class="math display">\[𝑃(&quot;非垃圾邮件&quot; )=0.7\]</span> 现在我们就将这些数据应用于朴素贝叶斯模型，操作过程如下:<br> <strong>第1步 分词</strong><br> 把训练集中的每一封邮件文本都以词或短语为单位进行切分（可以利用专门的分词工具，比如python中自带的jieba分词）。假设一封需要预测的邮件内容为“我司开设机器学习系统课程，并可办理各种正规发票”，那么分词后可能就是：“我司”，“开设”，“机器学习”，“系统课程”，“并可”，“办理”，“各种”，“正规”，“发票”。分好的词按类别混合在一起，我们称之为“词袋”。</p>
 <p><strong>第2步 统计</strong><br> 统计词袋中各个词在各个类别下出现的概率为 <span class="math display">\[𝑃(&quot;我司&quot;│&quot;垃圾邮件&quot; ),𝑃(&quot;我司&quot; │&quot;非垃圾邮件&quot; )\]</span> <span class="math display">\[𝑃(&quot;开设&quot;│&quot;垃圾邮件&quot; ),𝑃(&quot;开设&quot;│&quot;非垃圾邮件&quot; )\]</span> <span class="math display">\[𝑃(&quot;机器学习&quot;│&quot;垃圾邮件&quot; ),𝑃(&quot;机器学习&quot;│&quot;非垃圾邮件&quot; )…\]</span></p>
 <p>比如：<br> <span class="math display">\[𝑃(&quot;我司&quot;│&quot;垃圾邮件&quot; )=\frac{𝑁_{𝑘𝑗}}{𝑁_𝑘}\]</span> 其中，<span class="math inline">\(𝑁_{𝑘}\)</span>表示类别<span class="math inline">\(𝒄_𝒌\)</span>中包含的总邮件文本数目；<span class="math inline">\(𝑵_{𝒌𝒋}\)</span>表示类别<span class="math inline">\(𝒄_𝒌\)</span>中包含“我司”这个词的邮件文本数目。</p>
-<p><strong>第3步 计算预测</strong><br> 假设现在出现一封新的邮件：“机器学习精英直播”，分词后为“机器学习”“精英”“直播”。要判断该邮件是否为垃圾邮件，则进行以下计算： <span class="math display">\[𝑃(&quot;垃圾邮件&quot;|&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)=\frac{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;垃圾邮件&quot;)×𝑃(&quot;垃圾邮件&quot; )}{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)}\]</span> <span class="math display">\[𝑃(&quot;非垃圾邮件&quot;|&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)
-=\frac{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;非垃圾邮件&quot;)×𝑃(&quot;非垃圾邮件&quot;)}{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)}\]</span> 进一步利用特征条件独立假设，这里即假设各个词之间是相互独立的，则有：<br> <span class="math display">\[𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;垃圾邮件&quot;)×𝑃(&quot;垃圾邮件&quot;)
+<p><strong>第3步 计算预测</strong><br> 假设现在出现一封新的邮件：“机器学习精英直播”，分词后为“机器学习”“精英”“直播”。要判断该邮件是否为垃圾邮件，则进行以下计算： <span class="math display">\[𝑃(&quot;垃圾邮件&quot;|&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)\\
+=\frac{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;垃圾邮件&quot;)×𝑃(&quot;垃圾邮件&quot; )}{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)}\]</span> <span class="math display">\[𝑃(&quot;非垃圾邮件&quot;|&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)\\
+=\frac{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;非垃圾邮件&quot;)×𝑃(&quot;非垃圾邮件&quot;)}{𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;)}\]</span> 进一步利用特征条件独立假设，这里即假设各个词之间是相互独立的，则有：<br> <span class="math display">\[𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;垃圾邮件&quot;)×𝑃(&quot;垃圾邮件&quot;)\\
 =𝑃(&quot;机器学习&quot;│&quot;垃圾邮件&quot;)…×𝑃(&quot;直播&quot;|&quot;垃圾邮件&quot;)×𝑃(&quot;垃圾邮件&quot;)\]</span></p>
-<p><span class="math display">\[𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;非垃圾邮件&quot;)×𝑃(&quot;非垃圾邮件&quot;)
+<p><span class="math display">\[𝑃(&quot;机器学习&quot;,&quot;精英&quot;,&quot;直播&quot;│&quot;非垃圾邮件&quot;)×𝑃(&quot;非垃圾邮件&quot;)\\
 =𝑃(&quot;机器学习&quot;│&quot;非垃圾邮件&quot;)…×𝑃(&quot;直播&quot;|&quot;非垃圾邮件&quot;)×𝑃(&quot;非垃圾邮件&quot;)\]</span></p>
 <p>将之前从词袋中统计的各个特征词的条件概率<span class="math inline">\(𝑃(&quot;机器学习&quot;│&quot;垃圾邮件&quot; )…\)</span>和先验概率<span class="math inline">\(𝑃(“垃圾邮件”)\)</span>，<span class="math inline">\(𝑃(&quot;非垃圾邮件&quot;)\)</span>等分别代入上面两式并比较两式值的大小（因为分母相同，所以只用比较分子），如果垃圾邮件的概率大就判断为垃圾邮件，否则判断为非垃圾邮件。</p>
 <p>上面的计算过程存在一个小缺陷，那就是在计算先验概率 <span class="math display">\[∏_{𝑗=1}^𝑁𝑃(𝑋^{(𝑗)}=𝑥_𝑖^{(𝑗)}│𝑌=𝑐_𝑘)\]</span> 的过程中出现计算不合法的问题。<br> 从上面的例子我们知道，<span class="math inline">\(𝑃(𝑋^{(j)}=𝑥_𝑖^{(𝑗)}|𝑌=𝑐_𝑘)\)</span>表示样本<span class="math inline">\(𝑥_𝑖^{(𝑗)}\)</span>在各个类别<span class="math inline">\(𝑐_𝑘\)</span>下出现的概率，比如<span class="math inline">\(𝑃(&quot;机器学习&quot;|&quot;垃圾邮件&quot;)\)</span>，其值就等于所有包含“机器学习”特征词的邮件数目除以所有垃圾邮件的总数目。但是，如果整个训练集样本中都没有出现过“机器学习”这个词呢？那就相当于<span class="math inline">\(𝑃(&quot;机器学习&quot;│&quot;垃圾邮件&quot;)=0\)</span>，这样，不管样本<span class="math inline">\(𝑥_𝑖\)</span>中其他特征词在多少垃圾邮件中出现，最终<span class="math inline">\(∏_{𝑗=1}^𝑁𝑃(𝑋^{(𝑗)}=𝑥_𝑖^{(𝑗)}│𝑌=𝑐_𝑘)\)</span>的值均为0，即该邮件在垃圾邮件这一类别下的概率始终都为0，这明显不合理。<br> 为了避免这一问题，朴素贝叶斯需要加入一个平滑因子，即在计算每个 <span class="math inline">\(∏_{𝑗=1}^𝑁𝑃(𝑋^{(𝑗)}=𝑥_𝑖^{(𝑗)}│𝑌=𝑐_𝑘)\)</span> 时，在分母和分子当中同时增加一个较小的值，一般分子当中加入平滑因子<span class="math inline">\(\alpha\)</span>，在分母中对应加入一个<span class="math inline">\(𝐾\alpha\)</span>，即:<br> <span class="math display">\[∏_{𝑗=1}^𝑁𝑃(𝑋^{(𝑗)}=𝑥_𝑖^{(𝑗)}│ 𝑌=𝑐_𝑘)=\frac{𝑁_{𝑘𝑗}+\alpha}{𝑁_𝑘+𝐾\alpha}\]</span> 这里K表示训练集中类别<span class="math inline">\(𝑐_𝑘\)</span>的总数，如上面垃圾邮件的例子中就是K=2。当我们取𝛼=1时，对应的平滑就称为“拉普拉斯平滑”。</p>
