@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 Boosting 是一种提升算法，可以将弱的学习算法提升为强的学习算法。 基本思路是将基分类器层层叠加，每一层在训练的时候，对前一层基分类器分错的样本，给予更高的权重。 AdaBoost  算法步骤:  先用每个样本权重相等的训练集训练一个初始的基学习器； 提高上一轮被错误分类的样本的权值，降低被正确分类的样本的权值； 线性加权求和。误差率小的基学习器拥有较大的权值，误差率大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="boosting算法">
+<meta property="og:url" content="http://example.com/2022/10/23/boosting%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 Boosting 是一种提升算法，可以将弱的学习算法提升为强的学习算法。 基本思路是将基分类器层层叠加，每一层在训练的时候，对前一层基分类器分错的样本，给予更高的权重。 AdaBoost  算法步骤:  先用每个样本权重相等的训练集训练一个初始的基学习器； 提高上一轮被错误分类的样本的权值，降低被正确分类的样本的权值； 线性加权求和。误差率小的基学习器拥有较大的权值，误差率大">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
+<meta property="article:published_time" content="2022-10-23T14:24:29.000Z">
+<meta property="article:modified_time" content="2022-10-23T16:52:36.643Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
+
+
+<link rel="canonical" href="http://example.com/2022/10/23/boosting%E7%AE%97%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/23/boosting%E7%AE%97%E6%B3%95/","path":"2022/10/23/boosting算法/","title":"boosting算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>boosting算法 | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gbdt"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">优缺点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost-1"><span class="nav-number">5.</span> <span class="nav-text">XGBoost</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/23/boosting%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="boosting算法 | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          boosting算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-23 22:24:29" itemprop="dateCreated datePublished" datetime="2022-10-23T22:24:29+08:00">2022-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-24 00:52:36" itemprop="dateModified" datetime="2022-10-24T00:52:36+08:00">2022-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">聚类</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<p>Boosting 是一种提升算法，可以将弱的学习算法提升为强的学习算法。 基本思路是将基分类器层层叠加，每一层在训练的时候，对前一层基分类器分错的样本，给予更高的权重。<br></p>
+<h1 id="adaboost">AdaBoost</h1>
+<p><img src="https://tangshusen.me/2018/11/18/adaboost/2.1.png" /></p>
+<h2 id="算法步骤">算法步骤:</h2>
+<ul>
+<li>先用每个样本权重相等的训练集训练一个初始的基学习器；</li>
+<li>提高上一轮被错误分类的样本的权值，降低被正确分类的样本的权值；</li>
+<li>线性加权求和。误差率小的基学习器拥有较大的权值，误差率大的基学习器拥有较小的权值。</li>
+</ul>
+<h1 id="gbdt">GBDT</h1>
+<p>GBDT就是所有弱分类器的结果相加等于预测值，然后下一个弱分类器去拟合误差函数对预测值的残差(这个残差就是预测值与真实值之间的误差)。<br> GBDT分类树使用的基分类器是CART分类树；GBDT回归树使用的基分类器是CART回归树。<br> <strong>举例</strong> 比如我今年30岁了，但计算机或者模型GBDT并不知道我今年多少岁，那GBDT咋办呢？ - 它会在第一个弱分类器（或第一棵树中）随便用一个年龄比如20岁来拟合，然后发现误差有10岁； - 接下来在第二棵树中，用6岁去拟合剩下的损失，发现差距还有4岁； - 接着在第三棵树中用3岁拟合剩下的差距，发现差距只有1岁了； - 最后在第四课树中用1岁拟合剩下的残差，完美。 - 最终，四棵树的结论加起来，就是真实年龄30岁（实际工程中，gbdt是计算负梯度，用负梯度近似残差）</p>
+<p>梯度提升树（GBDT）是在提升树的基础上改进的。梯度提升树扩展了提升树的适用范围。梯度提升树只需要损失函数对fk(x)可微，而不需要fk(x)对x也可微。</p>
+<h2 id="原理推导">原理推导</h2>
+<p><span class="math inline">\(𝑓(𝑥)\)</span>在<span class="math inline">\(𝑥= 𝑥_{𝑘−1}\)</span>处进行泰勒展开，得: <span class="math display">\[𝑓(𝑥)=𝑓(𝑥_{𝑘−1})+𝑓^′(𝑥_{𝑘−1})(𝑥−𝑥_{𝑘−1})\]</span> 再取<span class="math inline">\(𝑥=𝑥_𝑘\)</span>，得： <span class="math display">\[𝑓(𝑥_𝑘 )=𝑓(𝑥_{𝑘−1})+𝑓^′ (𝑥_{𝑘−1})((𝑥_𝑘−𝑥_{𝑘−1})\]</span> 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥))\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行泰勒展开，可得: <span class="math display">\[𝐿(𝑦,𝑓(𝑥))\approx𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}(𝑓(𝑥)−𝑓_{𝑘−1}(𝑥))\]</span> 再取<span class="math inline">\(𝑓(𝑥)=𝑓_𝑘(𝑥)\)</span>，得：</p>
+<p><span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))\approx𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))\]</span> 又： <span class="math display">\[(𝑓_𝑘 (𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘 (𝑥;\theta_𝑘)\]</span> 所以有： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)\approx 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}𝑇_𝑘(𝑥;\theta_𝑘)
+\]</span> <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)-𝐿(𝑦,𝑓_{𝑘−1}(𝑥)) = \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}𝑇_𝑘(𝑥;\theta_𝑘)
+\]</span> <span class="math inline">\(𝐿(𝑦,𝑓_𝑘(𝑥))\)</span>和<span class="math inline">\(𝐿(𝑦,𝑓_{𝑘−1}(𝑥))\)</span>分别表示经过k轮和k-1轮迭代后提升树模型的损失，显然我们希望每一轮迭代都能在前面一轮的基础上减小损失值，即： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≤𝐿(𝑦,𝑓_{𝑘−1}(𝑥))\]</span> <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))−𝐿(𝑦,𝑓_{𝑘−1}(𝑥))≤0\]</span> 显然，当取： <span class="math display">\[𝑇_𝑘(𝑥;\theta_𝑘 )= −\left[\frac{\partial𝐿(𝑦,𝑓(𝑥))}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\]</span> 时能保证目标恒成立。<br> 对于回归问题，当损失函数取平方损失函数: <span class="math display">\[𝐿(𝑦,𝑓(𝑥))=\frac{1}{2}[𝑦−𝑓(𝑥)]^2\]</span> 时，损失函数的负梯度在当前模型的值为: <span class="math display">\[−\left[\frac{\partial𝐿(𝑦,𝑓(𝑥)}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\]</span> <span class="math display">\[\begin{align*}
+&amp;=−\left[\frac{\partial\frac{1}{2}[𝑦−𝑓(𝑥)]^2}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\\
+\\
+&amp;=[𝑦−𝑓(𝑥)]_{𝑓(𝑥)=𝑓_{𝑘−1} (𝑥)}\\
+\\
+&amp;=𝑦−𝑓_{𝑘−1}(𝑥)
+\end{align*}
+\]</span> 验证了前面的拟合年龄的例子。<br> GBDT分类和回归的区别在于采用的损失函数的不同。<br></p>
+<h2 id="优缺点">优缺点：</h2>
+<p><strong>优点</strong><br> 在处理回归任务时，由于可以选择Huber损失函数或Quantile损失函数，因此相对于AdaBoost，对噪声的敏感性大大降低。<br> <strong>缺点</strong><br> 和AdaBoost一样，对各个基学习器之间存在强关联，不利于并行化处理。</p>
+<h1 id="xgboost">XGBoost</h1>
+<p>XGBoost高效地实现了GBDT算法并进行了算法和工程上的许多改进。 ## 原理 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥)\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行二阶泰勒展开： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥)}{\partial𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}∗\frac{(\partial^2𝐿(𝑦,𝑓_{𝑘−1}(𝑥)))}{\partial𝑓_{𝑘−1}^2(𝑥)}[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
+\]</span> 取<span class="math inline">\(𝑔=\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}(𝑥)}\)</span>，<span class="math inline">\(ℎ=\frac{\partial^2 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}^2(𝑥)}\)</span>，代入上式得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}ℎ[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
+\]</span> 又在GBDT中，利用前向分布算法，有<span class="math inline">\((𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘(𝑥)\)</span>，代入得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g𝑇_𝑘(𝑥)+\frac{1}{2}ℎ𝑇_𝑘^2(𝑥)
+\]</span> 上面式子仅针对一个样本数据，对于整体得样本，其损失函数为： <span class="math display">\[𝐿≈∑_{𝑖=1}^𝑁𝐿(𝑦,𝑓_𝑘(𝑥)≈∑_{𝑖=1}^𝑁[ 𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))+g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]\]</span> 等式右边中得第一项<span class="math inline">\(𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))\)</span>只与前k-1轮有关，第k轮优化中可将该项视为常数。另外加上正则化项就可得到XGBoost模型的损失函数: <span class="math display">\[𝐿=∑_{𝑖=1}^𝑁[g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]+Ω(𝑇_𝑘 (𝑥))\]</span></p>
+<h1 id="xgboost-1">XGBoost</h1>
+<h1 id="参考">参考</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/23/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="prev" title="朴素贝叶斯">
+                  <i class="fa fa-chevron-left"></i> 朴素贝叶斯
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/" rel="next" title="单阶段物体检测">
+                  单阶段物体检测 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
