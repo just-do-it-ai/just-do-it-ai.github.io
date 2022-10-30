@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。 yolov1 只使用单一的网络去预测检测框和分类，可以做到端到端训练，速度很快。 # 结构  \(7\times 7,3\times 3,1\times 1\)代表的是卷积核的大小，\(s-2\)代表的是步长为\(2\)，\(\times 4,\times 2\)代表重复次数。 最后3个模块的操作是先将\(7\times">
+    <meta name="description" content="概述 单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单阶段物体检测">
 <meta property="og:url" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="概述 单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。 yolov1 只使用单一的网络去预测检测框和分类，可以做到端到端训练，速度很快。 # 结构  \(7\times 7,3\times 3,1\times 1\)代表的是卷积核的大小，\(s-2\)代表的是步长为\(2\)，\(\times 4,\times 2\)代表重复次数。 最后3个模块的操作是先将\(7\times">
+<meta property="og:description" content="概述 单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*1noFJp_rnXsG0TJvtoghFA.png">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_block.png">
 <meta property="og:image" content="https://learnopencv.com/wp-content/uploads/2022/10/yolov6-vgg-reparameterization.png">
 <meta property="article:published_time" content="2022-10-25T01:21:53.000Z">
-<meta property="article:modified_time" content="2022-10-30T12:45:56.976Z">
+<meta property="article:modified_time" content="2022-10-30T12:47:50.502Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png">
@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-30 20:45:56" itemprop="dateModified" datetime="2022-10-30T20:45:56+08:00">2022-10-30</time>
+      <time title="Modified: 2022-10-30 20:47:50" itemprop="dateModified" datetime="2022-10-30T20:47:50+08:00">2022-10-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="概述">概述</h1>
-<p>单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。</p>
+<p>单阶段物体检测的方法包括YOLO、SDD和RetinaNet等。<span id="more"></span></p>
 <h1 id="yolov1">yolov1</h1>
 <p>只使用单一的网络去预测检测框和分类，可以做到端到端训练，速度很快。 # 结构 <img src="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png" /> <span class="math inline">\(7\times 7,3\times 3,1\times 1\)</span>代表的是卷积核的大小，<span class="math inline">\(s-2\)</span>代表的是步长为<span class="math inline">\(2\)</span>，<span class="math inline">\(\times 4,\times 2\)</span>代表重复次数。<br> 最后3个模块的操作是先将<span class="math inline">\(7\times 7\times 1024\)</span>的卷积层展平然后接全连接层得到<span class="math inline">\(4096\)</span>维向量，之后再接一个全连接层得到<span class="math inline">\(1470\)</span>维向量，最后将该向量reshape成<span class="math inline">\(7\times 7\times 30\)</span>。<span class="math inline">\(7\times 7\)</span>代表将图像分成<span class="math inline">\(7\times 7\)</span>的网格，每个网格负责预测类别和检测框，<span class="math inline">\(30\)</span>代表<span class="math inline">\(20\)</span>个类别和<span class="math inline">\(2\)</span>个检测框，每个检测框<span class="math inline">\(5\)</span>个参数，<span class="math inline">\(30=20+2\times 5\)</span>，<span class="math inline">\(5\)</span>包含<span class="math inline">\(1\)</span>个置信度(判断检测框内是否含有物体)和<span class="math inline">\(4\)</span>个检测框回归参数(<span class="math inline">\(x,y,w,h\)</span>)。</p>
 <h2 id="损失函数">损失函数</h2>
