@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/R-FCN_originpaper.png">
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T04:10:25.183Z">
+<meta property="article:modified_time" content="2022-10-31T04:15:20.444Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 12:10:25" itemprop="dateModified" datetime="2022-10-31T12:10:25+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 12:15:20" itemprop="dateModified" datetime="2022-10-31T12:15:20+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -366,7 +366,7 @@ smooth_{L_1}(x)= \begin{cases}
 <h2 id="概述-1">概述</h2>
 <p><strong>问题:</strong><br> 特征金字塔是识别系统检测不同尺度物体的基本组成部分。但最近的深度学习对象检测器已经避免了金字塔表示，部分原因是它们需要大量的计算和内存。<br> <strong>解决方法:</strong><br> 利用深度卷积网络固有的多尺度、金字塔层次结构，以边际额外成本(marginal extra cost:只能说造词能力很强，边际额外成本没有定义，应该指的是虽然计算开销增加了，但是以高效率的方式增加的，相对于其他方法增加的计算开销很小)构建特征金字塔。开发了一种具有横向连接的自顶向下架构，用于构建各种尺度的高级语义特征图。这种架构被称为特征金字塔网络。<br> <strong>fpn与其他方法比较：</strong> <img src="https://production-media.paperswithcode.com/methods/new_teaser_TMZlD2J.jpg" /></p>
 <h2 id="fpn在faster-rcnn中的部署细节">fpn在faster rcnn中的部署细节</h2>
-<p><strong>对于rpn：</strong><br> 因为头部(rpnhead,也就是一个3x3卷积后跟两个1x1卷积分别对应着分类和回归)在所有金字塔层级的所有像素位置上密集滑动，在特定的层级上没有必要有多尺度的锚框(anchor)。相反，我们将单一尺度的锚框分配到每个层级，当然每个层级的锚框还是有3种横纵比。那么，如果有5个层级，则会有15种锚框。<span class="math inline">\(\{32^2, 64^2, 128^2, 256^2, 512^2\}\)</span>，尺度为32的对应着底层的特征图<span class="math inline">\(p_2\)</span>。<br> <strong>对于fast rcnn：</strong><br> Fast R-CNN是一个基于区域的对象检测器，它使用感兴趣区域(RoI)提取特征。Fast R-CNN最常在单尺度特征图上执行。要将它与FPN一起使用，我们需要将不同尺度的roi分配到金字塔级别。分配公式如下： <span class="math display">\[k = \lfloor k0 + log_2(\sqrt{wh}/224)\rfloor\]</span> 224是imagenet预训练网络常用的尺度。Fast R-CNN使用<span class="math inline">\(C_4\)</span>作为单尺度特征映射，因此将<span class="math inline">\(k_0\)</span>设为4。w和h是感兴趣区域在输入图像上的宽和高。<br></p>
+<p><strong>对于rpn：</strong><br> 因为头部(rpnhead,也就是一个3x3卷积后跟两个1x1卷积分别对应着分类和回归)在所有金字塔层级的所有像素位置上密集滑动，在特定的层级上没有必要有多尺度的锚框(anchor)。相反，我们将单一尺度的锚框分配到每个层级，当然每个层级的锚框还是有3种横纵比。那么，如果有5个层级，则会有15种锚框。<span class="math inline">\(\{32^2, 64^2, 128^2, 256^2, 512^2\}\)</span>，尺度为32的对应着底层的特征图<span class="math inline">\(p_2\)</span>。<br> <strong>对于fast rcnn：</strong><br> Fast R-CNN是一个基于区域的对象检测器，它使用感兴趣区域(RoI)提取特征。Fast R-CNN最常在单尺度特征图上执行。要将它与FPN一起使用，我们需要将不同尺度的roi分配到金字塔级别。分配公式如下： <span class="math display">\[k = \lfloor k_0 + log_2(\sqrt{wh}/224)\rfloor\]</span> 224是imagenet预训练网络常用的尺度。Fast R-CNN使用<span class="math inline">\(C_4\)</span>作为单尺度特征映射，因此将<span class="math inline">\(k_0\)</span>设为4。w和h是感兴趣区域在输入图像上的宽和高。<br></p>
 <blockquote>
 <p>fpn中给从底向上路径的特征图取名为<span class="math inline">\(\{C_2,C_3,C_4,C_5,C_6\}\)</span>，从顶向下路径的特征图取名为<span class="math inline">\(\{P_2,P_3,P_4,P_5,P_6\}\)</span>。<span class="math inline">\(C_2\)</span>和<span class="math inline">\(P_2\)</span>对应着不同路径下相同分辨率特征图且是最底层特征图。</p>
 </blockquote>
