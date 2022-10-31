@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-08-26_at_2.55.44_PM_JVfxCw7.png">
 <meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_block.png">
 <meta property="article:published_time" content="2022-10-25T01:21:53.000Z">
-<meta property="article:modified_time" content="2022-10-31T03:39:11.644Z">
+<meta property="article:modified_time" content="2022-10-31T03:44:39.876Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png">
@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 11:39:11" itemprop="dateModified" datetime="2022-10-31T11:39:11+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 11:44:39" itemprop="dateModified" datetime="2022-10-31T11:44:39+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -305,7 +305,10 @@ b_h &amp;=p_he^{t_h}\end{align*}
 <p><span class="math inline">\(\alpha\)</span>是平衡参数: <span class="math display">\[\alpha=\frac{v}{1-IoU+v}\]</span> <span class="math inline">\(v\)</span>用于度量长宽比的一致性程度： <span class="math display">\[v=\frac{4}{\pi}(arctan(\frac{w^{gt}}{h^{gt}})-arctan(\frac{w}{h}))^2\]</span></p>
 </blockquote>
 <h2 id="bag-of-specials">Bag of specials</h2>
-<p>Bag of specials不同于Bag of freebies在于其增加小幅度推理开销。<br> - 扩大感受野。SPP、ASPP、RFB</p>
+<p>Bag of specials不同于Bag of freebies在于其增加小幅度推理开销。<br></p>
+<ul>
+<li>扩大感受野。SPP、ASPP、RFB</li>
+</ul>
 <blockquote>
 <p>此处的SPP不是原论文中的SPP，原论文的中的SPP会生成一维的特征向量，这没法部署到全卷积神经网络中去，YOLOv3使用不同核大小{1，5，9，13}，步长为1的池化层得到SPP层特征，相对较大的卷积核可以增加感受野。<br> <img src="https://d3i71xaburhd42.cloudfront.net/2f0827a1f052a36c2e48db3f5c843e8a204f3dd4/10-Figure3-1.png" /> ASPP和RFB则都使用了扩张卷积(dilated convolution)来增大感受野。</p>
 </blockquote>
