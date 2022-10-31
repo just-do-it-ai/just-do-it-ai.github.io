@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-d7e33ab8aebaba8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/846/format/webp">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-e56e5ed5ac6c3e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1194/format/webp">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T03:52:47.030Z">
+<meta property="article:modified_time" content="2022-10-31T03:57:37.730Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 11:52:47" itemprop="dateModified" datetime="2022-10-31T11:52:47+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 11:57:37" itemprop="dateModified" datetime="2022-10-31T11:57:37+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -314,8 +314,11 @@ smooth_{L_1}(x)= \begin{cases}
 \]</span> 选择L2损失对于比较大的误差的惩罚很高。 采用稍微缓和一点绝对损失函数（L1损失）f(x)=|x|，它是随着误差线性增长，而不是平方增长。但这个函数在0点处导数不存在，因此可能会影响收敛。解决办法是分段函数，在0点附近使用平方函数使得它更加平滑。因此被称为平滑L1损失函数<br></p>
 </blockquote>
 <ul>
-<li>mini-batch sampling方法优化，像RCNN一样仍采样128个样本数据(RoI)，但不同的是这128个样本数据仅来自于2张图片，也就是每张图片有64个样本数据。25%为正样本，检测框与真值框的IoU大于0.5为正样本，大于0.1小于0.5为负样本，低阈值0.1此处起到类似难例挖掘的作用。 &gt; SPPnet和RCNN的128个样本来自128张图片。而fast rcnn的128个数据样本来自2张图片，这样的好处在于，网络在前向过程和反向传播时可以共享计算。速度提升64倍。</li>
+<li>mini-batch sampling方法优化，像RCNN一样仍采样128个样本数据(RoI)，但不同的是这128个样本数据仅来自于2张图片，也就是每张图片有64个样本数据。25%为正样本，检测框与真值框的IoU大于0.5为正样本，大于0.1小于0.5为负样本，低阈值0.1此处起到类似难例挖掘的作用。</li>
 </ul>
+<blockquote>
+<p>SPPnet和RCNN的128个样本来自128张图片。而fast rcnn的128个数据样本来自2张图片，这样的好处在于，网络在前向过程和反向传播时可以共享计算。速度提升64倍。</p>
+</blockquote>
 <h2 id="其他结论">其他结论</h2>
 <ul>
 <li>微调卷积层能带来mAP的提升，但是从conv2 1往上微调带来的mAP提升比从conv3 1往上微调带来的mAP提升只高0.3个points，时间却是conv3 1的1.3倍。</li>
@@ -329,11 +332,18 @@ smooth_{L_1}(x)= \begin{cases}
 <h2 id="改进-1">改进</h2>
 <ul>
 <li>设计了一个非常小的卷积网络RPN来替代选择性搜索算法生成候选框，加快了网络速度。</li>
-<li>针对候选框尺度和横纵比，提出了anchor box的概念。在最后一层特征图的每个像素位置，设置3种尺度(128<em>128，256</em>256，512*512)和3种比例(1:1,1:2,2:1)共9种组合的anchor box。 &gt; 为了网络习得尺度不变性，之前的网络做法有两种，一是缩放图像和特征图，fast rcnn中图像金字塔有5种尺度{480, 576, 688, 864, 1200}；二是使用多种不同大小的卷积核。具体参见原论文3.1.1</li>
+<li>针对候选框尺度和横纵比，提出了anchor box的概念。在最后一层特征图的每个像素位置，设置3种尺度(128<em>128，256</em>256，512*512)和3种比例(1:1,1:2,2:1)共9种组合的anchor box。</li>
 </ul>
+<blockquote>
+<p>为了网络习得尺度不变性，之前的网络做法有两种，一是缩放图像和特征图，fast rcnn中图像金字塔有5种尺度{480, 576, 688, 864, 1200}；二是使用多种不同大小的卷积核。具体参见原论文3.1.1</p>
+</blockquote>
 <h2 id="rpn">RPN</h2>
 <h3 id="rpn中正负样本的设置">RPN中正负样本的设置</h3>
-<p>正样本有2种情况：<br> - 和ground truth具有最高交并比的anchor - 和ground truth交并比超过0.7的anchor</p>
+<p>正样本有2种情况：<br></p>
+<ul>
+<li>和ground truth具有最高交并比的anchor。</li>
+<li>和ground truth交并比超过0.7的anchor。</li>
+</ul>
 <p>负样本是和ground truth交并比小于0.3的anchor。 每个mini batch采样256个样本，不同于论文fast rcnn，这256个样本全部来自同一张图片，正负样本的比例设置成1：1，如果正样本的数量不够128，则使用负样本补齐。</p>
 <h3 id="损失函数">损失函数</h3>
 <p>损失函数和fast rcnn类似。 分类只有正负2个类别，所以分类是一个二值交叉熵损失。 回归使用的是smooth L1损失。</p>
