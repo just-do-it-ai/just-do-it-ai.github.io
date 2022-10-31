@@ -35,10 +35,10 @@
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Faster_RCNN.png">
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/FPN.png">
 <meta property="og:image" content="https://production-media.paperswithcode.com/methods/new_teaser_TMZlD2J.jpg">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-d7e33ab8aebaba8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/846/format/webp">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-e56e5ed5ac6c3e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1194/format/webp">
+<meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/R-FCN_originpaper.png">
+<meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T04:03:55.029Z">
+<meta property="article:modified_time" content="2022-10-31T04:10:25.183Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 12:03:55" itemprop="dateModified" datetime="2022-10-31T12:03:55+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 12:10:25" itemprop="dateModified" datetime="2022-10-31T12:10:25+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -375,10 +375,11 @@ smooth_{L_1}(x)= \begin{cases}
 <h1 id="r-fcn">R-FCN</h1>
 <h2 id="概述-2">概述</h2>
 <p><strong>问题</strong>：<br> rpn会提供几百个proposals，fast rcnn需要重复计算上百次，计算开销很大。<br> <strong>解决方案：</strong><br> 基于区域的全卷积网络(R-FCN)共享网络内几乎所有的计算。<br> 然而，卷积网络中的更深层次是平移不变的，这使得它们对定位任务无效。<br> 作者使用位置敏感评分图(position-sensitive score maps)来补救。<br> 这些敏感的评分图编码了前景目标的相对空间信息，汇集起来可以确定准确的定位。<br> <strong>具体实现：</strong><br> R-FCN检测器是四种卷积网络的组合。输入图像首先通过ResNet-101得到特征映射。中间输出(Conv4层)被传递到区域建议网络(RPN)来产生proposals，而最终输出通过卷积层进一步处理，并输入到分类器和回归器。分类层将创建的位置敏感映射与proposals相结合，生成预测，而回归网络输出边界框属性。<br> ResNet-101应用到R-FCN时会把最后的average pool和1000-d全连接层都去掉了，仅保留卷积层，再新加一个1x1x1024的卷积层用来降维（从2048维降到1024维），和一个很特殊的卷积来生成<span class="math inline">\(k^2\times (C+1)\)</span>维的Position-sensitive score map。其中的<span class="math inline">\(C\)</span>是要分类的类别数。<span class="math inline">\(k\)</span>是之后的ROI Pooling中对ROI区域要划分的小格数，比如论文中<span class="math inline">\(k=3\)</span>就是对ROI在长宽方向各三等分形成9个小区域。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/8904720-d7e33ab8aebaba8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/846/format/webp" /></p>
+<img src="/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/R-FCN_originpaper.png" class="" title="R-FCN_originpaper">
 <p>最后一个特殊卷积输出Position-sensitive score map后，就要做ROI Pooling了，和Faster R-CNN中的ROI Pooling一样要对9个小区域分别进行pooling，要注意的是R-FCN中９个小区域并不是在所有<span class="math inline">\(k^2\times (C+1)\)</span>维度上都做pooling，每个小区域只会在对应的C+1个维度上作pooling，比如ROI左上角的区域就在前<span class="math inline">\(C+1\)</span>个维度上pooling，左中位置的区域就在<span class="math inline">\(C+2\)</span>到<span class="math inline">\(2C+2\)</span>间的维度上作pooling，以此类推。pooling后输出的是<span class="math inline">\(C+1\)</span>维度的<span class="math inline">\(k\times k\)</span>数据，每个维度上的<span class="math inline">\(k\times k\)</span>个数据再加到一起(vote过程)形成<span class="math inline">\(C+1\)</span>个单点数据，就代表了<span class="math inline">\(C+1\)</span>个类别的分类概率。<br> 对于目标定位的输出和上面的分类输出过程类似，只是维度不再是<span class="math inline">\(k^2\times (C+1)\)</span>，而是<span class="math inline">\(k^2\times 4\)</span>，表示９个小区域的<span class="math inline">\([dx,dy,dw,dh]\)</span> 4个偏移坐标。</p>
 <h2 id="position-sensitive-score-map的解释">Position-sensitive score map的解释</h2>
-<p>Position-sensitive score map的概念最早来自另一篇实例分割的<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.08678.pdf">论文</a>。<br> 中间的9张图对应Position-sensitive score map的9个维度的输出。 拿左上角的图说明：它的每一个点代表该点正好出现在目标左上角的得分，也可以理解是该点右下方正好是目标的概率。要注意的是：“目标左上角的概率”的概念并不局限于图中画的绿色框范围，而是整张图上的每一个点。<br> 同理其余8张图各自对应了目标正上侧、右上侧、左中侧、正中侧、右中侧、左下侧、正下侧、右下侧的得分。<br> 在训练时，一个ROI的9个小区域从每张图的对应区域去Pooling出一个结果，组成新的图，如果ROI刚好覆盖ground truth，这个新的区域就标记为前景(label=1)。 为什么每张图都能携带相对位置信息？因为从9张图中提取1~9号小方格时，每个小方格在每张图上的位置并不相同，而是在上下左右方向上有偏移，当组合出来的9宫格对应ground truth时，小方格1就对应了ground truth左上角的位置，小方格2对应了ground truth正上方的位置，依此类推，所以用这种9宫格训练目标时就有了相对目标位置的信息在里面 。 <img src="https://upload-images.jianshu.io/upload_images/8904720-e56e5ed5ac6c3e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1194/format/webp" /></p>
+<p>Position-sensitive score map的概念最早来自另一篇实例分割的<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.08678.pdf">论文</a>。<br> 中间的9张图对应Position-sensitive score map的9个维度的输出。 拿左上角的图说明：它的每一个点代表该点正好出现在目标左上角的得分，也可以理解是该点右下方正好是目标的概率。要注意的是：“目标左上角的概率”的概念并不局限于图中画的绿色框范围，而是整张图上的每一个点。<br> 同理其余8张图各自对应了目标正上侧、右上侧、左中侧、正中侧、右中侧、左下侧、正下侧、右下侧的得分。<br> 在训练时，一个ROI的9个小区域从每张图的对应区域去Pooling出一个结果，组成新的图，如果ROI刚好覆盖ground truth，这个新的区域就标记为前景(label=1)。 为什么每张图都能携带相对位置信息？因为从9张图中提取1~9号小方格时，每个小方格在每张图上的位置并不相同，而是在上下左右方向上有偏移，当组合出来的9宫格对应ground truth时，小方格1就对应了ground truth左上角的位置，小方格2对应了ground truth正上方的位置，依此类推，所以用这种9宫格训练目标时就有了相对目标位置的信息在里面。</p>
+<img src="/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png" class="" title="Position-sensitive_score_map">
 <h1 id="参考">参考</h1>
 
     </div>
