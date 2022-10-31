@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-d7e33ab8aebaba8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/846/format/webp">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8904720-e56e5ed5ac6c3e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1194/format/webp">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T02:49:40.772Z">
+<meta property="article:modified_time" content="2022-10-31T03:52:47.030Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 10:49:40" itemprop="dateModified" datetime="2022-10-31T10:49:40+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 11:52:47" itemprop="dateModified" datetime="2022-10-31T11:52:47+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -333,13 +333,20 @@ smooth_{L_1}(x)= \begin{cases}
 </ul>
 <h2 id="rpn">RPN</h2>
 <h3 id="rpn中正负样本的设置">RPN中正负样本的设置</h3>
-<p>正样本有2种情况： - 和ground truth具有最高交并比的anchor - 和ground truth交并比超过0.7的anchor</p>
+<p>正样本有2种情况：<br> - 和ground truth具有最高交并比的anchor - 和ground truth交并比超过0.7的anchor</p>
 <p>负样本是和ground truth交并比小于0.3的anchor。 每个mini batch采样256个样本，不同于论文fast rcnn，这256个样本全部来自同一张图片，正负样本的比例设置成1：1，如果正样本的数量不够128，则使用负样本补齐。</p>
 <h3 id="损失函数">损失函数</h3>
 <p>损失函数和fast rcnn类似。 分类只有正负2个类别，所以分类是一个二值交叉熵损失。 回归使用的是smooth L1损失。</p>
 <h2 id="训练过程-1">训练过程</h2>
 <p>可以把faster rcnn看作两个独立的网络rpn和fast rcnn的组合，两个网络都有相同的backbone(vgg)。rpn和fast rcnn如果独立训练会以不同的方式改变backbone(vgg)，为了能够共享backbone，需要一种策略去训练网络。作者提供了3种方法，而faster rcnn使用的是以下这种方法更新网络参数,训练过程有4步：<br></p>
-<p><strong>四步交替迭代训练:</strong><br> 1. 使用imagenet预训练模型初始化rpn的backbone(vgg)，微调backbone和rpn网络。<br> 2. 使用第一步提供的proposal，相当于用proposal替代了选择性搜素算法提供的检测框，然后按照原fast rcnn的方法去训练。<br> &gt; 目前两个网络还没有共享backbone(vgg)，是两个独立的网络。 3. 固定第二步训练得到backbone参数，训练rpn，此时两个网络共享了backbone。<br> 4. 继续固定backbone的参数，训练fast rcnn。<br></p>
+<p><strong>四步交替迭代训练:</strong><br> 1. 使用imagenet预训练模型初始化rpn的backbone(vgg)，微调backbone和rpn网络。<br> 2. 使用第一步提供的proposal，相当于用proposal替代了选择性搜素算法提供的检测框，然后按照原fast rcnn的方法去训练。<br></p>
+<blockquote>
+<p>目前两个网络还没有共享backbone(vgg)，是两个独立的网络。</p>
+</blockquote>
+<ol start="3" type="1">
+<li>固定第二步训练得到backbone参数，训练rpn，此时两个网络共享了backbone。<br></li>
+<li>继续固定backbone的参数，训练fast rcnn。</li>
+</ol>
 <blockquote>
 <p>虽然原始论文中用四步交替迭代训练。然而现在github上开源的实现大多是采用近似联合训练(Approximate joint training)，完成端到端训练。</p>
 </blockquote>
