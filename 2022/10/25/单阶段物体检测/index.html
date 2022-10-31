@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://www.mdpi.com/applsci/applsci-10-03079/article_deploy/html/images/applsci-10-03079-g002.png">
 <meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_block.png">
 <meta property="article:published_time" content="2022-10-25T01:21:53.000Z">
-<meta property="article:modified_time" content="2022-10-31T03:03:50.322Z">
+<meta property="article:modified_time" content="2022-10-31T03:07:21.247Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png">
@@ -239,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 11:03:50" itemprop="dateModified" datetime="2022-10-31T11:03:50+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 11:07:21" itemprop="dateModified" datetime="2022-10-31T11:07:21+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -272,7 +272,7 @@
 <h2 id="损失函数">损失函数</h2>
 <p><img src="https://miro.medium.com/max/1400/1*1noFJp_rnXsG0TJvtoghFA.png" /> <span class="math inline">\(1_{ij}^{obj}\)</span>中<span class="math inline">\(i\)</span>表示第<span class="math inline">\(i\)</span>个grid cell，<span class="math inline">\(j\)</span>表示第<span class="math inline">\(i\)</span>个grid cell中第<span class="math inline">\(j\)</span>个bounding box，这个bounding box是对应grid cell中的最高IOU值的bounding box。<br> 大物体的平方损失要远远大于小物体的平方损失，这会导致对于大物体的惩罚要大于对小物体的惩罚，这不是想要的结果，因此对<span class="math inline">\(w,h\)</span>开根号，可以缩小两者之间惩罚的差距。<br> 类别损失函数使用平方误差损失，而不是交叉熵损失。<span class="math inline">\(\lambda\)</span>是平衡系数。</p>
 <h1 id="yolov2">yolov2</h1>
-<p>yolov2相对于yolov1有以下几点改进： 1. 增加输出特征图大小为13，可以获得更多的预测框，结合anchor机制，提升了模型的召回率。 2. 引进anchor机制。anchor的获取是通过k-means方法获得初始值，为了获得更好的IOU分数，作者将欧氏距离替换成了如下公式： <span class="math display">\[d(box,centtroid)=1-IOU(box,centroid)\]</span> 3. 利用图像金字塔方法让网络学习到尺度不变性。 4. 设计了darknet19，让模型速度更快。</p>
+<p>yolov2相对于yolov1有以下几点改进：<br> 1. 增加输出特征图大小为13，可以获得更多的预测框，结合anchor机制，提升了模型的召回率。<br> 2. 引进anchor机制。anchor的获取是通过k-means方法获得初始值，为了获得更好的IOU分数，作者将欧氏距离替换成了如下公式：<br> <span class="math display">\[d(box,centtroid)=1-IOU(box,centroid)\]</span> 3. 利用图像金字塔方法让网络学习到尺度不变性。<br> 4. 设计了darknet19，让模型速度更快。</p>
 <h1 id="yolov3">yolov3</h1>
 <p>yolov3相对于yolov2的改进是： 1. 增加了多尺度输出。类似于FPN的操作。尺度的选择依然是通过kmeans方法，选择了9个集群和3种尺度anchor。 2. 提出了darknet53。darknet53是darknet19和残差连接结合的产物，shortcut connection帮助网络堆叠到53层。</p>
 <h2 id="anchor预测细节">anchor预测细节</h2>
@@ -286,8 +286,15 @@ b_h &amp;=p_he^{t_h}\end{align*}
 <p><img src="https://miro.medium.com/max/640/1*FBcHt5rsee5VGcnA-vwJeA.png" /></p>
 <h1 id="yolov4">yolov4</h1>
 <h2 id="bag-of-freebies">Bag of freebies</h2>
-<p>Bag of freebies是一类提升模型表现的方法，其特点是改变训练策略，只增加训练时间，而不增加推理时间。文中主要涉及3种：<br> 1. 数据增强方法mixup(两张图片混合)、cutout(裁剪矩形区域填充0值)、cutmix(将裁剪后的图像覆盖到其他图像的矩形区域，并根据混合区域的大小调整标签)等；<br> 2. 类别不平衡，双阶段可以使用难例挖掘的方法，单阶段有两种解决方法focal loss和label smoothing。focal loss在yolov3中已证实不起作用。<br> &gt; focal loss公式：<span class="math inline">\(FL(p_t)=-\alpha_t(1-p_t)^\gamma log(p_t)\)</span> 对于类别不平衡问题，可以通过设置<span class="math inline">\(\alpha_t\)</span>来分配不同的权重给不同的类别，比如狗的图片数量是猫的两倍，则在训练时狗的<span class="math inline">\(\alpha_t\)</span>为0.5，而猫的<span class="math inline">\(\alpha_t\)</span>为1。<span class="math inline">\((1-p_t)^\gamma\)</span>则是帮助网络关注到难例，如果置信度很高，比如<span class="math inline">\(p_t\)</span>为0.9，则focal loss相对于交叉熵损失会降低很多，也就是说惩罚很小，大部分的惩罚来自于置信度不那么高的难例中。 3. IoU损失，IoU损失可以实现尺度不变性，L1损失和L2损失都会导致损失随着检测框的尺寸增加而增加。在IoU的基础上变化而来以下3种： - GIoU，在IoU的基础上改进了其非重叠情况下(检测框和真值框无交集，此时IoU恒为0，但GIoU会随着两者之间的距离增加而逐渐向-1逼近)无法优化的问题。C是覆盖检测框和真值框最小矩形面积 <span class="math display">\[GIoU=IoU-\frac{C-A\cup B}{C}\]</span> &gt; 在<span class="math inline">\(A\cup B\)</span>值固定的情况下，非<span class="math inline">\(A\)</span>非<span class="math inline">\(B\)</span>区域(也就是<span class="math inline">\(C-A\cup B\)</span>区域)越小，GIoU越小(对GIoU求导可得上诉结论)。GIoU是IoU的下界，取值范围为[-1,1]。<br></p>
+<p>Bag of freebies是一类提升模型表现的方法，其特点是改变训练策略，只增加训练时间，而不增加推理时间。文中主要涉及3种：<br> 1. 数据增强方法mixup(两张图片混合)、cutout(裁剪矩形区域填充0值)、cutmix(将裁剪后的图像覆盖到其他图像的矩形区域，并根据混合区域的大小调整标签)等；<br> 2. 类别不平衡，双阶段可以使用难例挖掘的方法，单阶段有两种解决方法focal loss和label smoothing。focal loss在yolov3中已证实不起作用。<br></p>
+<blockquote>
+<p>focal loss公式：<span class="math inline">\(FL(p_t)=-\alpha_t(1-p_t)^\gamma log(p_t)\)</span> 对于类别不平衡问题，可以通过设置<span class="math inline">\(\alpha_t\)</span>来分配不同的权重给不同的类别，比如狗的图片数量是猫的两倍，则在训练时狗的<span class="math inline">\(\alpha_t\)</span>为0.5，而猫的<span class="math inline">\(\alpha_t\)</span>为1。<span class="math inline">\((1-p_t)^\gamma\)</span>则是帮助网络关注到难例，如果置信度很高，比如<span class="math inline">\(p_t\)</span>为0.9，则focal loss相对于交叉熵损失会降低很多，也就是说惩罚很小，大部分的惩罚来自于置信度不那么高的难例中。</p>
+</blockquote>
+<ol start="3" type="1">
+<li>IoU损失，IoU损失可以实现尺度不变性，L1损失和L2损失都会导致损失随着检测框的尺寸增加而增加。在IoU的基础上变化而来以下3种：<br></li>
+</ol>
 <ul>
+<li><p>GIoU，在IoU的基础上改进了其非重叠情况下(检测框和真值框无交集，此时IoU恒为0，但GIoU会随着两者之间的距离增加而逐渐向-1逼近)无法优化的问题。C是覆盖检测框和真值框最小矩形面积 <span class="math display">\[GIoU=IoU-\frac{C-A\cup B}{C}\]</span> &gt; 在<span class="math inline">\(A\cup B\)</span>值固定的情况下，非<span class="math inline">\(A\)</span>非<span class="math inline">\(B\)</span>区域(也就是<span class="math inline">\(C-A\cup B\)</span>区域)越小，GIoU越小(对GIoU求导可得上诉结论)。GIoU是IoU的下界，取值范围为[-1,1]。<br></p></li>
 <li><p>DIoU，DIoU在GIoU的基础上考虑了检测框和真值框之间的中心距离。<span class="math inline">\(c\)</span>表示覆盖检测框和真值框最小矩形面积的对角线长度。<span class="math inline">\(b\)</span>表示检测框中心，<span class="math inline">\(b^{gt}\)</span>表示真值框中心，<span class="math inline">\(\rho^2\)</span>表示欧式距离。 <span class="math display">\[DIoU=IoU-\frac{\rho^2(b,b^{gt})}{c^2}\]</span></p></li>
 <li><p>CIoU，CIoU在DIoU基础上考虑了检测框和真值框之间的横纵比。 <span class="math display">\[CIoU=IoU-\frac{\rho^2(b,b^{gt})}{c^2}-\alpha v\]</span> &gt;<span class="math inline">\(\alpha\)</span>是平衡参数: &gt;<span class="math display">\[\alpha=\frac{v}{1-IoU+v}\]</span> &gt;<span class="math inline">\(v\)</span>用于度量长宽比的一致性程度： &gt;<span class="math display">\[v=\frac{4}{\pi}(arctan(\frac{w^{gt}}{h^{gt}})-arctan(\frac{w}{h}))^2\]</span></p></li>
 </ul>
