@@ -34,6 +34,8 @@
 <meta property="og:image" content="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-06-25_at_1.27.27_PM_CjrAZaI.png">
 <meta property="og:image" content="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-06-13_at_7.01.00_PM.png">
 <meta property="og:image" content="https://learnopencv.com/wp-content/uploads/2022/10/yolov6-model-architecture-1.png">
+<meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/EfficientRep.png">
+<meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_CSPBepBackbone.png">
 <meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/efficientdecouplehead.png">
 <meta property="og:image" content="https://miro.medium.com/max/828/1*IAIus4y2drsOYqUUp_lkqw.png">
 <meta property="og:image" content="https://miro.medium.com/max/450/1*8Ou4qNoKscReoOzMQJ1ZYA.png">
@@ -43,7 +45,7 @@
 <meta property="og:image" content="https://www.mdpi.com/applsci/applsci-10-03079/article_deploy/html/images/applsci-10-03079-g002.png">
 <meta property="og:image" content="http://example.com/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_block.png">
 <meta property="article:published_time" content="2022-10-25T01:21:53.000Z">
-<meta property="article:modified_time" content="2022-10-31T03:15:40.559Z">
+<meta property="article:modified_time" content="2022-10-31T03:27:28.011Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://miro.medium.com/max/1400/1*q5feieizWKYq7dpWjYvCOw.png">
@@ -239,7 +241,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 11:15:40" itemprop="dateModified" datetime="2022-10-31T11:15:40+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 11:27:28" itemprop="dateModified" datetime="2022-10-31T11:27:28+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,10 +333,7 @@ s_i= \begin{cases}
 s_i, &amp; iou(M,b_i)&lt;N_t \\
 s_i(1-iou(M,b_i)), &amp; iou(M,b_i)\geq N_t\\
 \end{cases}
-\end{equation}\]</span></p>
-</blockquote>
-<blockquote>
-<p>为了使公式中的<span class="math inline">\(s_i\)</span>连续，于是有以下改进版本： <span class="math display">\[s_i=s_ie^{-\frac{iou(M,b_i)^2}{\sigma}}, \forall b_i\notin D\]</span> <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-06-13_at_7.01.00_PM.png" /></p>
+\end{equation}\]</span> 为了使公式中的<span class="math inline">\(s_i\)</span>连续，于是有以下改进版本： <span class="math display">\[s_i=s_ie^{-\frac{iou(M,b_i)^2}{\sigma}}, \forall b_i\notin D\]</span> <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-06-13_at_7.01.00_PM.png" /></p>
 </blockquote>
 <h2 id="网络架构的选择">网络架构的选择</h2>
 <p>适合分类的网络不一定适合检测，相对于分类网络，检测网络有以下几点特性：<br> - 更高的分辨率图像输入 - 更深的网络以获得更大的感受野 - 更多的参数确保能检测一张图片中不同尺度的多个物体 通过上诉3个方向的比较，CSPdarknet53相比于CSPResNeXt50等网络更适合检测。<br> 所以YOLOv4的总体架构是： CSPdarknet53做为backbone，spp用于扩充感受野加入其中，参数融合的方法PANet作为网络neck，而YOLOv3作为头部组成了YOLOv4网络架构。</p>
@@ -342,8 +341,8 @@ s_i(1-iou(M,b_i)), &amp; iou(M,b_i)\geq N_t\\
 <h2 id="网络结构">网络结构</h2>
 <p><img src="https://learnopencv.com/wp-content/uploads/2022/10/yolov6-model-architecture-1.png" /></p>
 <h3 id="backbone">backbone</h3>
-<p><strong>EfficientRep：</strong><br> yolov6的nano、tiny、small三种模型变体使用的是EfficientRep作为backbone。<br> </p>
-<p><strong>CSPBepBackbone:</strong><br> yolov6的medium、large两种模型变体使用的是CSPBepBackbone，原论文中称为CSPStackRep Block。<br> </p>
+<p><strong>EfficientRep：</strong><br> yolov6的nano、tiny、small三种模型变体使用的是EfficientRep作为backbone。<br> <img src="/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/EfficientRep.png" class="" title="yolov6 EfficientRep"><br></p>
+<p><strong>CSPBepBackbone:</strong><br> yolov6的medium、large两种模型变体使用的是CSPBepBackbone，原论文中称为CSPStackRep Block。<br> <img src="/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/yolov6_CSPBepBackbone.png" class="" title="yolov6 CSPBepBackbone"></p>
 <h3 id="efficient-decouple-head">efficient decouple head</h3>
 <img src="/2022/10/25/%E5%8D%95%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/efficientdecouplehead.png" class="" title="efficient decouple head">
 <p><br> 该头部和yolov6论文与代码匹配，但是网络上有增加一个object支路的版本，这是错误的。论文中讲了其之前确实尝试了增加object支路(见论文3.3.3object loss)，但是会有负面影响，之后就抛弃了该分支。</p>
