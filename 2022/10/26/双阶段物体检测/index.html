@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/R-FCN_originpaper.png">
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T04:19:30.040Z">
+<meta property="article:modified_time" content="2022-10-31T06:15:03.219Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 12:19:30" itemprop="dateModified" datetime="2022-10-31T12:19:30+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 14:15:03" itemprop="dateModified" datetime="2022-10-31T14:15:03+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -381,6 +381,7 @@ smooth_{L_1}(x)= \begin{cases}
 <p>Position-sensitive score map的概念最早来自另一篇实例分割的<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.08678.pdf">论文</a>。<br> 中间的9张图对应Position-sensitive score map的9个维度的输出。 拿左上角的图说明：它的每一个点代表该点正好出现在目标左上角的得分，也可以理解是该点右下方正好是目标的概率。要注意的是：“目标左上角的概率”的概念并不局限于图中画的绿色框范围，而是整张图上的每一个点。<br> 同理其余8张图各自对应了目标正上侧、右上侧、左中侧、正中侧、右中侧、左下侧、正下侧、右下侧的得分。<br> 在训练时，一个ROI的9个小区域从每张图的对应区域去Pooling出一个结果，组成新的图，如果ROI刚好覆盖ground truth，这个新的区域就标记为前景(label=1)。 为什么每张图都能携带相对位置信息？因为从9张图中提取1~9号小方格时，每个小方格在每张图上的位置并不相同，而是在上下左右方向上有偏移，当组合出来的9宫格对应ground truth时，小方格1就对应了ground truth左上角的位置，小方格2对应了ground truth正上方的位置，依此类推，所以用这种9宫格训练目标时就有了相对目标位置的信息在里面。</p>
 <img src="/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png" class="" title="Position-sensitive_score_map">
 <h1 id="参考">参考</h1>
+<p>[1]A survey of modern deep learning based object detection models <br> [2]https://github.com/chenyuntc/simple-faster-rcnn-pytorch <br> [3]https://cloud.tencent.com/developer/article/1441555 <br> [4][r-fcn解释](https://www.jianshu.com/p/409fd61db9db)</p>
 
     </div>
 
