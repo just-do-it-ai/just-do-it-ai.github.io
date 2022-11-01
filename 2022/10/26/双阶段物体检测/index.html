@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/R-FCN_originpaper.png">
 <meta property="og:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/Position-sensitive_score_map.png">
 <meta property="article:published_time" content="2022-10-26T04:52:27.000Z">
-<meta property="article:modified_time" content="2022-10-31T06:15:03.219Z">
+<meta property="article:modified_time" content="2022-11-01T02:44:58.841Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/RCNN.png">
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 14:15:03" itemprop="dateModified" datetime="2022-10-31T14:15:03+08:00">2022-10-31</time>
+      <time title="Modified: 2022-11-01 10:44:58" itemprop="dateModified" datetime="2022-11-01T10:44:58+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -275,8 +275,8 @@
 <p>训练包含3个独立的模块：一是CNN(AlexNet)的微调；二是SVM的分类器训练；三是检测器回归框的训练。<br></p>
 <ul>
 <li>CNN先在大型通用数据集上进行训练，此时训练的标签是图像级的(也就是一张图片对应一个类别标签)，类别是1000类；再在特定领域的数据集上进行微调，此时的分类变成N+1类，对于PASCAL VOC数据集N为20。每个minibatch使用32个正样本(over all classes)，96个负样本。IoU大于0.5时为正样本，否则为负样本。</li>
-<li>继续使用特定领域的数据集训练SVM分类器，此时正负样本的定义略有不同。将真值框作为正样本，将IoU小于0.3的检测框作为负样本。这个值是经验值，设置的不同模型的表现也会跟着变化。</li>
-<li>回归器的训练使用的数据集是<span class="math inline">\((P, G)\)</span>对，<span class="math inline">\(G\)</span>是真值框，<span class="math inline">\(P\)</span>是与真值框IoU大于0.6的检测框。</li>
+<li>使用抽取出来的特征训练特定类别的SVM分类器，此时正负样本的定义略有不同。将真值框作为正样本，将IoU小于0.3的检测框作为负样本。这个值是经验值，设置的不同模型的表现也会跟着变化。</li>
+<li>回归器的训练使用的数据集是<span class="math inline">\((P, G)\)</span>对，<span class="math inline">\(G\)</span>是真值框，<span class="math inline">\(P\)</span>是与真值框IoU大于0.6的检测框。其目的是学习到P到G之间的映射关系。</li>
 </ul>
 <blockquote>
 <p>作者说CNN一开始使用的正负样本定义和SVM相同(即只将真值框作为正样本)，但实验结果不如上面的差异化的正负样本定义。之所以设置0.5作为CNN网络的正负样本阈值，是因为阈值条件宽松可以扩充正样本数据量，不容易过拟合。具体见原论文7.2章第2段。<br></p>

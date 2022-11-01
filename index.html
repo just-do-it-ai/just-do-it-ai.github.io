@@ -217,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 14:15:03" itemprop="dateModified" datetime="2022-10-31T14:15:03+08:00">2022-10-31</time>
+      <time title="Modified: 2022-11-01 10:44:58" itemprop="dateModified" datetime="2022-11-01T10:44:58+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -314,7 +314,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-31 13:24:32" itemprop="dateModified" datetime="2022-10-31T13:24:32+08:00">2022-10-31</time>
+      <time title="Modified: 2022-10-31 20:55:58" itemprop="dateModified" datetime="2022-10-31T20:55:58+08:00">2022-10-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -411,7 +411,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-24 00:52:36" itemprop="dateModified" datetime="2022-10-24T00:52:36+08:00">2022-10-24</time>
+      <time title="Modified: 2022-11-01 15:46:01" itemprop="dateModified" datetime="2022-11-01T15:46:01+08:00">2022-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -438,40 +438,15 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="概述">概述</h1>
-<p>Boosting 是一种提升算法，可以将弱的学习算法提升为强的学习算法。 基本思路是将基分类器层层叠加，每一层在训练的时候，对前一层基分类器分错的样本，给予更高的权重。<br></p>
-<h1 id="adaboost">AdaBoost</h1>
-<p><img src="https://tangshusen.me/2018/11/18/adaboost/2.1.png" /></p>
-<h2 id="算法步骤">算法步骤:</h2>
-<ul>
-<li>先用每个样本权重相等的训练集训练一个初始的基学习器；</li>
-<li>提高上一轮被错误分类的样本的权值，降低被正确分类的样本的权值；</li>
-<li>线性加权求和。误差率小的基学习器拥有较大的权值，误差率大的基学习器拥有较小的权值。</li>
-</ul>
-<h1 id="gbdt">GBDT</h1>
-<p>GBDT就是所有弱分类器的结果相加等于预测值，然后下一个弱分类器去拟合误差函数对预测值的残差(这个残差就是预测值与真实值之间的误差)。<br> GBDT分类树使用的基分类器是CART分类树；GBDT回归树使用的基分类器是CART回归树。<br> <strong>举例</strong> 比如我今年30岁了，但计算机或者模型GBDT并不知道我今年多少岁，那GBDT咋办呢？ - 它会在第一个弱分类器（或第一棵树中）随便用一个年龄比如20岁来拟合，然后发现误差有10岁； - 接下来在第二棵树中，用6岁去拟合剩下的损失，发现差距还有4岁； - 接着在第三棵树中用3岁拟合剩下的差距，发现差距只有1岁了； - 最后在第四课树中用1岁拟合剩下的残差，完美。 - 最终，四棵树的结论加起来，就是真实年龄30岁（实际工程中，gbdt是计算负梯度，用负梯度近似残差）</p>
-<p>梯度提升树（GBDT）是在提升树的基础上改进的。梯度提升树扩展了提升树的适用范围。梯度提升树只需要损失函数对fk(x)可微，而不需要fk(x)对x也可微。</p>
-<h2 id="原理推导">原理推导</h2>
-<p><span class="math inline">\(𝑓(𝑥)\)</span>在<span class="math inline">\(𝑥= 𝑥_{𝑘−1}\)</span>处进行泰勒展开，得: <span class="math display">\[𝑓(𝑥)=𝑓(𝑥_{𝑘−1})+𝑓^′(𝑥_{𝑘−1})(𝑥−𝑥_{𝑘−1})\]</span> 再取<span class="math inline">\(𝑥=𝑥_𝑘\)</span>，得： <span class="math display">\[𝑓(𝑥_𝑘 )=𝑓(𝑥_{𝑘−1})+𝑓^′ (𝑥_{𝑘−1})((𝑥_𝑘−𝑥_{𝑘−1})\]</span> 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥))\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行泰勒展开，可得: <span class="math display">\[𝐿(𝑦,𝑓(𝑥))\approx𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}(𝑓(𝑥)−𝑓_{𝑘−1}(𝑥))\]</span> 再取<span class="math inline">\(𝑓(𝑥)=𝑓_𝑘(𝑥)\)</span>，得：</p>
-<p><span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))\approx𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))\]</span> 又： <span class="math display">\[(𝑓_𝑘 (𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘 (𝑥;\theta_𝑘)\]</span> 所以有： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)\approx 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+ \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}𝑇_𝑘(𝑥;\theta_𝑘)
-\]</span> <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)-𝐿(𝑦,𝑓_{𝑘−1}(𝑥)) = \left[\frac{\partial{𝐿(𝑦,𝑓(𝑥))}}{\partial{𝑓(𝑥)}}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}𝑇_𝑘(𝑥;\theta_𝑘)
-\]</span> <span class="math inline">\(𝐿(𝑦,𝑓_𝑘(𝑥))\)</span>和<span class="math inline">\(𝐿(𝑦,𝑓_{𝑘−1}(𝑥))\)</span>分别表示经过k轮和k-1轮迭代后提升树模型的损失，显然我们希望每一轮迭代都能在前面一轮的基础上减小损失值，即： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≤𝐿(𝑦,𝑓_{𝑘−1}(𝑥))\]</span> <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))−𝐿(𝑦,𝑓_{𝑘−1}(𝑥))≤0\]</span> 显然，当取： <span class="math display">\[𝑇_𝑘(𝑥;\theta_𝑘 )= −\left[\frac{\partial𝐿(𝑦,𝑓(𝑥))}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\]</span> 时能保证目标恒成立。<br> 对于回归问题，当损失函数取平方损失函数: <span class="math display">\[𝐿(𝑦,𝑓(𝑥))=\frac{1}{2}[𝑦−𝑓(𝑥)]^2\]</span> 时，损失函数的负梯度在当前模型的值为: <span class="math display">\[−\left[\frac{\partial𝐿(𝑦,𝑓(𝑥)}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\]</span> <span class="math display">\[\begin{align*}
-&amp;=−\left[\frac{\partial\frac{1}{2}[𝑦−𝑓(𝑥)]^2}{\partial𝑓(𝑥)}\right]_{𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)}\\
-\\
-&amp;=[𝑦−𝑓(𝑥)]_{𝑓(𝑥)=𝑓_{𝑘−1} (𝑥)}\\
-\\
-&amp;=𝑦−𝑓_{𝑘−1}(𝑥)
-\end{align*}
-\]</span> 验证了前面的拟合年龄的例子。<br> GBDT分类和回归的区别在于采用的损失函数的不同。<br></p>
-<h2 id="优缺点">优缺点：</h2>
-<p><strong>优点</strong><br> 在处理回归任务时，由于可以选择Huber损失函数或Quantile损失函数，因此相对于AdaBoost，对噪声的敏感性大大降低。<br> <strong>缺点</strong><br> 和AdaBoost一样，对各个基学习器之间存在强关联，不利于并行化处理。</p>
-<h1 id="xgboost">XGBoost</h1>
-<p>XGBoost高效地实现了GBDT算法并进行了算法和工程上的许多改进。 ## 原理 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥)\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行二阶泰勒展开： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥)}{\partial𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}∗\frac{(\partial^2𝐿(𝑦,𝑓_{𝑘−1}(𝑥)))}{\partial𝑓_{𝑘−1}^2(𝑥)}[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
-\]</span> 取<span class="math inline">\(𝑔=\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}(𝑥)}\)</span>，<span class="math inline">\(ℎ=\frac{\partial^2 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}^2(𝑥)}\)</span>，代入上式得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}ℎ[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
-\]</span> 又在GBDT中，利用前向分布算法，有<span class="math inline">\((𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘(𝑥)\)</span>，代入得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g𝑇_𝑘(𝑥)+\frac{1}{2}ℎ𝑇_𝑘^2(𝑥)
-\]</span> 上面式子仅针对一个样本数据，对于整体得样本，其损失函数为： <span class="math display">\[𝐿≈∑_{𝑖=1}^𝑁𝐿(𝑦,𝑓_𝑘(𝑥)≈∑_{𝑖=1}^𝑁[ 𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))+g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]\]</span> 等式右边中得第一项<span class="math inline">\(𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))\)</span>只与前k-1轮有关，第k轮优化中可将该项视为常数。另外加上正则化项就可得到XGBoost模型的损失函数: <span class="math display">\[𝐿=∑_{𝑖=1}^𝑁[g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]+Ω(𝑇_𝑘 (𝑥))\]</span></p>
-<h1 id="xgboost-1">XGBoost</h1>
-<h1 id="参考">参考</h1>
-
+<p>Boosting 是一种提升算法，可以将弱的学习算法提升为强的学习算法。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/23/boosting%E7%AE%97%E6%B3%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
