@@ -29,8 +29,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
 <meta property="article:published_time" content="2022-10-23T14:24:29.000Z">
-<meta property="article:modified_time" content="2022-11-01T07:46:01.535Z">
+<meta property="article:modified_time" content="2022-11-06T14:38:53.879Z">
 <meta property="article:author" content="Scofield">
+<meta property="article:tag" content="adaboost gbdt xgboost">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
 
@@ -118,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gbdt"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">优缺点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost-1"><span class="nav-number">5.</span> <span class="nav-text">XGBoost</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gbdt"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">优缺点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost%E7%9B%B8%E5%AF%B9%E4%BA%8Egbdt%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">4.1.</span> <span class="nav-text">XGBoost相对于GBDT的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -141,6 +142,11 @@
           <a href="/categories/">
         <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -225,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-01 15:46:01" itemprop="dateModified" datetime="2022-11-01T15:46:01+08:00">2022-11-01</time>
+      <time title="Modified: 2022-11-06 22:38:53" itemprop="dateModified" datetime="2022-11-06T22:38:53+08:00">2022-11-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -282,8 +288,64 @@
 <p>XGBoost高效地实现了GBDT算法并进行了算法和工程上的许多改进。 ## 原理 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥)\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行二阶泰勒展开： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥)}{\partial𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}∗\frac{(\partial^2𝐿(𝑦,𝑓_{𝑘−1}(𝑥)))}{\partial𝑓_{𝑘−1}^2(𝑥)}[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
 \]</span> 取<span class="math inline">\(𝑔=\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}(𝑥)}\)</span>，<span class="math inline">\(ℎ=\frac{\partial^2 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}^2(𝑥)}\)</span>，代入上式得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}ℎ[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
 \]</span> 又在GBDT中，利用前向分布算法，有<span class="math inline">\((𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘(𝑥)\)</span>，代入得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g𝑇_𝑘(𝑥)+\frac{1}{2}ℎ𝑇_𝑘^2(𝑥)
-\]</span> 上面式子仅针对一个样本数据，对于整体得样本，其损失函数为： <span class="math display">\[𝐿≈∑_{𝑖=1}^𝑁𝐿(𝑦,𝑓_𝑘(𝑥)≈∑_{𝑖=1}^𝑁[ 𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))+g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]\]</span> 等式右边中得第一项<span class="math inline">\(𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))\)</span>只与前k-1轮有关，第k轮优化中可将该项视为常数。另外加上正则化项就可得到XGBoost模型的损失函数: <span class="math display">\[𝐿=∑_{𝑖=1}^𝑁[g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]+Ω(𝑇_𝑘 (𝑥))\]</span></p>
-<h1 id="xgboost-1">XGBoost</h1>
+\]</span></p>
+<p>上面式子仅针对一个样本数据，对于整体得样本，其损失函数为：</p>
+<p><span class="math display">\[𝐿≈∑_{𝑖=1}^𝑁𝐿(𝑦,𝑓_𝑘(𝑥)≈∑_{𝑖=1}^𝑁[ 𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))+g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]\]</span></p>
+<p>等式右边中得第一项<span class="math inline">\(𝐿(𝑦_𝑖,𝑓_{𝑘−1}(𝑥_𝑖))\)</span>只与前k-1轮有关，第k轮优化中可将该项视为常数。另外加上正则化项就可得到XGBoost模型的损失函数:</p>
+<p><span class="math display">\[𝐿=∑_{𝑖=1}^𝑁[g_𝑖𝑇_𝑘(𝑥_𝑖)+\frac{1}{2}ℎ_𝑖𝑇_𝑘^2(𝑥_𝑖)]+Ω(𝑇_𝑘 (𝑥))\]</span></p>
+<p>假设第k棵CART回归树其对应的叶子区域样本子集为<span class="math inline">\(𝐷_𝑘1,𝐷_𝑘2,…,𝐷_𝑘𝑇\)</span>,且第j个小单元<span class="math inline">\(𝐷_𝑘𝑗\)</span>中仍然包含<span class="math inline">\(𝑁_𝑘𝑗\)</span> <span class="math display">\[
+\bar{c}_{k j}=\frac{1}{N_{k j}} \sum_{x_{i} \in D_{k j}} y_{i}
+\]</span> 得到:<span class="math inline">\(\quad T_{k}(x)=\sum_{j=1}^{T} \bar{c}_{k j} I\left(x_{i} \in D_{k j}\right)\)</span>。<br> 正则化项<span class="math inline">\(\Omega\left(T_{k}(x)\right)\)</span>的构造如下： <span class="math display">\[
+\Omega\left(T_{k}(x)\right)=\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} \bar{c}_{k j}{ }^{2}
+\]</span> 其中, 参数T为 <span class="math inline">\(T_{k}(x)\)</span> 决策树的叶子节点的个数, 参数 <span class="math inline">\(\bar{c}_{k j}, j=1,2, \cdots \mathrm{T}\)</span>, 是第 <span class="math inline">\(\mathrm{j}\)</span> 个叶子节点 的输出均值; <span class="math inline">\(\gamma\)</span> 和 <span class="math inline">\(\lambda\)</span> 是权衡因子。叶子节点的数量及其权重因子一起用来控制决策树模 型的复杂度。</p>
+<p>将 <span class="math inline">\(T_{k}(x)\)</span> 和 <span class="math inline">\(\Omega\left(T_{k}(x)\right)\)</span> 一起代入 <span class="math inline">\(L_{k}\)</span> ， 可得：</p>
+<p><span class="math display">\[
+L_{k}=\sum_{i=1}^{N}\left[\mathrm{~g}_{i} T_{k}\left(x_{i}\right)+\frac{1}{2} h_{i} T_{k}^{2}\left(x_{i}\right)\right]+\Omega\left(T_{k}(x)\right)
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;=\sum_{i=1}^{N}\left[g_{i} T_{k}\left(x_{i}\right)+\frac{1}{2} h_{i} T_{k}^{2}\left(x_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} \bar{c}_{k j}^{2} \\
+&amp;=\sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right) \bar{c}_{k j}+\frac{1}{2}\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right) \bar{c}_{k j}{ }^{2}\right]+\gamma T
+\end{aligned}
+\]</span></p>
+<p>可以看到，XGBoost模型对应的损失函数主要与原损失函数的一阶、二阶梯度在当前模 型的值 <span class="math inline">\(g_{i} 、 h_{i}\)</span> 及第 <span class="math inline">\(\mathrm{k}\)</span> 棵CART树的叶子节点参数值 <span class="math inline">\(\bar{c}_{k j}\)</span> 有关, 而 <span class="math inline">\(g_{i}\)</span> 和 <span class="math inline">\(h_{i}\)</span> 与第 <span class="math inline">\(\mathrm{k}\)</span> 轮迭代无关, 这 里先将其视为常数, 所以现在要训练第 <span class="math inline">\(\mathrm{k}\)</span> 棵CART树, 只需考虑 <span class="math inline">\(\bar{c}_{k j}\)</span> 参数。</p>
+<p>对 <span class="math inline">\(\bar{c}_{k j}\)</span> 求导并另其为0，可得：</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\frac{\partial L_{k}}{\partial \bar{c}_{k j}}=\sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)+\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right) \bar{c}_{k j}\right]=0 \quad L_{k}=\frac{1}{2} \sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)^{2} /\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right)\right]+\lambda T \\
+&amp;\bar{c}_{k j}=-\frac{\sum_{x_{i} \in D_{k j}} g_{i}}{\sum_{x_{i} \in D_{k j}} h_{i}+\lambda}
+\end{aligned}
+\]</span></p>
+<p>将其反代入上式可得第 <span class="math inline">\(k\)</span> 轮迭代时的等价损失函数为：</p>
+<p><span class="math display">\[
+L_{k}=\frac{1}{2} \sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)^{2} /\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right)\right]+\lambda T
+\]</span> 实际上第k轮迭代的损失函数的优化过程对应的就是第k棵树的分裂过程：每次分裂对应于将属于某个叶子节点下的训练样本分配到两个新的叶子节点上；而损失函数满足样本之间的累加性，所以通过将分裂前叶子节点上所有样本的损失与分裂之后两个新叶子节点上的样本的损失进行比较，以此作为各个特征分裂点的打分标准；最后选择一个生成该树的最佳分裂方案（这个过程在形式上就和利用基尼系数或平方误差为CART寻找最佳分裂点一样，区别仅在于该特征分裂打分标准是我们直接从目标函数中推导得到的）。 需要注意的是，在实践中，当训练数据量较大时，我们不可能穷举每一棵树进行打分来选择最好的，这个计算量过于庞大。那怎么办呢？很简单，直接采用贪心方式来逐层选择最佳分裂点。假设一个叶子节点<span class="math inline">\(I\)</span>分裂成两个新的叶子节点<span class="math inline">\(I_L\)</span>和<span class="math inline">\(I_R\)</span>，则该节点分裂产生的增益为：</p>
+<p><span class="math display">\[
+G_{\text {split }}=\frac{1}{2}\left[\frac{\left(\sum_{x_{i} \in I_{L}} g_{i}\right)^{2}}{\left(\sum_{x_{i} \in I_{L}} h_{i}+\lambda\right)}+\frac{\left(\sum_{x_{i} \in I_{R}} g_{i}\right)^{2}}{\left(\sum_{x_{i} \in I_{R}} h_{i}+\lambda\right)}-\frac{\left(\sum_{x_{i} \in I} g_{i}\right)^{2}}{\left(\sum_{x_{i} \in I} h_{i}+\lambda\right)}\right]-\gamma
+\]</span></p>
+<p>上面的<span class="math inline">\(G_{split}\)</span>表示的就是一个叶子节点<span class="math inline">\(I\)</span>按照某特征下的某分裂点分裂成两个新的叶子节点<span class="math inline">\(I_L\)</span>和<span class="math inline">\(I_R\)</span>后可以获得的“增益”，该增益值与模型的损失函数值成负相关关系（因为它在损失函数的基础上取了负号），该值越大，就表示按照该分裂方式分裂可以使模型的整体损失减小得越多。 所以反过来看，其实XGBoost采用的是解析解思维，即对损失函数进行二阶泰勒展开，求得解析解，然后用这个解析解作为“增益”来辅助建立CART回归树，最终使得整体损失达到最优。</p>
+<h2 id="xgboost相对于gbdt的优势">XGBoost相对于GBDT的优势</h2>
+<ol type="1">
+<li>引入损失函数的二阶导信息，效果要好一些。</li>
+<li>加入正则化项，防止过拟合。</li>
+<li>支持对特征进行抽样，借鉴了随机森林的做法。</li>
+<li>剪枝处理方法不同。</li>
+</ol>
+<blockquote>
+<p>当遇到一个负“增益”时，GBDT会马上停止分裂，但XGBoost会一直分裂到指定的最大深度，然后回过头来剪枝。如果某个节点之后不再有负值，则会除掉这个分裂；但如果负值后面出现正值，并且最后综合起来还是正值，则该分裂会保留。</p>
+</blockquote>
+<ol start="5" type="1">
+<li>XGBoost直接求解析解，而GBDT是通过减小损失函数求数值解，因此XGBoost求解速度更快。</li>
+</ol>
+<blockquote>
+<p>GBDT模型采用的是数值优化思维,即利用CART回归树去拟合损失函数的负梯度在当前模型的值，达到减小损失函数的目的；而XGBoost采用的是解析解思想，即对损失函数进行二阶泰勒展开，求得解析解，然后用这个解析解作为“增益”来辅助建立CART回归树，最终使得整体的损失达到最优，因此XGBoost的训练速度更快。</p>
+</blockquote>
+<ol start="6" type="1">
+<li>支持并行。</li>
+</ol>
+<blockquote>
+<p>不同于随机森林的并行。因为XGBoost的基学习器之间具有强关联，每一个基学习器的训练都是建立在前面基学习器基础之上进行的，因此不可能直接做到各个基学习器之间的并行化处理。我们知道，决策树的学习过程最耗时的一个步骤是对特征的值进行排序以确定最佳分割点，所以XGBoost在训练之前，预先对特征数据进行了排序，并将其保存为block结构，利用这个block结构，各个特征的增益计算可以多线程进行，而且后面的迭代中可以重复使用这个结构，从而大大减少了计算量。所以XGBoost的并行不是在决策树粒度上的，而是在特征粒度上。</p>
+</blockquote>
 <h1 id="参考">参考</h1>
 
     </div>
@@ -293,6 +355,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/adaboost-gbdt-xgboost/" rel="tag"># adaboost gbdt xgboost</a>
+          </div>
 
         
 
