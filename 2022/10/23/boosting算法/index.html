@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
 <meta property="article:published_time" content="2022-10-23T14:24:29.000Z">
-<meta property="article:modified_time" content="2022-11-06T14:48:00.881Z">
+<meta property="article:modified_time" content="2022-11-06T14:55:29.416Z">
 <meta property="article:author" content="Scofield">
 <meta property="article:tag" content="adaboost gbdt xgboost">
 <meta name="twitter:card" content="summary">
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gbdt"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">优缺点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost%E7%9B%B8%E5%AF%B9%E4%BA%8Egbdt%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">4.1.</span> <span class="nav-text">XGBoost相对于GBDT的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">2.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法步骤:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gbdt"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC"><span class="nav-number">3.1.</span> <span class="nav-text">原理推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text">优缺点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost%E7%9B%B8%E5%AF%B9%E4%BA%8Egbdt%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">4.2.</span> <span class="nav-text">XGBoost相对于GBDT的优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-06 22:48:00" itemprop="dateModified" datetime="2022-11-06T22:48:00+08:00">2022-11-06</time>
+      <time title="Modified: 2022-11-06 22:55:29" itemprop="dateModified" datetime="2022-11-06T22:55:29+08:00">2022-11-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -285,7 +285,9 @@
 <h2 id="优缺点">优缺点：</h2>
 <p><strong>优点</strong><br> 在处理回归任务时，由于可以选择Huber损失函数或Quantile损失函数，因此相对于AdaBoost，对噪声的敏感性大大降低。<br> <strong>缺点</strong><br> 和AdaBoost一样，对各个基学习器之间存在强关联，不利于并行化处理。</p>
 <h1 id="xgboost">XGBoost</h1>
-<p>XGBoost高效地实现了GBDT算法并进行了算法和工程上的许多改进。 ## 原理 对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥)\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行二阶泰勒展开： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥)}{\partial𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}∗\frac{(\partial^2𝐿(𝑦,𝑓_{𝑘−1}(𝑥)))}{\partial𝑓_{𝑘−1}^2(𝑥)}[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
+<p>XGBoost高效地实现了GBDT算法并进行了算法和工程上的许多改进。</p>
+<h2 id="原理">原理</h2>
+<p>对损失函数<span class="math inline">\(𝐿(𝑦,𝑓(𝑥)\)</span>在<span class="math inline">\(𝑓(𝑥)=𝑓_{𝑘−1}(𝑥)\)</span>处进行二阶泰勒展开： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥)}{\partial𝑓_{𝑘−1}(𝑥)}(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}∗\frac{(\partial^2𝐿(𝑦,𝑓_{𝑘−1}(𝑥)))}{\partial𝑓_{𝑘−1}^2(𝑥)}[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
 \]</span> 取<span class="math inline">\(𝑔=\frac{\partial𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}(𝑥)}\)</span>，<span class="math inline">\(ℎ=\frac{\partial^2 𝐿(𝑦,𝑓_{𝑘−1}(𝑥))}{\partial𝑓_{𝑘−1}^2(𝑥)}\)</span>，代入上式得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥)≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g(𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))+\frac{1}{2}ℎ[𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥)]^2
 \]</span> 又在GBDT中，利用前向分布算法，有<span class="math inline">\((𝑓_𝑘(𝑥)−𝑓_{𝑘−1}(𝑥))=𝑇_𝑘(𝑥)\)</span>，代入得： <span class="math display">\[𝐿(𝑦,𝑓_𝑘(𝑥))≈𝐿(𝑦,𝑓_{𝑘−1}(𝑥))+g𝑇_𝑘(𝑥)+\frac{1}{2}ℎ𝑇_𝑘^2(𝑥)
 \]</span></p>
@@ -312,7 +314,7 @@ L_{k}=\sum_{i=1}^{N}\left[\mathrm{~g}_{i} T_{k}\left(x_{i}\right)+\frac{1}{2} h_
 <p>对 <span class="math inline">\(\bar{c}_{k j}\)</span> 求导并另其为0，可得：</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\frac{\partial L_{k}}{\partial \bar{c}_{k j}}=\sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)+\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right) \bar{c}_{k j}\right]=0 \quad L_{k}=\frac{1}{2} \sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)^{2} /\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right)\right]+\lambda T \\
+&amp;\frac{\partial L_{k}}{\partial \bar{c}_{k j}}=\sum_{j=1}^{T}\left[\left(\sum_{x_{i} \in D_{k j}} g_{i}\right)+\left(\sum_{x_{i} \in D_{k j}} h_{i}+\lambda\right) \bar{c}_{k j}\right]=0 \quad  \\
 &amp;\bar{c}_{k j}=-\frac{\sum_{x_{i} \in D_{k j}} g_{i}}{\sum_{x_{i} \in D_{k j}} h_{i}+\lambda}
 \end{aligned}
 \]</span></p>
