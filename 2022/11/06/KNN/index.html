@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决） K近邻分类 K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。 算法的步骤 第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。 第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。 第3步：选取前K个数据。 第4步：加权平均。 对于选择出来的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KNN">
+<meta property="og:url" content="http://example.com/2022/11/06/KNN/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决） K近邻分类 K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。 算法的步骤 第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。 第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。 第3步：选取前K个数据。 第4步：加权平均。 对于选择出来的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-1.jpg?height=884&amp;width=1033&amp;top_left_y=366&amp;top_left_x=666">
+<meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1531&amp;width=2016&amp;top_left_y=51&amp;top_left_x=0">
+<meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1190&amp;width=1144&amp;top_left_y=264&amp;top_left_x=2107">
+<meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0">
+<meta property="article:published_time" content="2022-11-06T15:18:13.000Z">
+<meta property="article:modified_time" content="2022-11-06T15:45:13.043Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-1.jpg?height=884&amp;width=1033&amp;top_left_y=366&amp;top_left_x=666">
+
+
+<link rel="canonical" href="http://example.com/2022/11/06/KNN/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/11/06/KNN/","path":"2022/11/06/KNN/","title":"KNN"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KNN | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k%E8%BF%91%E9%82%BB%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">K近邻分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">算法的步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k%E8%BF%91%E9%82%BB%E5%9B%9E%E5%BD%92"><span class="nav-number">3.</span> <span class="nav-text">K近邻回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kd%E6%A0%91"><span class="nav-number">3.1.</span> <span class="nav-text">KD树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0kd%E6%A0%91"><span class="nav-number">3.2.</span> <span class="nav-text">构造KD树</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/06/KNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="KNN | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KNN
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-11-06 23:18:13 / Modified: 23:45:13" itemprop="dateCreated datePublished" datetime="2022-11-06T23:18:13+08:00">2022-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<p>KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）</p>
+<h1 id="k近邻分类">K近邻分类</h1>
+<p>K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。</p>
+<h2 id="算法的步骤">算法的步骤</h2>
+<p>第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。<br></p>
+<p>第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。<br></p>
+<p>第3步：选取前K个数据。</p>
+<p>第4步：加权平均。 对于选择出来的K个数据按照距离加权平均，距离越近的样本点赋予更大的权重。</p>
+<p><img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-1.jpg?height=884&amp;width=1033&amp;top_left_y=366&amp;top_left_x=666" /></p>
+<p>求出三者距离和: <span class="math inline">\(Sum =D_{A 1}+D_{A 2}+D_{B 1}\)</span></p>
+<p>样本A1权重分配: $W_{A 1}=1-D_{A 1} / Sum $</p>
+<p>则新数据属于 <span class="math inline">\(A\)</span> 的权重是: <span class="math inline">\(W_{A 1}+W_{A 2}\)</span>，属于B的权重是: <span class="math inline">\(W_{B 1}\)</span>。</p>
+<p>如果 <span class="math inline">\(W_{A 1}+W_{A 2}&lt;W_{B 1}\)</span>，则新数据属于 <span class="math inline">\(B\)</span> 类, 否则属于A类。</p>
+<p><span class="math inline">\(D_{A 1}\)</span>是欧式距离或其他距离公式计算得出的样本点之间的距离。 距离越近D越小，但是我们希望距离越近权重越大，可以通过<span class="math inline">\(1-D/Sum\)</span>的方法实现。</p>
+<h2 id="优点">优点</h2>
+<p>易于实现;对异常值不太敏感。</p>
+<h2 id="缺点">缺点</h2>
+<p>推理时间较长，新数据需要和所有数据计算距离。</p>
+<blockquote>
+<p>其他机器学习方法如Logistic回归，通过训练得出参数后，只需要将新数据带入确定的函数之后就可以得到标签值。</p>
+</blockquote>
+<p>当样本存在范围重叠时，K近邻的分类精度很低。</p>
+<blockquote>
+<p><strong>注意:</strong><br> 数据归一化、K值的选择和距离的度量方式对K近邻的结果影响很大。<br> 1. 如果不先对数据进行归一化，那么当多个特征的取值范围相差较大时，就会发生距离偏移，最终结果也会受到很大影响。<br> 2. k值定的太小，那么模型对噪声就会非常敏感，分类时产生较大误差；但k值若定的太大，则激素那量就会变得很大，所以需要根据实际数据量进行权衡。<br> 3. k近邻一般采用欧式距离。<br></p>
+</blockquote>
+<h1 id="k近邻回归">K近邻回归</h1>
+<p>k近邻回归与k近邻分类类似，k近邻分类采用的是多数表决的方式决定分类结果，而k近邻回归是将距离最近的k个样本点的真值的平均作为预测值。</p>
+<h2 id="kd树">KD树</h2>
+<p>如果直接采用暴力的方式去遍历所有点来确定k个最近邻点，则计算开销太大。<br> 为了提高效率，可以考虑使用特殊的数据结构来组织和存储训练数据。KD树是其中一种。</p>
+<h2 id="构造kd树">构造KD树</h2>
+<p>以下是根据维度轮替的方法构建的KD树，还可以根据最大方差法构建KD树，使用方差可以使得构造的KD树数据分得更开一点。</p>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1531&amp;width=2016&amp;top_left_y=51&amp;top_left_x=0" alt="" /><figcaption>"二维空间中的数据点划分情况"</figcaption>
+</figure>
+<p>假设有6个二维数据点 <span class="math inline">\(\left(x_{i}^{1}, x_{i}^{2}\right) \in\{(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)\}\)</span> 。<br> 选择 <span class="math inline">\(x_{i}^{(1)}\)</span> 为轴, 对其从小到大顺序排序, 选出其中位数 (奇数时选中间的作为中 位数, 偶数时选中间偏后一位的作为中位数, 我们的目标是将点划到分割线上)。 这里 <span class="math inline">\(x_{i}^{1}\)</span> 按顺序排列为 <span class="math inline">\(2,4,5,7,8,9\)</span>, 所以中位数为 7 , 第一次按 <span class="math inline">\(x_{i}^{1}=7\)</span> 划分 矩形区域，确定左右子空间, 根节点为 <span class="math inline">\((7,2)\)</span> ；分割超平面为 <span class="math inline">\(x_{i}^{1}=7\)</span> 将整个空 间分为两部分： <span class="math inline">\(x_{i}^{1} \leq 7\)</span> 的部分为左子空间，包含3个节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ；另 一部分为右子空间，包含2个节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span> 。<br> 对于左子空间包含的节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ，按照 <span class="math inline">\(x_{i}^{2}=4\)</span> 划分, 得到上、下两个 子空间，分别包含节点 <span class="math inline">\(\{(2,3)\}\)</span> 和 <span class="math inline">\(\{(4,7)\}\)</span> ；对于右子空间包含的节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span>, 按照 <span class="math inline">\(x_{i}^{2}=6\)</span> 划分，得到另一个上、下子空间，上子空间不包含任何节点，下子空 间包含节点 <span class="math inline">\(\{(8,1)\}\)</span> ；<br> 直到每个点都被划分后停止。</p>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1190&amp;width=1144&amp;top_left_y=264&amp;top_left_x=2107" alt="" /><figcaption>"构造的KD树"</figcaption>
+</figure>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0" alt="" /><figcaption>"找最近邻点"</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/26/%E5%8F%8C%E9%98%B6%E6%AE%B5%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B/" rel="prev" title="双阶段物体检测">
+                  <i class="fa fa-chevron-left"></i> 双阶段物体检测
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

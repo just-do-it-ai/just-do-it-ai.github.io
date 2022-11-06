@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -177,6 +177,126 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/06/KNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/06/KNN/" class="post-title-link" itemprop="url">KNN</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-11-06 23:18:13 / Modified: 23:45:13" itemprop="dateCreated datePublished" datetime="2022-11-06T23:18:13+08:00">2022-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="概述">概述</h1>
+<p>KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）</p>
+<h1 id="k近邻分类">K近邻分类</h1>
+<p>K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。</p>
+<h2 id="算法的步骤">算法的步骤</h2>
+<p>第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。<br></p>
+<p>第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。<br></p>
+<p>第3步：选取前K个数据。</p>
+<p>第4步：加权平均。 对于选择出来的K个数据按照距离加权平均，距离越近的样本点赋予更大的权重。</p>
+<p><img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-1.jpg?height=884&amp;width=1033&amp;top_left_y=366&amp;top_left_x=666" /></p>
+<p>求出三者距离和: <span class="math inline">\(Sum =D_{A 1}+D_{A 2}+D_{B 1}\)</span></p>
+<p>样本A1权重分配: $W_{A 1}=1-D_{A 1} / Sum $</p>
+<p>则新数据属于 <span class="math inline">\(A\)</span> 的权重是: <span class="math inline">\(W_{A 1}+W_{A 2}\)</span>，属于B的权重是: <span class="math inline">\(W_{B 1}\)</span>。</p>
+<p>如果 <span class="math inline">\(W_{A 1}+W_{A 2}&lt;W_{B 1}\)</span>，则新数据属于 <span class="math inline">\(B\)</span> 类, 否则属于A类。</p>
+<p><span class="math inline">\(D_{A 1}\)</span>是欧式距离或其他距离公式计算得出的样本点之间的距离。 距离越近D越小，但是我们希望距离越近权重越大，可以通过<span class="math inline">\(1-D/Sum\)</span>的方法实现。</p>
+<h2 id="优点">优点</h2>
+<p>易于实现;对异常值不太敏感。</p>
+<h2 id="缺点">缺点</h2>
+<p>推理时间较长，新数据需要和所有数据计算距离。</p>
+<blockquote>
+<p>其他机器学习方法如Logistic回归，通过训练得出参数后，只需要将新数据带入确定的函数之后就可以得到标签值。</p>
+</blockquote>
+<p>当样本存在范围重叠时，K近邻的分类精度很低。</p>
+<blockquote>
+<p><strong>注意:</strong><br> 数据归一化、K值的选择和距离的度量方式对K近邻的结果影响很大。<br> 1. 如果不先对数据进行归一化，那么当多个特征的取值范围相差较大时，就会发生距离偏移，最终结果也会受到很大影响。<br> 2. k值定的太小，那么模型对噪声就会非常敏感，分类时产生较大误差；但k值若定的太大，则激素那量就会变得很大，所以需要根据实际数据量进行权衡。<br> 3. k近邻一般采用欧式距离。<br></p>
+</blockquote>
+<h1 id="k近邻回归">K近邻回归</h1>
+<p>k近邻回归与k近邻分类类似，k近邻分类采用的是多数表决的方式决定分类结果，而k近邻回归是将距离最近的k个样本点的真值的平均作为预测值。</p>
+<h2 id="kd树">KD树</h2>
+<p>如果直接采用暴力的方式去遍历所有点来确定k个最近邻点，则计算开销太大。<br> 为了提高效率，可以考虑使用特殊的数据结构来组织和存储训练数据。KD树是其中一种。</p>
+<h2 id="构造kd树">构造KD树</h2>
+<p>以下是根据维度轮替的方法构建的KD树，还可以根据最大方差法构建KD树，使用方差可以使得构造的KD树数据分得更开一点。</p>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1531&amp;width=2016&amp;top_left_y=51&amp;top_left_x=0" alt="" /><figcaption>"二维空间中的数据点划分情况"</figcaption>
+</figure>
+<p>假设有6个二维数据点 <span class="math inline">\(\left(x_{i}^{1}, x_{i}^{2}\right) \in\{(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)\}\)</span> 。<br> 选择 <span class="math inline">\(x_{i}^{(1)}\)</span> 为轴, 对其从小到大顺序排序, 选出其中位数 (奇数时选中间的作为中 位数, 偶数时选中间偏后一位的作为中位数, 我们的目标是将点划到分割线上)。 这里 <span class="math inline">\(x_{i}^{1}\)</span> 按顺序排列为 <span class="math inline">\(2,4,5,7,8,9\)</span>, 所以中位数为 7 , 第一次按 <span class="math inline">\(x_{i}^{1}=7\)</span> 划分 矩形区域，确定左右子空间, 根节点为 <span class="math inline">\((7,2)\)</span> ；分割超平面为 <span class="math inline">\(x_{i}^{1}=7\)</span> 将整个空 间分为两部分： <span class="math inline">\(x_{i}^{1} \leq 7\)</span> 的部分为左子空间，包含3个节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ；另 一部分为右子空间，包含2个节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span> 。<br> 对于左子空间包含的节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ，按照 <span class="math inline">\(x_{i}^{2}=4\)</span> 划分, 得到上、下两个 子空间，分别包含节点 <span class="math inline">\(\{(2,3)\}\)</span> 和 <span class="math inline">\(\{(4,7)\}\)</span> ；对于右子空间包含的节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span>, 按照 <span class="math inline">\(x_{i}^{2}=6\)</span> 划分，得到另一个上、下子空间，上子空间不包含任何节点，下子空 间包含节点 <span class="math inline">\(\{(8,1)\}\)</span> ；<br> 直到每个点都被划分后停止。</p>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1190&amp;width=1144&amp;top_left_y=264&amp;top_left_x=2107" alt="" /><figcaption>"构造的KD树"</figcaption>
+</figure>
+<figure>
+<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0" alt="" /><figcaption>"找最近邻点"</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1011,99 +1131,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/06/word2vec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Scofield">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Scofield">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Scofield">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/10/06/word2vec/" class="post-title-link" itemprop="url">word2vec</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-06 11:50:59" itemprop="dateCreated datePublished" datetime="2022-10-06T11:50:59+08:00">2022-10-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-14 11:24:52" itemprop="dateModified" datetime="2022-10-14T11:24:52+08:00">2022-10-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言">前言</h1>
-<p>Word2Vec是谷歌2013年推出的一个NLP工具，是一种基于预测的方法，区别于此，还有基于计数的方法。Word2Vec的基本思想是：把自然语言中的每个词都表示成一个统一意义、同一维度的词向量，这样，词与词之间的关系就可以用短向量之间的关系度量。Word2Vec可以在百万数量级的词典和上亿数据集上进行高效训练，得到每一个词语的短向量；并且词语向量之间的距离可以表示词语之间的相似度。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/06/word2vec/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
