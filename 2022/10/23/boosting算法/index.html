@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://tangshusen.me/2018/11/18/adaboost/2.1.png">
 <meta property="article:published_time" content="2022-10-23T14:24:29.000Z">
-<meta property="article:modified_time" content="2022-11-06T14:38:53.879Z">
+<meta property="article:modified_time" content="2022-11-06T14:48:00.881Z">
 <meta property="article:author" content="Scofield">
 <meta property="article:tag" content="adaboost gbdt xgboost">
 <meta name="twitter:card" content="summary">
@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-06 22:38:53" itemprop="dateModified" datetime="2022-11-06T22:38:53+08:00">2022-11-06</time>
+      <time title="Modified: 2022-11-06 22:48:00" itemprop="dateModified" datetime="2022-11-06T22:48:00+08:00">2022-11-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -347,6 +347,7 @@ G_{\text {split }}=\frac{1}{2}\left[\frac{\left(\sum_{x_{i} \in I_{L}} g_{i}\rig
 <p>不同于随机森林的并行。因为XGBoost的基学习器之间具有强关联，每一个基学习器的训练都是建立在前面基学习器基础之上进行的，因此不可能直接做到各个基学习器之间的并行化处理。我们知道，决策树的学习过程最耗时的一个步骤是对特征的值进行排序以确定最佳分割点，所以XGBoost在训练之前，预先对特征数据进行了排序，并将其保存为block结构，利用这个block结构，各个特征的增益计算可以多线程进行，而且后面的迭代中可以重复使用这个结构，从而大大减少了计算量。所以XGBoost的并行不是在决策树粒度上的，而是在特征粒度上。</p>
 </blockquote>
 <h1 id="参考">参考</h1>
+<p>[1]https://tangshusen.me/2018/11/18/adaboost/<br> [2]《机器学习基础》胡欢武</p>
 
     </div>
 
