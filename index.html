@@ -214,9 +214,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-11-06 23:18:13 / Modified: 23:45:13" itemprop="dateCreated datePublished" datetime="2022-11-06T23:18:13+08:00">2022-11-06</time>
+      <time title="Created: 2022-11-06 23:18:13" itemprop="dateCreated datePublished" datetime="2022-11-06T23:18:13+08:00">2022-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-07 00:11:16" itemprop="dateModified" datetime="2022-11-07T00:11:16+08:00">2022-11-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -246,8 +252,7 @@
 <p>第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。<br></p>
 <p>第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。<br></p>
 <p>第3步：选取前K个数据。</p>
-<p>第4步：加权平均。 对于选择出来的K个数据按照距离加权平均，距离越近的样本点赋予更大的权重。</p>
-<p><img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-1.jpg?height=884&amp;width=1033&amp;top_left_y=366&amp;top_left_x=666" /></p>
+<p>第4步：加权平均。 对于选择出来的K个数据按照距离加权平均，距离越近的样本点赋予更大的权重。 <img src="https://cdn.mathpix.com/cropped/2022_11_06_019d9a76f0b3073b630fg-1.jpg?height=1008&amp;width=1276&amp;top_left_y=270&amp;top_left_x=400" /></p>
 <p>求出三者距离和: <span class="math inline">\(Sum =D_{A 1}+D_{A 2}+D_{B 1}\)</span></p>
 <p>样本A1权重分配: $W_{A 1}=1-D_{A 1} / Sum $</p>
 <p>则新数据属于 <span class="math inline">\(A\)</span> 的权重是: <span class="math inline">\(W_{A 1}+W_{A 2}\)</span>，属于B的权重是: <span class="math inline">\(W_{B 1}\)</span>。</p>
@@ -269,17 +274,21 @@
 <h2 id="kd树">KD树</h2>
 <p>如果直接采用暴力的方式去遍历所有点来确定k个最近邻点，则计算开销太大。<br> 为了提高效率，可以考虑使用特殊的数据结构来组织和存储训练数据。KD树是其中一种。</p>
 <h2 id="构造kd树">构造KD树</h2>
-<p>以下是根据维度轮替的方法构建的KD树，还可以根据最大方差法构建KD树，使用方差可以使得构造的KD树数据分得更开一点。</p>
-<figure>
-<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1531&amp;width=2016&amp;top_left_y=51&amp;top_left_x=0" alt="" /><figcaption>"二维空间中的数据点划分情况"</figcaption>
-</figure>
-<p>假设有6个二维数据点 <span class="math inline">\(\left(x_{i}^{1}, x_{i}^{2}\right) \in\{(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)\}\)</span> 。<br> 选择 <span class="math inline">\(x_{i}^{(1)}\)</span> 为轴, 对其从小到大顺序排序, 选出其中位数 (奇数时选中间的作为中 位数, 偶数时选中间偏后一位的作为中位数, 我们的目标是将点划到分割线上)。 这里 <span class="math inline">\(x_{i}^{1}\)</span> 按顺序排列为 <span class="math inline">\(2,4,5,7,8,9\)</span>, 所以中位数为 7 , 第一次按 <span class="math inline">\(x_{i}^{1}=7\)</span> 划分 矩形区域，确定左右子空间, 根节点为 <span class="math inline">\((7,2)\)</span> ；分割超平面为 <span class="math inline">\(x_{i}^{1}=7\)</span> 将整个空 间分为两部分： <span class="math inline">\(x_{i}^{1} \leq 7\)</span> 的部分为左子空间，包含3个节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ；另 一部分为右子空间，包含2个节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span> 。<br> 对于左子空间包含的节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ，按照 <span class="math inline">\(x_{i}^{2}=4\)</span> 划分, 得到上、下两个 子空间，分别包含节点 <span class="math inline">\(\{(2,3)\}\)</span> 和 <span class="math inline">\(\{(4,7)\}\)</span> ；对于右子空间包含的节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span>, 按照 <span class="math inline">\(x_{i}^{2}=6\)</span> 划分，得到另一个上、下子空间，上子空间不包含任何节点，下子空 间包含节点 <span class="math inline">\(\{(8,1)\}\)</span> ；<br> 直到每个点都被划分后停止。</p>
-<figure>
-<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-3.jpg?height=1190&amp;width=1144&amp;top_left_y=264&amp;top_left_x=2107" alt="" /><figcaption>"构造的KD树"</figcaption>
-</figure>
-<figure>
-<img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0" alt="" /><figcaption>"找最近邻点"</figcaption>
-</figure>
+<p>以下是根据维度轮替的方法构建的KD树，还可以根据最大方差法构建KD树，使用方差可以使得构造的KD树数据分得更开一点。 <img src="https://cdn.mathpix.com/cropped/2022_11_06_019d9a76f0b3073b630fg-3.jpg?height=1526&amp;width=3204&amp;top_left_y=79&amp;top_left_x=2" alt="&quot;二维空间中的数据点划分情况及构造的KD树&quot;" /></p>
+<p>假设有6个二维数据点 <span class="math inline">\(\left(x_{i}^{1}, x_{i}^{2}\right) \in\{(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)\}\)</span> 。<br> <strong>第1步：确定左、右子空间:</strong><br> 选择 <span class="math inline">\(x_{i}^{(1)}\)</span> 为轴, 对其从小到大顺序排序, 选出其中位数 (奇数时选中间的作为中 位数, 偶数时选中间偏后一位的作为中位数, 我们的目标是将点划到分割线上)。 这里 <span class="math inline">\(x_{i}^{1}\)</span> 按顺序排列为 <span class="math inline">\(2,4,5,7,8,9\)</span>, 所以中位数为 7 , 第一次按 <span class="math inline">\(x_{i}^{1}=7\)</span> 划分 矩形区域，确定左右子空间, 根节点为 <span class="math inline">\((7,2)\)</span> ；分割超平面为 <span class="math inline">\(x_{i}^{1}=7\)</span> 将整个空 间分为两部分： <span class="math inline">\(x_{i}^{1} \leq 7\)</span> 的部分为左子空间，包含3个节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ；另 一部分为右子空间，包含2个节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span> 。<br> <strong>第2步：确定上、下子空间:</strong><br> 对于左子空间包含的节点 <span class="math inline">\(\{(2,3),(5,4),(4,7)\}\)</span> ，按照 <span class="math inline">\(x_{i}^{2}=4\)</span> 划分, 得到上、下两个 子空间，分别包含节点 <span class="math inline">\(\{(2,3)\}\)</span> 和 <span class="math inline">\(\{(4,7)\}\)</span> ；对于右子空间包含的节点 <span class="math inline">\(\{(9,6),(8,1)\}\)</span>, 按照 <span class="math inline">\(x_{i}^{2}=6\)</span> 划分，得到另一个上、下子空间，上子空间不包含任何节点，下子空 间包含节点 <span class="math inline">\(\{(8,1)\}\)</span> ；<br> <strong>第3步：重复第1步和第2步:</strong><br> 直到每个点都被划分后停止。</p>
+<h2 id="搜索kd树">搜索KD树</h2>
+<p><strong>第1步：深度优先遍历到可能的叶子节点:</strong><br> 先从根节点出发，递归向下访问KD树：若目标点T当前维的坐标小于切分点坐标，则移动到左子节点，否则移动到右子节点；直到子节点为叶子节点为止，该叶子节点X暂时为目标点的最近邻点。</p>
+<p><strong>第2步：回溯寻找最近邻点:</strong><br> 从上面确定的最近邻点X递归向上回退至父节点A。此时会有两种情况：<br> 第一种情况：<br> 该父节点A比当前最近邻点X距离目标点更近，则节点A为新的当前最近邻点。 因为节点A为新的当前最近邻点，则目标点T一定与节点A所在的超平面相交，此时必须检查节点A的另一个子节点Y；<br> 第二种情况：<br> 该父子节点A比当前最近邻点X距离目标点更远，需判断以目标点T为球心，目标点T到最近邻点A的距离为半径是否与超平面相交：如果相交，需要判断父节点A的另一个子节点B与目标点的距离；如果不相交，则可省略计算节点B与目标节点的距离，因为节点B到目标点的距离&gt;超平面到目标点的距离。<br></p>
+<p>直到根节点，根节点仍需要判断上面两种情况。此时可以找到目标点的最近邻点，可以看出，由于超平面的存在可以省略掉许多节点与目标点之间的距离计算</p>
+<h2 id="举例">举例</h2>
+<p><img src="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0" alt="&quot;找最近邻点&quot;" /> 搜索举例以目标点（3，1）为例：<br> 第1步：<br> 先访问根节点，比较第1维，目标点第1维为3，小于根节点的第1维，则向根节点的左子节点移动；再用目标点的第2维与左子节点的第2维比较，1小于4，继续向左子树移动。由于到达叶子节点（2，3），则（2，3）被认为是当前的最近邻节点。(如果（2，3）并非叶子节点，则需要比较目标点第1维也就是3与节点（2，3）的第1维也就是2之间的大小，此时3大于2，需要移动到（2，3）的右子节点继续遍历下去，直到叶子节点为止)。<br> 维度轮替比较。<br> 第2步：回溯<br> 向上回溯到父节点（5，4），判断目标点（3，1）到父节点（5，4）之间的距离是否小于目标点到（2，3）之间的距离，由于大于到（2，3）的距离，则需要计算父节点（5，4）所在超平面y=4与目标点之间的距离，从上图圆弧可以看出超平面到目标点的距离大于目标点到（2，3）的距离，所以不需要计算目标点与（5，4）的右子节点（4，7）之间的距离。<br> 此时相当于遍历完子树（5，4），继续向上回溯到（7，2），同样的，计算目标点与根节点之间的距离，大于到（2，3）的距离。此时，需要计算（7，2）所在的超平面到目标点的距离是否大于到（2，3）的距离，此时确实是大于，则可以终止回溯。<br></p>
+<h2 id="kd树的复杂度">KD树的复杂度</h2>
+<p>KD树的平均时间复杂度是log(n)，当特征维数接近训练集实例数时，kd树的搜索效率则会迅速下降，几乎接近线性扫描。</p>
+<h2 id="knn应用kd树">KNN应用KD树</h2>
+<p>从KD树的步骤可以看出，KD树能够找到最近邻的点，但KNN要找的是K个近邻点，如何实现？参考下面网址：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23966698">KNN应用</a><br></p>
+<p>KD树建立一个栈stack用以保存离目标点最近的 k 个节点（样本）。<br> 第1步：与KD树相同<br> 从根节点往下利用维度轮替的方法确定一个叶子节点X。<br> 第2步：回溯（与KD树不同）<br> 将叶子节点X标记为访问过。因为stack为空，直接将叶子节点的特征（包括节点本身和节点与目标节点之间的距离等）入栈。<br> 向上回溯到父节点A，并将节点A标记为访问过，计算节点A与目标节点之间的距离； &gt; 此时分为2种情况：<br> 第1种情况：stack里不足k个点,将当前节点特征入栈；<br> 第2种情况：stack里已有K个节点。<br>   情况2.1:如果节点A到目标点之间的距离小于stack里最长距离，则用当前节点特征替换掉stack中离目标点最远的点；<br>   情况2.2:如果节点A到目标点之间的距离大于stack里最长距离，计算目标节点到超平面的距离，如果超平面的距离大于stack里的最长距离，则节点A的右子节点Y不需要计算距离；否则需要按照第一步从右子节点Y往下确定一个叶子节点，再向上回溯。</p>
+<p>第3步： 如果节点A不是根节点，则需要继续向上回溯。回溯过程中遇到已访问过的节点则跳过继续向上回溯，直到根节点。</p>
+<h1 id="参考">参考</h1>
 
       
     </div>
