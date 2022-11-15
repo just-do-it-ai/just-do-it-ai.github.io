@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 kmeans算法是一种无监督的聚类算法。其核心思想是：对于给定的样本集，按照样本点之间的距离的大小，将样本集划分为K个簇，并让簇内的点尽量紧凑，而让簇间的点尽量分开。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kmeans聚类">
+<meta property="og:url" content="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 kmeans算法是一种无监督的聚类算法。其核心思想是：对于给定的样本集，按照样本点之间的距离的大小，将样本集划分为K个簇，并让簇内的点尽量紧凑，而让簇间的点尽量分开。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://files.realpython.com/media/kmeans-algorithm.a94498a7ecd2.png">
+<meta property="og:image" content="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/kmeans%E8%81%9A%E7%B1%BB/kmeansplt.png">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20190812011808/Screenshot-2019-08-12-at-1.13.15-AM.png">
+<meta property="og:image" content="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/kmeans%E8%81%9A%E7%B1%BB/kmeans%2B%2B.png">
+<meta property="og:image" content="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/kmeans%E8%81%9A%E7%B1%BB/kmeans%2B%2Binitial.png">
+<meta property="article:published_time" content="2022-11-10T06:22:14.000Z">
+<meta property="article:modified_time" content="2022-11-12T08:35:54.050Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://files.realpython.com/media/kmeans-algorithm.a94498a7ecd2.png">
+
+
+<link rel="canonical" href="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/","path":"2022/11/10/kmeans聚类/","title":"kmeans聚类"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>kmeans聚类 | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">算法复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kmeans"><span class="nav-number">2.</span> <span class="nav-text">kmeans++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">算法过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96k%E4%B8%AA%E8%B4%A8%E5%BF%83"><span class="nav-number">2.2.</span> <span class="nav-text">初始化k个质心</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/10/kmeans%E8%81%9A%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="kmeans聚类 | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kmeans聚类
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-10 14:22:14" itemprop="dateCreated datePublished" datetime="2022-11-10T14:22:14+08:00">2022-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-12 16:35:54" itemprop="dateModified" datetime="2022-11-12T16:35:54+08:00">2022-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">聚类</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<p>kmeans算法是一种无监督的聚类算法。其核心思想是：对于给定的样本集，按照样本点之间的距离的大小，将样本集划分为K个簇，并让簇内的点尽量紧凑，而让簇间的点尽量分开。<span id="more"></span>目标函数一般是最小化均方误差。 # kmeans ## 算法过程 <img src="https://files.realpython.com/media/kmeans-algorithm.a94498a7ecd2.png" /></p>
+<h2 id="缺点">缺点</h2>
+<ol type="1">
+<li>质心的初始值会对结果产生比较重要的影响。(kmeans++优化的点)</li>
+<li>数据类别严重不平衡时，聚类效果不佳。</li>
+<li>非球面数据聚类效果不好。</li>
+<li>即使是平均分布的数据，kmeans也会强行分类。</li>
+</ol>
+<h2 id="算法复杂度">算法复杂度</h2>
+<p>平均算法复杂度是O(k<em>n</em>t)，k是聚类中心的数量，n是样本数量，t是迭代次数。</p>
+<details>
+<summary>
+实现细节
+</summary>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># norm默认计算矩阵二范数</span></span><br><span class="line"><span class="keyword">from</span> numpy.linalg <span class="keyword">import</span> norm</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Kmeans</span>:</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;Implementing Kmeans algorithm.&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n_clusters, max_iter=<span class="number">100</span>, random_state=<span class="number">123</span></span>):</span><br><span class="line">        self.n_clusters = n_clusters</span><br><span class="line">        self.max_iter = max_iter</span><br><span class="line">        self.random_state = random_state</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">initializ_centroids</span>(<span class="params">self, X</span>):</span><br><span class="line">      <span class="comment">#假设有n个样本</span></span><br><span class="line">        np.random.RandomState(self.random_state)</span><br><span class="line">      <span class="comment">#permutation是打乱0-n之间的索引</span></span><br><span class="line">        random_idx = np.random.permutation(X.shape[<span class="number">0</span>])</span><br><span class="line">        centroids = X[random_idx[:self.n_clusters]]</span><br><span class="line">        <span class="keyword">return</span> centroids</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_centroids</span>(<span class="params">self, X, labels</span>):</span><br><span class="line">        centroids = np.zeros((self.n_clusters, X.shape[<span class="number">1</span>]))</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(self.n_clusters):</span><br><span class="line">      <span class="comment">#labels共有n个，每个数值在0到n_clusters之间，取出等于k的类别用于计算新的聚类中心。</span></span><br><span class="line">            centroids[k, :] = np.mean(X[labels == k, :], axis=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> centroids</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_distance</span>(<span class="params">self, X, centroids</span>):</span><br><span class="line">        distance = np.zeros((X.shape[<span class="number">0</span>], self.n_clusters))</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(self.n_clusters):</span><br><span class="line">      <span class="comment">#计算距离,norm:np.sqrt(input[0]^2+input[1]^2),axis=1表示从1维度计算</span></span><br><span class="line">            row_norm = norm(X - centroids[k, :], axis=<span class="number">1</span>)</span><br><span class="line">            distance[:, k] = np.square(row_norm)</span><br><span class="line">        <span class="keyword">return</span> distance</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_closest_cluster</span>(<span class="params">self, distance</span>):</span><br><span class="line">        <span class="keyword">return</span> np.argmin(distance, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_sse</span>(<span class="params">self, X, labels, centroids</span>):</span><br><span class="line">        distance = np.zeros(X.shape[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(self.n_clusters):</span><br><span class="line">            distance[labels == k] = norm(X[labels == k] - centroids[k], axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> np.<span class="built_in">sum</span>(np.square(distance))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fit</span>(<span class="params">self, X</span>):</span><br><span class="line">        self.centroids = self.initializ_centroids(X)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.max_iter):</span><br><span class="line">            old_centroids = self.centroids</span><br><span class="line">            distance = self.compute_distance(X, old_centroids)</span><br><span class="line">            self.labels = self.find_closest_cluster(distance)</span><br><span class="line">            self.centroids = self.compute_centroids(X, self.labels)</span><br><span class="line">            <span class="comment">#提前终止</span></span><br><span class="line">            <span class="keyword">if</span> np.<span class="built_in">all</span>(old_centroids == self.centroids):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        self.error = self.compute_sse(X, self.labels, self.centroids)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self, X</span>):</span><br><span class="line">        distance = self.compute_distance(X, self.centroids)</span><br><span class="line">        <span class="keyword">return</span> self.find_closest_cluster(distance) </span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data1 = np.random.randn(<span class="number">100</span>,<span class="number">2</span>)</span><br><span class="line">data2 = np.random.randn(<span class="number">100</span>,<span class="number">2</span>)+<span class="number">10</span></span><br><span class="line">data = np.concatenate([data1,data2])</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.scatter(data[:<span class="number">100</span>,<span class="number">0</span>],data[:<span class="number">100</span>,<span class="number">1</span>])</span><br><span class="line">plt.scatter(data[<span class="number">100</span>:<span class="number">200</span>,<span class="number">0</span>],data[<span class="number">100</span>:<span class="number">200</span>,<span class="number">1</span>])</span><br><span class="line">model = Kmeans(<span class="number">2</span>)</span><br><span class="line">model.fit(data)</span><br><span class="line">centroids = model.centroids</span><br><span class="line">plt.scatter(centroids[:,<span class="number">0</span>],centroids[:,<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="kmeans%E8%81%9A%E7%B1%BB/kmeansplt.png" /></p>
+</details>
+<h1 id="kmeans">kmeans++</h1>
+<p>k -means++是K-mean算法的一种智能质心初始化方法。目标是通过随机分配第一个质心来找初始质心，根据最大平方距离选择其余的质心。这样做的目的是将中心点彼此推得尽可能远。<br> <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ml-k-means-algorithm/">kmeans可能会出现下面这种聚类不好的情况</a>。 <img src="https://media.geeksforgeeks.org/wp-content/uploads/20190812011808/Screenshot-2019-08-12-at-1.13.15-AM.png" /> 实际运行的时候发现好像不太可能出现图示情况。<br> 根据kmeans++论文，其速度和准确度会提高。<br> 类别不平衡时表现不好。非球面数据聚类效果不好。</p>
+<h2 id="算法过程">算法过程</h2>
+<p><img src="kmeans%E8%81%9A%E7%B1%BB/kmeans%2B%2B.png" /></p>
+<p><span class="math inline">\(D(x)\)</span>表示样本点<span class="math inline">\(x\)</span>到已选择的质心中的最近质心的距离。</p>
+<h2 id="初始化k个质心">初始化k个质心</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">data1 = np.random.normal([<span class="number">1</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>],(<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line">data2 = np.random.normal([<span class="number">6</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>],(<span class="number">50</span>,<span class="number">2</span>))</span><br><span class="line">data3 = np.random.normal([<span class="number">6</span>,<span class="number">8</span>],[<span class="number">1</span>,<span class="number">1</span>],(<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line">data = np.concatenate([data1,data2,data3])</span><br><span class="line">np.random.seed(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">distance</span>(<span class="params">p1, p2</span>):</span><br><span class="line">    <span class="keyword">return</span> np.<span class="built_in">sum</span>((p1 - p2)**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">initialize</span>(<span class="params">data, k</span>):</span><br><span class="line">    <span class="comment"># 随机选择第一个中心点</span></span><br><span class="line">    centroids = data[:<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># 计算剩下k-1个中心点</span></span><br><span class="line">    <span class="keyword">for</span> c_id <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">1</span>):</span><br><span class="line">        dist = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(data.shape[<span class="number">0</span>]):</span><br><span class="line">            <span class="comment">#取出一个点，计算该点到其他已经计算出来的中心点的距离</span></span><br><span class="line">            point = data[i, :]</span><br><span class="line">            d = sys.maxsize</span><br><span class="line">            <span class="comment">#找到现有的中心点中与该point距离最近的点，保留该最短距离</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(centroids)):</span><br><span class="line">                temp_dist = distance(point, centroids[j])</span><br><span class="line">                d = <span class="built_in">min</span>(d, temp_dist)</span><br><span class="line">            dist.append(d)</span><br><span class="line">        dist = np.array(dist)</span><br><span class="line">        <span class="comment">#在所有距离最短的点中，保留距离最大的点作为下一个中心点</span></span><br><span class="line">        next_centroid = data[np.argmax(dist):np.argmax(dist)+<span class="number">1</span>]</span><br><span class="line">        centroids=np.concatenate([centroids,next_centroid])</span><br><span class="line">        plt.scatter(data[:,<span class="number">0</span>],data[:,<span class="number">1</span>])</span><br><span class="line">        plt.scatter(centroids[:,<span class="number">0</span>],centroids[:,<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> centroids</span><br><span class="line">initialize(data, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="kmeans%E8%81%9A%E7%B1%BB/kmeans%2B%2Binitial.png" /></p>
+<h1 id="参考">参考</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/07/pytorch%E6%A8%A1%E5%9D%97/" rel="prev" title="pytorch模块">
+                  <i class="fa fa-chevron-left"></i> pytorch模块
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/11/15/tensor%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D/" rel="next" title="tensor使用方法介绍">
+                  tensor使用方法介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
