@@ -20,18 +20,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决） K近邻分类 K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。 算法的步骤 第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。 第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。 第3步：选取前K个数据。 第4步：加权平均。 对于选择出来的">
+    <meta name="description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KNN">
 <meta property="og:url" content="http://example.com/2022/11/06/KNN/index.html">
 <meta property="og:site_name" content="Scofield">
-<meta property="og:description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决） K近邻分类 K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。 算法的步骤 第1步：计算距离。 用欧式距离或其他距离计算新数据到所有数据之间的距离。 第2步：升序排列。 将计算出的距离按照从小到大的顺序排列。 第3步：选取前K个数据。 第4步：加权平均。 对于选择出来的">
+<meta property="og:description" content="概述 KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_019d9a76f0b3073b630fg-1.jpg?height=1008&amp;width=1276&amp;top_left_y=270&amp;top_left_x=400">
 <meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_019d9a76f0b3073b630fg-3.jpg?height=1526&amp;width=3204&amp;top_left_y=79&amp;top_left_x=2">
 <meta property="og:image" content="https://cdn.mathpix.com/cropped/2022_11_06_527f179cc32827a0bfa5g-4.jpg?height=1531&amp;width=2016&amp;top_left_y=55&amp;top_left_x=0">
 <meta property="article:published_time" content="2022-11-06T15:18:13.000Z">
-<meta property="article:modified_time" content="2022-11-06T16:11:16.436Z">
+<meta property="article:modified_time" content="2022-12-06T12:31:59.835Z">
 <meta property="article:author" content="Scofield">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.mathpix.com/cropped/2022_11_06_019d9a76f0b3073b630fg-1.jpg?height=1008&amp;width=1276&amp;top_left_y=270&amp;top_left_x=400">
@@ -232,7 +232,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-07 00:11:16" itemprop="dateModified" datetime="2022-11-07T00:11:16+08:00">2022-11-07</time>
+      <time title="Modified: 2022-12-06 20:31:59" itemprop="dateModified" datetime="2022-12-06T20:31:59+08:00">2022-12-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,7 +255,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="概述">概述</h1>
-<p>KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）</p>
+<p>KNN三要素k值的选择，距离度量方法、回归决策规则（如多数投票表决）<span id="more"></span></p>
 <h1 id="k近邻分类">K近邻分类</h1>
 <p>K近邻方法是在给定新数据时查看其周围的数据，以‘’少数服从多数“的方式确定新数据的标签。</p>
 <h2 id="算法的步骤">算法的步骤</h2>
