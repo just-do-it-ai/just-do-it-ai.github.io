@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 参数 初始化的方法 单层网络 要初始化单个层的权重，请使用torch.nn.init中的函数。 12conv1 &#x3D; torch.nn.Conv2d(...)torch.nn.init.xavier_uniform(conv1.weight) 或者，也可以通过写入conv1.weight.data来修改参数。例子: 1conv1.weight.data.fill_(0.01) 对于偏置也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="参数初始化">
+<meta property="og:url" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:site_name" content="Scofield">
+<meta property="og:description" content="概述 参数 初始化的方法 单层网络 要初始化单个层的权重，请使用torch.nn.init中的函数。 12conv1 &#x3D; torch.nn.Conv2d(...)torch.nn.init.xavier_uniform(conv1.weight) 或者，也可以通过写入conv1.weight.data来修改参数。例子: 1conv1.weight.data.fill_(0.01) 对于偏置也">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/constant.png">
+<meta property="og:image" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/uniform.png">
+<meta property="og:image" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/generaluniform.png">
+<meta property="og:image" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/normal.png">
+<meta property="article:published_time" content="2022-11-21T12:40:03.000Z">
+<meta property="article:modified_time" content="2022-11-24T07:16:43.225Z">
+<meta property="article:author" content="Scofield">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/constant.png">
+
+
+<link rel="canonical" href="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/","path":"2022/11/21/参数初始化/","title":"参数初始化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>参数初始化 | Scofield</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Scofield</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">参数 初始化的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%B1%82%E7%BD%91%E7%BB%9C"><span class="nav-number">2.1.</span> <span class="nav-text">单层网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%B8%AA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.</span> <span class="nav-text">整个网络模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">3.</span> <span class="nav-text">参数初始化的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%BA%E5%9B%BA%E5%AE%9A%E5%80%BC"><span class="nav-number">3.1.</span> <span class="nav-text">初始化为固定值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%BA%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83"><span class="nav-number">3.2.</span> <span class="nav-text">初始化为均匀分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%9D%83%E9%87%8D%E7%9A%84%E4%B8%80%E8%88%AC%E8%A7%84%E5%88%99"><span class="nav-number">3.3.</span> <span class="nav-text">设置权重的一般规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%BA%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-number">4.</span> <span class="nav-text">初始化为正态分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch%E4%B8%AD%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">pytorch中初始化的方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Scofield"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Scofield</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/just-do-it-ai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;just-do-it-ai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xluo2583@gmail.com" title="E-Mail → mailto:xluo2583@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.jpg" title="WeChat → &#x2F;images&#x2F;wechat.jpg"><i class="fa fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/21/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Scofield">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Scofield">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="参数初始化 | Scofield">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          参数初始化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-21 20:40:03" itemprop="dateCreated datePublished" datetime="2022-11-21T20:40:03+08:00">2022-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-24 15:16:43" itemprop="dateModified" datetime="2022-11-24T15:16:43+08:00">2022-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="概述">概述</h1>
+<h1 id="参数-初始化的方法">参数 初始化的方法</h1>
+<h2 id="单层网络">单层网络</h2>
+<p>要初始化单个层的权重，请使用torch.nn.init中的函数。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conv1 = torch.nn.Conv2d(...)</span><br><span class="line">torch.nn.init.xavier_uniform(conv1.weight)</span><br></pre></td></tr></table></figure> 或者，也可以通过写入conv1.weight.data来修改参数。例子: <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conv1.weight.data.fill_(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure> 对于偏置也是一样的： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conv1.bias.data.fill_(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="整个网络模块">整个网络模块</h2>
+<p>将初始化函数传递给torch.nn.Module.apply。它会递归地初始化整个nn.Module中的权值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">init_weights</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, nn.Linear):</span><br><span class="line">        torch.nn.init.xavier_uniform(m.weight)</span><br><span class="line">        m.bias.data.fill_(<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line">net = nn.Sequential(nn.Linear(<span class="number">2</span>, <span class="number">2</span>), nn.Linear(<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">net.apply(init_weights)</span><br></pre></td></tr></table></figure>
+<h1 id="参数初始化的影响">参数初始化的影响</h1>
+<h2 id="初始化为固定值">初始化为固定值</h2>
+<p>如果遵循奥卡姆剃刀原理，我们可能会认为将所有权重设置为0或1是最好的解决方案，但是事实并非如此。<br> 在每个权重相同的情况下，每一层的所有神经元都产生相同的输出。这使得模型很难决定调整哪些权重。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># initialize two NN&#x27;s with 0 and 1 constant weights</span></span><br><span class="line">model_0 = Net(constant_weight=<span class="number">0</span>)</span><br><span class="line">model_1 = Net(constant_weight=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#output</span></span><br><span class="line">Validation Accuracy</span><br><span class="line"><span class="number">9.625</span>% -- All Zeros</span><br><span class="line"><span class="number">10.050</span>% -- All Ones</span><br><span class="line">Training Loss</span><br><span class="line"><span class="number">2.304</span>  -- All Zeros</span><br><span class="line"><span class="number">1552.281</span>  -- All Ones</span><br></pre></td></tr></table></figure>
+<p><img src="参数初始化\constant.png" /></p>
+<h2 id="初始化为均匀分布">初始化为均匀分布</h2>
+<p>均匀分布从一组数字中选出任意一个数的概率是相等的。<br> 让我们看看使用统一权重初始化(其中低=0.0，高=1.0)的神经网络训练效果如何。<br> 在模型定义之外定义权重:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># takes in a module and applies the specified weight initialization</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">weights_init_uniform</span>(<span class="params">m</span>):</span><br><span class="line">    classname = m.__class__.__name__</span><br><span class="line">    <span class="comment"># for every Linear layer in a model..</span></span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">&#x27;Linear&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">        <span class="comment"># apply a uniform distribution to the weights and a bias=0</span></span><br><span class="line">        m.weight.data.uniform_(<span class="number">0.0</span>, <span class="number">1.0</span>)</span><br><span class="line">        m.bias.data.fill_(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">model_uniform = Net()</span><br><span class="line">model_uniform.apply(weights_init_uniform)</span><br></pre></td></tr></table></figure>
+<p><img src="参数初始化\uniform.png" /></p>
+<h2 id="设置权重的一般规则">设置权重的一般规则</h2>
+<p>在神经网络中设置权重的一般规则是将它们设置为接近零而又不会太小的数。<br> 好的做法是在 <span class="math inline">\([-y, y]\)</span> 的范围内初始化参数，其中 $y=1/ $， n为给定神经元的输入数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># takes in a module and applies the specified weight initialization</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">weights_init_uniform_rule</span>(<span class="params">m</span>):</span><br><span class="line">    classname = m.__class__.__name__</span><br><span class="line">    <span class="comment"># for every Linear layer in a model..</span></span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">&#x27;Linear&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">        <span class="comment"># get the number of the inputs</span></span><br><span class="line">        n = m.in_features</span><br><span class="line">        y = <span class="number">1.0</span>/np.sqrt(n)</span><br><span class="line">        m.weight.data.uniform_(-y, y)</span><br><span class="line">        m.bias.data.fill_(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new model with these weights</span></span><br><span class="line">model_rule = Net()</span><br><span class="line">model_rule.apply(weights_init_uniform_rule)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">Validation Accuracy</span><br><span class="line"><span class="number">75.817</span>% -- Centered Weights [-<span class="number">0.5</span>, <span class="number">0.5</span>)</span><br><span class="line"><span class="number">85.208</span>% -- General Rule [-y, y)</span><br><span class="line">Training Loss</span><br><span class="line"><span class="number">0.705</span>  -- Centered Weights [-<span class="number">0.5</span>, <span class="number">0.5</span>)</span><br><span class="line"><span class="number">0.469</span>  -- General Rule [-y, y)</span><br></pre></td></tr></table></figure>
+<p>下面我们比较了用均匀分布初始化权值[-0.5,0.5)的神经网络与用一般规则初始化权值的神经网络的性能:</p>
+<p><img src="参数初始化\generaluniform.png" /></p>
+<h1 id="初始化为正态分布">初始化为正态分布</h1>
+<p>正态分布的均值应为0，标准差为 $y=1/ $，n为给定神经元的输入数。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## takes in a module and applies the specified weight initialization</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">weights_init_normal</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;Takes in a module and initializes all linear layers with weight</span></span><br><span class="line"><span class="string">        values taken from a normal distribution.&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    classname = m.__class__.__name__</span><br><span class="line">    <span class="comment"># for every Linear layer in a model</span></span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">&#x27;Linear&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">        y = m.in_features</span><br><span class="line">    <span class="comment"># m.weight.data shoud be taken from a normal distribution</span></span><br><span class="line">        m.weight.data.normal_(<span class="number">0.0</span>,<span class="number">1</span>/np.sqrt(y))</span><br><span class="line">    <span class="comment"># m.bias.data should be 0</span></span><br><span class="line">        m.bias.data.fill_(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">Validation Accuracy</span><br><span class="line"><span class="number">85.775</span>% -- Uniform Rule [-y, y)</span><br><span class="line"><span class="number">84.717</span>% -- Normal Distribution</span><br><span class="line">Training Loss</span><br><span class="line"><span class="number">0.329</span>  -- Uniform Rule [-y, y)</span><br><span class="line"><span class="number">0.443</span>  -- Normal Distribution</span><br></pre></td></tr></table></figure> 下面我们展示了两个神经网络的性能，一个使用均匀分布初始化，另一个使用正态分布初始化。 <img src="参数初始化\normal.png" /></p>
+<h1 id="pytorch中初始化的方法">pytorch中初始化的方法</h1>
+<p>kaiming是针对xavier初始化方法在relu这一类激活函数表现不佳而提出的改进</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/16/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="prev" title="激活函数">
+                  <i class="fa fa-chevron-left"></i> 激活函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scofield</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
